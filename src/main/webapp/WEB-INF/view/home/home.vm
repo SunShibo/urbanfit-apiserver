@@ -1,0 +1,70 @@
+div class="main">
+    <div class="row">
+        <header class="col-md-12">
+            <h1><span> 总览</span></h1>
+        </header>
+        <div class="section col-md-12">
+            <h4 class="section-title">容器</h4>
+            <div class="section-body">
+                <div class="row">
+                    <div class="text-center col-md-4">
+                        <a class="" href="#">
+                            <div class="number">2</div>
+                            <p>全部容器</p>
+                        </a>
+                    </div>
+                    <div class="text-center col-md-4">
+                        <a class="" href="#">
+                            <div class="number">2</div>
+                            <p>运行中</p>
+                        </a>
+                    </div>
+                    <div class="text-center col-md-4">
+                        <a class="" href="#">
+                            <div class="number">0</div>
+                            <p>已停止</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section col-md-12">
+            <h4 class="section-title">主机</h4>
+            <div class="section-body">
+                <div class="row">
+                    <div class="text-center col-md-4">
+                        <a class="" href="#">
+                            <div class="number">1</div>
+                            <p>全部主机</p>
+                        </a>
+                    </div>
+                    <div class="text-center col-md-4">
+                        <a class="" href="#">
+                            <div class="number">0</div>
+                            <p>异常</p>
+                        </a>
+                    </div>
+                    <div class="text-center col-md-4">
+                        <a class="" href="#">
+                            <div class="number">0</div>
+                            <p>维护中</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section col-md-12">
+            <h4 class="section-title">本地镜像</h4>
+            <div class="section-body">
+                <div class="row">
+                    <div class="text-center col-md-4">
+                        <a class="" href="#">
+                            <div class="number">1</div>
+                            <p>全部镜像</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

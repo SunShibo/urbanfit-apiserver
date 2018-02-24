@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html class="app">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>总览</title>
+    <meta name="description" content="cSphere docker管理系统"/>
+    <meta name="keywords" content="cSphere,docker"/>
+
+    <link href="/static/css/index.css" rel="stylesheet"/>
+    <script type="text/javascript" async src="/static/js/piwik.js"></script>
+    <script type="text/javascript" id="analytics-js" async src="/static/js/analytics.js"></script>
+    <script src="/static/js/latest-version.js" id="get_latest_api_version"></script>
+    <script>/*<![CDATA[*/
+    window.zEmbed || function (e, t) {
+        var n, o, d, i, s, a = [], r = document.createElement("iframe");
+        window.zEmbed = function () {
+            a.push(arguments)
+        }, window.zE = window.zE || window.zEmbed, r.src = "javascript:false", r.title = "", r.role = "presentation", (r.frameElement || r).style.cssText = "display: none", d = document.getElementsByTagName("script"), d = d[d.length - 1], d.parentNode.insertBefore(r, d), i = r.contentWindow, s = i.document;
+        try {
+            o = s
+        } catch (c) {
+            n = document.domain, r.src = 'javascript:var d=document.open();d.domain="' + n + '";void(0);', o = s
+        }
+        o.open()._l = function () {
+            var o = this.createElement("script");
+            n && (this.domain = n), o.id = "js-iframe-async", o.src = e, this.t = +new Date, this.zendeskHost = t, this.zEQueue = a, this.body.appendChild(o)
+        }, o.write('<body onload="document._l();">'), o.close()
+    }("//assets.zendesk.com/embeddable_framework/main.js", "csphere.zendesk.com");
+    /*]]>*/</script>
+</head>
+<body style="" class="">
+
+<div id="root">
+    <div id="container" class="container-dashboard">
+        <nav id="header" class="header navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-form navbar-left">
+                    <form>
+                        <i><img src="/static/images/search.png"></i>
+                        <span>&nbsp;</span>
+                        <input name="keyword" placeholder="搜索 容器、镜像、主机" type="search"/>
+                    </form>
+                </div>
+                <div class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li role="presentation" class=""><a href="#" target="_blank"><i><img
+                                src="/static/images/book.png"></i><span> 文档</span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div id="contents" class="contents-dashboard">
+            <div class="container-fluid">
+                <div class="sidebar">
+                    <!--<div class="brand">
+                        <a href="#"><img src="%E6%80%BB%E8%A7%88%20-%20cSphere_files/300d4cd41a00241756a59c2f891f78a6.svg" width="100" height="23" /></a>
+                    </div>
+                    <div class="version">
+                        <p><span>1.0.1</span></p>
+                    </div>-->
+                    <ul class="nav nav-sidebar">
+                        <li role="presentation" class="active"><a href="#"><i class="fa fa-bar-chart-o fa-fw"></i><span> 总览</span></a>
+                        </li>
+                        <li role="presentation" class=""><a href="/container/list"><i
+                                class="fa fa-cube fa-fw"></i><span> 容器</span></a></li>
+                        <li role="presentation" class=""><a href="/host/list"><i class="fa fa-server fa-fw"></i><span> 主机</span></a>
+                        </li>
+                        <li role="presentation" class=""><a href="#"><i
+                                class="fa fa-database fa-fw"></i><span> 本地镜像</span></a></li>
+                        <li role="presentation" class=""><a href="#"><i class="fa fa-cubes fa-fw"></i><span> 镜像仓库</span></a>
+                        </li>
+                        <li role="presentation" class=""><a href="#"><i class="fa fa-bell fa-fw"></i><span> 监控告警</span></a>
+                        </li>
+                    </ul>
+                    <ul class="nav nav-sidebar">
+                        <li role="presentation" class=""><a href="#"><i
+                                class="fa fa-file-code-o fa-fw"></i><span> 应用模板</span></a></li>
+                        <li role="presentation" class=""><a href="#"><i class="fa fa-bolt fa-fw"></i><span> 应用实例</span></a>
+                        </li>
+                    </ul>
+                    <ul class="nav nav-sidebar">
+                        <li><a role="button" href="#"><i class="fa fa-plus fa-fw"></i><span> 创建容器</span></a></li>
+                        <li role="presentation" class=""><a href="#"><i
+                                class="fa fa-gears fa-fw"></i><span> 设置</span></a></li>
+                    </ul>
+                    <ul class="nav nav-sidebar push-to-bottom" data-reactid=".0.1.0.0.0.4">
+                        <li role="presentation" class=""><a href="#"><i
+                                class="fa fa-sign-out fa-rotate-180 fa-fw"></i><span> 退出</span></a></li>
+                    </ul>
+                </div>
+                $screen_placeholder
+            </div>
+        </div>
+    </div>
+</div>
+<script src="files/main.js"></script>
+<iframe src="javascript:false" title="" style="display: none;"></iframe>
+<script>NSApp && NSApp.start()</script>
+</body>
+</html>
+

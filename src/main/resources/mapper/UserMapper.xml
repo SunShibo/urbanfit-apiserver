@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 【用户】 -->
+<mapper namespace="com.urbanfit.apiserver.dao.UserDAO">
+
+    <select id="getCount" resultType="int" parameterType="String">
+        select count(id) from test
+    </select>
+
+	<!-- 【注册】 -->
+    <insert id="register" parameterType="com.urbanfit.apiserver.entity.UserDO" useGeneratedKeys="true" keyProperty="id">
+        <![CDATA[
+           INSERT INTO pd_user_profile( email, password, status,create_time ) VALUES( #{email}, #{password}, #{status}, NOW() )
+        ]]>
+    </insert>
+    
+    <select id="login" resultType="com.urbanfit.apiserver.entity.bo.UserBO">
+    	SELECT
+            id ,nickname ,gender ,username ,password ,birthday ,location ,
+            head_portrait ,phone_number ,email ,wechat ,sina_weibo ,
+            create_time ,modify_time ,twiter ,facebook ,linkedin ,status , country
+        FROM
+            pd_user_profile
+        WHERE
+            ( username = #{account} or email = #{account} or phone_number = #{account} )
+            AND password = #{password}
+    </select>
+
+	<select id="loginById" resultType="com.urbanfit.apiserver.entity.bo.UserBO">
+		SELECT
+		id ,nickname ,gender ,username ,password ,birthday ,location ,
+		head_portrait ,phone_number ,email ,wechat ,sina_weibo ,
+		create_time ,modify_time ,twiter ,facebook ,linkedin ,status , country
+		FROM
+		pd_user_profile
+		WHERE
+		id = #{id} AND status = 'status_normal'
+	</select>
+
+	<!-- 通过邮箱查找用户 -->
+	<select id="selectUserByEmail" resultType="com.urbanfit.apiserver.entity.bo.UserBO">
+		SELECT
+		id ,nickname ,gender ,username ,password ,birthday ,location ,
+		head_portrait ,phone_number ,email ,wechat ,sina_weibo ,
+		create_time ,modify_time ,twiter ,facebook ,linkedin ,status
+		FROM
+		pd_user_profile
+		WHERE email = #{email}
+	</select>
+    
+    <!-- 根据【用户名】查询【用户数】 -->
+    <select id="selectCountByUsername" parameterType="String" resultType="int">
+    	SELECT count(1) FROM pd_user_profile WHERE username = #{username}
+    </select>
+
+    <!-- 根据【手机号】查询【用户数】 -->
+    <select id="selectCountByMobileCode" parameterType="String" resultType="int">
+    	SELECT count(1) FROM pd_user_profile WHERE phone_number = #{phoneNumber}
+    </select>
+
+	<!-- 通过邮箱修改用户状态 -->
+	<update id="updateStatusByEmail" parameterType="com.urbanfit.apiserver.entity.UserDO">
+		UPDATE pd_user_profile SET status = #{status} WHERE email = #{email}
+	</update>
+
+	<!-- 修改用户头像 -->
+	<update id="updateUserHeadPortrait" >
+		UPDATE pd_user_profile SET head_portrait = #{headPortrait} WHERE id = #{id}
+	</update>
+
+	<update id="completeProfile" parameterType="com.urbanfit.apiserver.entity.UserDO">
+		UPDATE pd_user_profile SET head_portrait = #{headPortrait} , nickname = #{nickname} WHERE id = #{id}
+	</update>
+
+	<update id="updatePasswordByEmail" parameterType="com.urbanfit.apiserver.entity.UserDO">
+		UPDATE pd_user_profile SET password = #{password} WHERE email = #{email}
+	</update>
+    
+    <!-- 更加【手机号】更新【用户】信息 -->
+    <update id="updateUserInfo" parameterType="com.urbanfit.apiserver.entity.UserDO">
+    	UPDATE 
+    		pd_user_profile
+    	SET
+    		modify_time = NOW()
+    		<if test="null != username and '' != username">, username = #{username} </if>
+    		<if test="null != name and '' != name">, name = #{name} </if>
+    		<if test="null != nickname and '' != nickname">, nickname = #{nickname} </if>
+    		<if test="null != gender and '' != gender">, gender = #{gender} </if>
+    		<if test="null != location and '' != location">, location = #{location} </if>
+    		<if test="null != signature and '' != signature">, signature = #{signature} </if>
+    		<if test="null != email and '' != email">, email = #{email} </if>
+    		<if test="null != wechat and '' != wechat">, wechat = #{wechat} </if>
+    		<if test="null != sinaWeibo and '' != sinaWeibo">, sina_weibo = #{sinaWeibo} </if>
+    		<if test="null != twiter and '' != twiter">, twiter = #{twiter} </if>
+    		<if test="null != facebook and '' != facebook">, facebook = #{facebook} </if>
+    		<if test="null != linkedin and '' != linkedin">, linkedin = #{linkedin} </if>
+    		<if test="null != headPortrait and '' != headPortrait">, head_portrait = #{headPortrait} </if>
+    		<if test="null != country and '' != country">, country = #{country} </if>
+    		<if test="null != birthday">, birthday = #{birthday} </if>
+    	WHERE
+    		id = #{id}
+    </update>
+    
+    <!-- 查询【用户】列表 -->
+    <select id="selectUserList" parameterType="com.urbanfit.apiserver.entity.UserDO" resultType="com.urbanfit.apiserver.entity.UserDO">
+    	SELECT *
+    		<if test="0 &lt; id">
+    			, (SELECT count(1) FROM pd_follow_link WHERE follower_id = #{id}) follow_count
+    			, (SELECT count(1) FROM pd_follow_link WHERE be_follower_id = #{id}) be_follower_count 
+    		</if>
+		FROM 
+			pd_user_profile 
+		<where>
+			1 = 1
+			<if test="null != username and '' != username"> AND username LIKE ('%' || #{username} || '%')</if>
+			<if test="null != nickname and '' != nickname"> AND nickname LIKE ('%' || #{nickname} || '%')</if>
+			<if test="null != gender and '' != gender"> AND gender = #{nickname} </if>
+			<if test="null != signature and '' != signature"> AND signature LIKE ('%' || #{signature} || '%')</if>
+			<if test="null != phoneNumber and '' != phoneNumber"> AND phone_number LIKE ('%' || #{phoneNumber} || '%')</if>
+			<if test="null != email and '' != email"> AND email LIKE ('%' || #{email} || '%')</if>
+			<if test="null != wechat and '' != wechat"> AND wechat LIKE ('%' || #{wechat} || '%')</if>
+			<if test="null != sinaWeibo and '' != sinaWeibo"> AND sina_weibo LIKE ('%' || #{sinaWeibo} || '%')</if>
+			<if test="null != twiter and '' != twiter">AND twiter = #{twiter} </if>
+    		<if test="null != facebook and '' != facebook">AND facebook = #{facebook} </if>
+    		<if test="null != linkedin and '' != linkedin">AND linkedin = #{linkedin} </if>
+		</where>
+    </select>
+
+	<update id="updatePwdByOldPwd" parameterType="com.urbanfit.apiserver.entity.UserDO">
+		UPDATE
+		pd_user_profile
+		SET
+		modify_time = NOW()
+		, password = #{newPassword}
+		WHERE
+		id = #{id} and password = #{oldPassword}
+	</update>
+
+</mapper>

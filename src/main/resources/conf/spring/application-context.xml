@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd 
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <import resource="../mybatis/datasource.xml"/>
+
+    <context:component-scan base-package="com.urbanfit.apiserver">
+        <context:exclude-filter type="annotation"
+                                expression="org.springframework.stereotype.Controller" />
+    </context:component-scan>
+
+    <bean id="defaultFilter" class="com.urbanfit.apiserver.web.support.filter.DefaultFilter">
+    </bean>
+
+    <aop:aspectj-autoproxy/>
+    <bean id="idempotencyInterceptor" class="com.urbanfit.apiserver.system.idempotency.core.IdempotencyInterceptor">
+    </bean>
+
+    <aop:config proxy-target-class="true">
+        <aop:pointcut id="idempotentOperation" expression="execution(* com.urbanfit.apiserver..*(..))
+                and @annotation(com.urbanfit.apiserver.system.idempotency.core.Idempotent)" />
+        <aop:advisor pointcut-ref="idempotentOperation" advice-ref="idempotencyInterceptor" />
+    </aop:config>
+
+    <bean id="systemInitializationConfigurer" init-method="init"
+          class="com.urbanfit.apiserver.system.systemConfig.SystemInitializationConfigurer" >
+    </bean>
+
+</beans>

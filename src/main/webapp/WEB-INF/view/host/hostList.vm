@@ -1,0 +1,124 @@
+<div class="main">
+    <div class="row">
+        <header class="col-md-12">
+            <h1><span>主机分组列表</span></h1>
+        </header>
+        <div class="col-md-4">
+            <div class="pool-item row">
+                <div class="col-sm-5">
+                    <a class="name" title="开发" href="#">开发</a>
+                </div>
+                <div class="numbers col-sm-5">
+                    <dd class="node-number">0</dd>
+                    <dt>
+                        <small>主机</small>
+                    </dt>
+                </div>
+                <div class="col-sm-2">
+                    <a class="" href="#">查看</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="pool-item row">
+                <div class="col-sm-5">
+                    <a class="name" title="开发" href="#">测试</a>
+                </div>
+                <div class="numbers col-sm-5">
+                    <dd class="node-number">0</dd>
+                    <dt>
+                        <small>主机</small>
+                    </dt>
+                </div>
+                <div class="col-sm-2">
+                    <a class="" href="#">查看</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="pool-item row">
+                <div class="col-sm-5">
+                    <a class="name" title="开发" href="#">预生产</a>
+                </div>
+                <div class="numbers col-sm-5">
+                    <dd class="node-number">0</dd>
+                    <dt>
+                        <small>主机</small>
+                    </dt>
+                </div>
+                <div class="col-sm-2">
+                    <a class="" href="#">查看</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="pool-item row">
+                <div class="col-sm-5">
+                    <a class="name" title="开发" href="#">生产</a>
+                </div>
+                <div class="numbers col-sm-5">
+                    <dd class="node-number">0</dd>
+                    <dt>
+                        <small>主机</small>
+                    </dt>
+                </div>
+                <div class="col-sm-2">
+                    <a class="" href="#">查看</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="pool-item row">
+                <div class="col-sm-5">
+                    <a class="name" title="开发" href="#">默认</a>
+                </div>
+                <div class="numbers col-sm-5">
+                    <dd class="node-number">0</dd>
+                    <dt>
+                        <small>主机</small>
+                    </dt>
+                </div>
+                <div class="col-sm-2">
+                    <a class="" href="#">查看</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="pool-item row">
+                <div class="col-sm-5">
+                    <a class="name" title="开发" href="#">NAT</a>
+                </div>
+                <div class="numbers col-sm-5">
+                    <dd class="node-number">1</dd>
+                    <dt>
+                        <small>主机</small>
+                    </dt>
+                </div>
+                <div class="col-sm-2">
+                    <a class="" href="#">查看</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="pool-item row">
+                <div class="col-sm-5">
+                    <a class="name" title="开发" href="#">cSphere系统</a>
+                </div>
+                <div class="numbers col-sm-5">
+                    <dd class="node-number">0</dd>
+                    <dt>
+                        <small>主机</small>
+                    </dt>
+                </div>
+                <div class="col-sm-2">
+                    <a class="" href="#">查看</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12" data-reactid=".0.1.0.0.1.0.2">
+            <div style="padding:8px 8px;border-color:#1579f5;border-style:dashed;border-width:1px;text-align:center;padding-left:0;padding-right:0;">
+                <a href="#" role="button"> 新建分组</a>
+            </div>
+        </div>
+    </div>
+</div>
