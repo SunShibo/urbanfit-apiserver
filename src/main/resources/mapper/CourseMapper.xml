@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.urbanfit.apiserver.dao.StoreDao">
+    <!-- 添加课程信息 -->
+    <insert id="addCourse" parameterType="com.urbanfit.apiserver.entity.Course"
+            useGeneratedKeys="true" keyProperty="courseId">
+        insert into t_course (courseType, introduce, userId, createTime) values (#{courseType}, #{introduce},
+        #{userId}, now())
+    </insert>
+    <!-- 根据课程类型查询数据 -->
+    <select id="queryCourseByType" parameterType="int" resultType="com.urbanfit.apiserver.entity.Course">
+        select * from t_course where courseType = #{courseType}
+    </select>
+    <!-- 修改课程信息 -->
+    <update id="updateCourse" parameterType="com.urbanfit.apiserver.entity.Course">
+        update t_course set introduce = #{introduce} where courseId = #{courseId}
+    </update>
+    <select id="queryCourseByCourseId" parameterType="int" resultType="com.urbanfit.apiserver.entity.Course">
+        select * from t_course where courseId = #{courseId}
+    </select>
+</mapper>
