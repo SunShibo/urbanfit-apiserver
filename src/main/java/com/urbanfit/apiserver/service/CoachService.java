@@ -6,6 +6,6 @@ package com.urbanfit.apiserver.service;
 public class CoachService {
 
     public void addCoach(){
-
+        System.out.println("addCoach");
     }
 }
