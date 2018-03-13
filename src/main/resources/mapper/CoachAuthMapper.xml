@@ -4,7 +4,7 @@
 <mapper namespace="com.urbanfit.apiserver.dao.CoachAuthDao">
     <!-- 添加门店信息 -->
     <insert id="addCoachAuth" parameterType="com.urbanfit.apiserver.entity.CoachAuth"
-            useGeneratedKeys="true" keyProperty="storeId">
+            useGeneratedKeys="true" keyProperty="authId">
         insert into t_coach_auth (coachName, coachCardNum, userId, createTime) values (#{coachName}, #{coachCardNum},
         #{userId}, now())
     </insert>
@@ -18,11 +18,15 @@
     </select>
     <!-- 修改门店信息 -->
     <update id="updateCoachAuth" parameterType="com.urbanfit.apiserver.entity.CoachAuth">
-        update t_coach_auth set coachName = #{coachName}, coachCardNum = #{coachCardNum}, userId = #{userId},
+        update t_coach_auth set coachName = #{coachName}, coachCardNum = #{coachCardNum}, userId = #{userId}
         where authId = #{authId}
     </update>
     <!-- 删除认证 -->
     <delete id="deleteCoachAuth" parameterType="int">
         delete from t_coach_auth where authId = #{authId}
     </delete>
+
+    <select id="queryCoachAuthById" parameterType="int" resultType="com.urbanfit.apiserver.entity.CoachAuth">
+        select * from t_coach_auth where authId = #{authId}
+    </select>
 </mapper>

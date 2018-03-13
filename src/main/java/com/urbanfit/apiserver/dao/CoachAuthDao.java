@@ -18,4 +18,6 @@ public interface CoachAuthDao{
     public void updateCoachAuth(CoachAuth coachAuth);
 
     public void deleteCoachAuth(Integer authId);
+
+    public CoachAuth queryCoachAuthById(Integer authId);
 }

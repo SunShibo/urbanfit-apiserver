@@ -26,18 +26,18 @@ public class CoachAuthService {
      */
     public String addCoachAuth(String coachName, String coachCardNum){
         if(StringUtils.isEmpty(coachName) || StringUtils.isEmpty(coachCardNum)){
-            return JsonUtils.getJsonString4JavaPOJO(ResultDTOBuilder.failure("0000001", "参数有误")) ;
+            return JsonUtils.getJsonString4JavaPOJO(ResultDTOBuilder.failure("0", "参数有误")) ;
         }
         // 查看是否认证过
         CoachAuth coachAuth = coachAuthDao.queryCoachAuthByCardNum(coachCardNum);
         if(coachAuth != null){
-            return JsonUtils.getJsonString4JavaPOJO(ResultDTOBuilder.failure("0000001", "教师证号码已认证通过")) ;
+            return JsonUtils.getJsonString4JavaPOJO(ResultDTOBuilder.failure("0", "教师证号码已认证通过")) ;
         }
         CoachAuth auth = new CoachAuth();
         auth.setCoachName(coachName);
         auth.setCoachCardNum(coachCardNum);
-        coachAuthDao.addCoachAuth(coachAuth);
-        return JsonUtils.getJsonString4JavaPOJO(ResultDTOBuilder.failure("0000000", "添加认证信息成功")) ;
+        coachAuthDao.addCoachAuth(auth);
+        return JsonUtils.getJsonString4JavaPOJO(ResultDTOBuilder.failure("1", "添加认证信息成功")) ;
     }
 
     /**
@@ -45,10 +45,10 @@ public class CoachAuthService {
      */
     public String deleteCoachAuth(Integer authId){
         if(authId == null){
-            return JsonUtils.getJsonString4JavaPOJO(ResultDTOBuilder.failure("0000001", "参数有误")) ;
+            return JsonUtils.getJsonString4JavaPOJO(ResultDTOBuilder.failure("0", "参数有误")) ;
         }
         coachAuthDao.deleteCoachAuth(authId);
-        return JsonUtils.getJsonString4JavaPOJO(ResultDTOBuilder.failure("0000000", "删除认证信息成功")) ;
+        return JsonUtils.getJsonString4JavaPOJO(ResultDTOBuilder.failure("1", "删除认证信息成功")) ;
     }
 
     /**
@@ -58,17 +58,25 @@ public class CoachAuthService {
         if(authId == null || StringUtils.isEmpty(coachName) || StringUtils.isEmpty(coachCardNum)){
             return JsonUtils.getJsonString4JavaPOJO(ResultDTOBuilder.failure("0000001", "参数有误")) ;
         }
+        CoachAuth auth = coachAuthDao.queryCoachAuthById(authId);
+        if(auth == null){
+            return JsonUtils.getJsonString4JavaPOJO(ResultDTOBuilder.failure("0", "您修改的信息不存在")) ;
+        }
         // 查询认证信息是否存在
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("authId", authId);
         map.put("coachCardNum", coachCardNum);
         CoachAuth coachAuth = coachAuthDao.queryCoachAuthByCardNumAndId(map);
         if(coachAuth != null){
-            return JsonUtils.getJsonString4JavaPOJO(ResultDTOBuilder.failure("0000001", "教师证号码已认证通过")) ;
+            return JsonUtils.getJsonString4JavaPOJO(ResultDTOBuilder.failure("0", "教师证号码已认证通过")) ;
         }
-        coachAuth.setCoachName(coachName);
-        coachAuth.setCoachCardNum(coachCardNum);
-        coachAuthDao.updateCoachAuth(coachAuth);
-        return JsonUtils.getJsonString4JavaPOJO(ResultDTOBuilder.failure("0000000", "修改认证信息成功")) ;
+        auth.setCoachName(coachName);
+        auth.setCoachCardNum(coachCardNum);
+        coachAuthDao.updateCoachAuth(auth);
+        return JsonUtils.getJsonString4JavaPOJO(ResultDTOBuilder.failure("1", "修改认证信息成功")) ;
+    }
+
+    public CoachAuth queryCoachAuthById(Integer authId){
+        return coachAuthDao.queryCoachAuthById(authId);
     }
 }
