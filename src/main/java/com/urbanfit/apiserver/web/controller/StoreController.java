@@ -7,6 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
@@ -36,5 +38,12 @@ public class StoreController extends BaseCotroller{
     public void updateStore(HttpServletResponse response, Store store){
         String result = storeService.updateStore(store);
         safeJsonPrint(response, result);
+    }
+
+    @RequestMapping(value = "/toAdd")
+    public ModelAndView redirectAddPage(){
+        ModelAndView view = new ModelAndView();
+        view.setViewName("/store/store_add");
+        return view;
     }
 }
