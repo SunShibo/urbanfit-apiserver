@@ -10,6 +10,7 @@
         $(function (){
             $("#B_submit").click(updateCoachAuth);
         })
+
         // 修改教练认证信息
         function updateCoachAuth(){
             var authId = $("input[name='authId']").val();
@@ -35,6 +36,7 @@
                     }else {
                         // 修改成功，跳转到列表页面
                         alert("修改认证信息成功");
+                        window.location.href = "list";
                     }
                 }
             })

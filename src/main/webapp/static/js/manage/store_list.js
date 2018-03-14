@@ -1,7 +1,17 @@
 $(function(){
     $("a[name^='A_update']").click(redirectUpdatePage);
     $("a[name^='A_delete']").click(deleteStore);
+    $("#B_add").click(addStore);
+    $("#B_query").click(queryStore);
 })
+
+function queryStore(){
+    document.forms[0].submit();
+}
+
+function addStore(){
+    window.location.href = "toAdd";
+}
 
 function redirectUpdatePage(){
     var storeId = $(this).data("storeid");

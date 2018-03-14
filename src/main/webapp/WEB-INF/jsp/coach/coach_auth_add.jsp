@@ -10,6 +10,7 @@
       $(function (){
           $("#B_submit").click(addCoachAuth);
       })
+
       // 添加教练认证信息
       function addCoachAuth(){
           var coachName = $("input[name='coachName']").val();
@@ -34,6 +35,7 @@
                   }else {
                       // 添加成功，跳转到列表页面
                       alert("添加认证信息成功");
+                      window.location.href = "list";
                   }
               }
           })

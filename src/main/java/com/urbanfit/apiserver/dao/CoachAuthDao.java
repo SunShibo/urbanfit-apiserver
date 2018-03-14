@@ -2,6 +2,7 @@ package com.urbanfit.apiserver.dao;
 
 import com.urbanfit.apiserver.entity.CoachAuth;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,4 +21,8 @@ public interface CoachAuthDao{
     public void deleteCoachAuth(Integer authId);
 
     public CoachAuth queryCoachAuthById(Integer authId);
+
+    public int queryCoachAuthCount(Map<String, Object> map);
+
+    public List<CoachAuth> queryCoachAuthList(Map<String, Object> map);
 }

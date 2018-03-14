@@ -2,6 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.urbanfit.apiserver.dao.CoachAuthDao">
+    <sql id="limit">
+        limit #{pageOffset}, #{pageSize}
+    </sql>
     <!-- 添加门店信息 -->
     <insert id="addCoachAuth" parameterType="com.urbanfit.apiserver.entity.CoachAuth"
             useGeneratedKeys="true" keyProperty="authId">
@@ -28,5 +31,22 @@
 
     <select id="queryCoachAuthById" parameterType="int" resultType="com.urbanfit.apiserver.entity.CoachAuth">
         select * from t_coach_auth where authId = #{authId}
+    </select>
+
+    <select id="queryCoachAuthCount" parameterType="map" resultType="int">
+        select count(m.authId) from (
+            select * from t_coach_auth where 1 = 1
+            <if test="authInfo != null">
+                and (coachName like CONCAT("%", #{authInfo}, "%") or coachCardNum like CONCAT("%", #{authInfo}, "%"))
+            </if>
+        ) m
+    </select>
+    <select id="queryCoachAuthList" parameterType="map" resultType="com.urbanfit.apiserver.entity.CoachAuth">
+        select * from t_coach_auth where 1 = 1
+        <if test="authInfo != null">
+            and (coachName like CONCAT("%", #{authInfo}, "%") or coachCardNum like CONCAT("%", #{authInfo}, "%"))
+        </if>
+        order by createTime desc
+        <include refid="limit"/>
     </select>
 </mapper>

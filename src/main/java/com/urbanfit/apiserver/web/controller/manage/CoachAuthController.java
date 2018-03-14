@@ -26,10 +26,15 @@ public class CoachAuthController extends BaseCotroller {
     private CoachAuthService coachAuthService;
 
     @RequestMapping("/list")
-    public ModelAndView queryCoachAuth(){
+    public ModelAndView queryCoachAuthList(Integer pageNo, Integer pageSize, String authInfo){
+        pager = coachAuthService.queryCoachAuthList(authInfo, getQueryInfo(pageNo, pageSize));
         ModelAndView view = new ModelAndView();
-        view.setViewName("/coach/coach_auth_list");
 
+        view.setViewName("/coach/coach_auth_list");
+        view.addObject("lstCoachAuth", pager.getDatas());
+        view.addObject("pager", pager);
+        view.addObject("pageNo", pageNo);
+        view.addObject("authInfo", authInfo);
         return view;
     }
 

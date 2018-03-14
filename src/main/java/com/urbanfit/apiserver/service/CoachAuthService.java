@@ -3,6 +3,9 @@ package com.urbanfit.apiserver.service;
 import com.urbanfit.apiserver.dao.CoachAuthDao;
 import com.urbanfit.apiserver.entity.CoachAuth;
 import com.urbanfit.apiserver.entity.dto.ResultDTOBuilder;
+import com.urbanfit.apiserver.query.PageObject;
+import com.urbanfit.apiserver.query.PageObjectUtil;
+import com.urbanfit.apiserver.query.QueryInfo;
 import com.urbanfit.apiserver.util.JsonUtils;
 import com.urbanfit.apiserver.util.StringUtils;
 import org.springframework.stereotype.Service;
@@ -78,5 +81,19 @@ public class CoachAuthService {
 
     public CoachAuth queryCoachAuthById(Integer authId){
         return coachAuthDao.queryCoachAuthById(authId);
+    }
+
+    public PageObject<CoachAuth> queryCoachAuthList(String authInfo, QueryInfo queryInfo){
+        Map<String, Object> map = new HashMap<String, Object>();
+        if(!StringUtils.isEmpty(authInfo)){
+            map.put("authInfo", authInfo);
+        }
+        if(queryInfo != null){
+            map.put("pageOffset", queryInfo.getPageOffset());
+            map.put("pageSize", queryInfo.getPageSize());
+        }
+        PageObjectUtil page = new PageObjectUtil<CoachAuth>();
+        return  page.savePageObject(coachAuthDao.queryCoachAuthCount(map), coachAuthDao.
+                queryCoachAuthList(map), queryInfo);
     }
 }
