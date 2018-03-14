@@ -1,7 +1,7 @@
 package com.urbanfit.apiserver.dao;
 
 import com.urbanfit.apiserver.entity.Store;
-
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -27,4 +27,12 @@ public interface StoreDao {
      * 根据门店名称、门店id查询门店数据
      */
     public Store queryStoreByNameAndId(Map<String, Object> map);
+
+    public Store queryStoreById(Integer storeId);
+
+    public List<Store> queryStoreList(Map<String, Object> map);
+
+    public int queryStoreCount(Map<String, Object> map);
+
+    public void updateStoreStatus(Integer storeId);
 }

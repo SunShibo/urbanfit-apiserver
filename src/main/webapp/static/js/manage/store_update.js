@@ -1,14 +1,27 @@
 $(function(){
+    // 初始化省市区信息
+    var proviceInfo;
+    var cityInfo;
+    var districtInfo;
+    if(storeDistrict != ""){
+        var storeDistrictArr = storeDistrict.split(",");
+        proviceInfo = storeDistrictArr[0];
+        cityInfo = storeDistrictArr[1];
+        if(storeDistrictArr.length == 3){
+            districtInfo = storeDistrictArr[2];
+        }
+    }
     $("#city_info").citySelect({
+        prov : proviceInfo,
+        city : cityInfo,
+        dist : districtInfo,
         nodata: "none",
         required: false
     });
-
-    $("input[name='storeDistrict']").val("");
-    $("#B_submit").click(addStore);
+    $("#B_submit").click(updateStore);
 })
 
-function addStore(){
+function updateStore(){
     var storeName = $("input[name='storeName']").val();
     if(storeName == ""){
         alert("门店名称不能为空");
@@ -58,7 +71,7 @@ function addStore(){
     }
     $.ajax({
         type : "post",
-        url : "add",
+        url : "update",
         data : $("#storeForm").serialize(),
         dataType : "json",
         success: function(result, status) {
@@ -66,8 +79,8 @@ function addStore(){
                 alert(result.errMsg);
                 return ;
             }else {
-                // 添加成功，跳转到列表页面
-                alert("添加门店信息成功");
+                // 修改成功，跳转到列表页面
+                alert("修改门店信息成功");
                 window.location.href = "list";
             }
         }

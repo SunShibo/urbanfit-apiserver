@@ -3,6 +3,8 @@ package com.urbanfit.apiserver.web.controller.base;
 import com.google.common.collect.Lists;
 import com.urbanfit.apiserver.common.constants.SysConstants;
 import com.urbanfit.apiserver.entity.bo.UserBO;
+import com.urbanfit.apiserver.query.PageObject;
+import com.urbanfit.apiserver.query.QueryInfo;
 import com.urbanfit.apiserver.service.LoginService;
 //import com.urbanfit.apiserver.util.RedisUtil;
 import com.urbanfit.apiserver.util.redisUtils.RedissonHandler;
@@ -27,6 +29,10 @@ public class BaseCotroller {
 
     @Resource( name = "loginService" )
     LoginService loginService;
+
+    protected PageObject pager = null;
+    private int default_page_size = 10;
+    private int default_page_no = 1;
 
     /**
      * 异步返回结果
@@ -288,5 +294,26 @@ public class BaseCotroller {
         this.putLoginUser(loginUser.getUuid() , newLoginUser);
     }
 
+    public QueryInfo getQueryInfo(Integer pageNo, Integer pageSize) {
+        if (null == pageNo) {
+            pageNo = default_page_no;
+        }
+        if (null == pageSize) {
+            pageSize = default_page_size;
+        }
+        if (null != pageNo) {
+            QueryInfo queryInfo = new QueryInfo(pageSize, null, null,
+                    (pageNo - 1) * pageSize);
+            return queryInfo;
+        }
+        return null;
+    }
 
+    public PageObject getPager() {
+        return pager;
+    }
+
+    public void setPager(PageObject pager) {
+        this.pager = pager;
+    }
 }

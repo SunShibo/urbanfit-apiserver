@@ -1,16 +1,37 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: wangyubo
-  Date: 2018/3/13
-  Time: 21:24
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ page language="java" pageEncoding="UTF-8" %>
+<!DOCTYPE html>
 <html>
 <head>
-    <title></title>
+    <meta charset="utf-8" />
+    <title>门店列表</title>
+    <script type="text/javascript" src="/static/js/mainJs/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/manage/store_list.js"></script>
 </head>
 <body>
-
+    <table>
+        <tr>
+            <td>门店名称</td>
+            <td>联系电话</td>
+            <td>联系人</td>
+            <td>创建时间</td>
+            <td>操作</td>
+        </tr>
+        <c:forEach items="${lstStore}" var="store">
+            <tr>
+                <td>${store.storeName}</td>
+                <td>${store.mobile}</td>
+                <td>${store.contactName}</td>
+                <td>
+                    <fmt:formatDate value="${store.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
+                </td>
+                <td>
+                    <a href="javascript:void(0);" name="A_update_${store.storeId}" data-storeid="${store.storeId}">编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                    <a href="javascript:void(0);" name="A_delete__${store.storeId}" data-storeid="${store.storeId}">删除</a>
+                </td>
+            </tr>
+        </c:forEach>
+    </table>
 </body>
 </html>

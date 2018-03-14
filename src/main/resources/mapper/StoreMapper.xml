@@ -2,23 +2,51 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.urbanfit.apiserver.dao.StoreDao">
+    <sql id="limit">
+        limit #{pageOffset}, #{pageSize}
+    </sql>
     <!-- 添加门店信息 -->
     <insert id="addStore" parameterType="com.urbanfit.apiserver.entity.Store"
             useGeneratedKeys="true" keyProperty="storeId">
-        insert into t_score (storeName, storeDistrict, storeAddress, mobile, contactName, status, userId, createTime)
+        insert into t_store (storeName, storeDistrict, storeAddress, mobile, contactName, status, userId, createTime)
         values (#{storeName}, #{storeDistrict}, #{storeAddress}, #{mobile}, #{contactName}, 0, #{userId}, now())
     </insert>
     <!-- 根据门店名称查询数据 -->
     <select id="queryStoreByName" parameterType="String" resultType="com.urbanfit.apiserver.entity.Store">
-        select * from t_score where storeName = #{storeName} and status = 0
+        select * from t_store where storeName = #{storeName} and status = 0
     </select>
     <!-- 根据门店名称、门店id查询数据 -->
     <select id="queryStoreByNameAndId" parameterType="map" resultType="com.urbanfit.apiserver.entity.Store">
-        select * from t_score where storeName = #{storeName} and storeId != #{storeId} and status = 0
+        select * from t_store where storeName = #{storeName} and storeId != #{storeId} and status = 0
     </select>
     <!-- 修改门店信息 -->
     <update id="updateStore" parameterType="com.urbanfit.apiserver.entity.Store">
-        update t_score set storeName = #{storeName}, storeDistrict = #{storeDistrict}, storeAddress = #{storeAddress},
+        update t_store set storeName = #{storeName}, storeDistrict = #{storeDistrict}, storeAddress = #{storeAddress},
         mobile = #{mobile}, contactName = #{contactName}, status = 0, userId = #{userId} where storeId = #{storeId}
+    </update>
+    <select id="queryStoreById" parameterType="int" resultType="com.urbanfit.apiserver.entity.Store">
+        select * from t_store where status = 0 and storeId = #{storeId}
+    </select>
+
+    <select id="queryStoreCount" parameterType="map" resultType="int">
+        select count(m.storeId) from (
+            select * from t_store where status = 0
+            <if test="storeName != null">
+                and storeName like CONCAT("%", #{storeName}, "%")
+            </if>
+        ) m
+    </select>
+
+    <select id="queryStoreList" parameterType="map" resultType="com.urbanfit.apiserver.entity.Store">
+        select * from t_store where status = 0
+        <if test="storeName != null">
+            and storeName like CONCAT("%", #{storeName}, "%")
+        </if>
+        order by createTime desc
+        <include refid="limit"/>
+    </select>
+
+    <update id="updateStoreStatus" parameterType="int">
+        update t_store set status = 1 where storeId = #{storeId}
     </update>
 </mapper>

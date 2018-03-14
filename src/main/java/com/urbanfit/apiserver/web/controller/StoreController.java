@@ -30,8 +30,16 @@ public class StoreController extends BaseCotroller{
     }
 
     @RequestMapping(value = "/list")
-    public void queryStoreList(){
+    public ModelAndView queryStoreList(Integer pageNo, Integer pageSize, String storeName){
+        pager = storeService.queryStoreList(storeName, getQueryInfo(pageNo, pageSize));
+        ModelAndView view = new ModelAndView();
 
+        view.setViewName("/store/store_list");
+        view.addObject("lstStore", pager.getDatas());
+        view.addObject("pager", pager);
+        view.addObject("pageNo", pageNo);
+        view.addObject("storeName", storeName);
+        return view;
     }
 
     @RequestMapping(value = "/update")
@@ -45,5 +53,19 @@ public class StoreController extends BaseCotroller{
         ModelAndView view = new ModelAndView();
         view.setViewName("/store/store_add");
         return view;
+    }
+
+    @RequestMapping(value = "/toUpdate")
+    public ModelAndView redirectUpdatePage(Integer storeId){
+        ModelAndView view = new ModelAndView();
+        view.setViewName("/store/store_update");
+        view.addObject("store", storeService.queryStoreById(storeId));
+        return view;
+    }
+
+    @RequestMapping(value = "/delete")
+    public void deleteStore(HttpServletResponse response, Integer storeId){
+        String result = storeService.deleteStore(storeId);
+        safeJsonPrint(response, result);
     }
 }
