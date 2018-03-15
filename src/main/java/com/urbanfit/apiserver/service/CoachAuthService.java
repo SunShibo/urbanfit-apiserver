@@ -93,7 +93,7 @@ public class CoachAuthService {
             map.put("pageSize", queryInfo.getPageSize());
         }
         PageObjectUtil page = new PageObjectUtil<CoachAuth>();
-        return  page.savePageObject(coachAuthDao.queryCoachAuthCount(map), coachAuthDao.
+        return page.savePageObject(coachAuthDao.queryCoachAuthCount(map), coachAuthDao.
                 queryCoachAuthList(map), queryInfo);
     }
 }

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.urbanfit.apiserver.dao.CoachDao">
+    <sql id="limit">
+        limit #{pageOffset}, #{pageSize}
+    </sql>
+
+    <select id="queryCoachCount" parameterType="map" resultType="int">
+        select count(m.coachId) from (
+            select * from t_coach where status = 0
+            <if test="coachName != null">
+                and coachName like CONCAT("%", #{coachName}, "%")
+            </if>
+        ) m
+    </select>
+
+    <select id="queryCoachList" parameterType="map" resultType="com.urbanfit.apiserver.entity.Coach">
+        select * from t_coach where status = 0
+        <if test="coachName != null">
+            and coachName like CONCAT("%", #{coachName}, "%")
+        </if>
+        order by createTime desc
+        <include refid="limit"/>
+    </select>
+
+    <select id="queryCoachById" parameterType="int" resultType="com.urbanfit.apiserver.entity.Coach">
+        select * from t_coach where status = 0 and coachId = #{coachId}
+    </select>
+
+    <update id="deleteCoach" parameterType="int">
+        update t_coach set status = 1 where coachId = #{coachId}
+    </update>
+</mapper>

@@ -5,7 +5,6 @@
   <meta charset="utf-8" />
     <title>教练认证</title>
     <script type="text/javascript" src="/static/js/mainJs/jquery.min.js"></script>
-
     <script type="text/javascript">
         $(function (){
             $("#B_submit").click(updateCoachAuth);

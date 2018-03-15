@@ -1,11 +1,20 @@
 package com.urbanfit.apiserver.dao;
 
+import com.urbanfit.apiserver.entity.Coach;
+
+import java.util.List;
+import java.util.Map;
+
 /**
  * Created by Administrator on 2018/3/13.
  */
 public interface CoachDao {
 
-    public void addCoach();
+    public int queryCoachCount(Map<String, Object> map);
 
-    public void updateCoach();
+    public List<Coach> queryCoachList(Map<String, Object> map);
+
+    public Coach queryCoachById(Integer coachId);
+
+    public void deleteCoach(Integer coachId);
 }
