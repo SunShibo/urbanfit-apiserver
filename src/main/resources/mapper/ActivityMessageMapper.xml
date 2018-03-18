@@ -31,4 +31,15 @@
     <delete id="deleteActivityMessage" parameterType="int">
         delete from t_activity_message where messageId = #{messageId}
     </delete>
+
+    <insert id="addActivityMessage" parameterType="com.urbanfit.apiserver.entity.ActivityMessage"
+            useGeneratedKeys="true" keyProperty="messageId">
+        insert into t_activity_message (title, thumbnails, content, userId, createTime) values
+        (#{title}, #{thumbnails}, #{content}, #{userId}, now())
+    </insert>
+
+    <update id="updateActivityMessage" parameterType="com.urbanfit.apiserver.entity.ActivityMessage">
+        update t_activity_message set title = #{title}, thumbnails = #{thumbnails}, content = #{content}
+        where messageId = #{messageId}
+    </update>
 </mapper>

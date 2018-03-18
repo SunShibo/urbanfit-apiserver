@@ -9,6 +9,9 @@ import java.util.Date;
  */
 public class Course extends BaseModel {
     private Integer courseId;
+    /**
+     * 1：成人课程  2：青少年课程 3：私教课程  4：特色课程
+     */
     private Integer courseType;
     private String introduce;
     private Integer userId;

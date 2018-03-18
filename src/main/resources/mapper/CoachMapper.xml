@@ -31,4 +31,15 @@
     <update id="deleteCoach" parameterType="int">
         update t_coach set status = 1 where coachId = #{coachId}
     </update>
+
+    <insert id="addCoach" parameterType="com.urbanfit.apiserver.entity.Coach"
+            useGeneratedKeys="true" keyProperty="coachId">
+        insert into t_coach (coachName, coachTitle, headPortrait, introduce, status, userId, createTime) values
+        (#{coachName}, #{coachTitle}, #{headPortrait}, #{introduce}, 0, #{userId}, now())
+    </insert>
+
+    <update id="updateCoach" parameterType="com.urbanfit.apiserver.entity.Coach">
+        update t_coach set coachName = #{coachName}, coachTitle = #{coachTitle}, headPortrait = #{headPortrait},
+        introduce = #{introduce} where coachId = #{coachId}
+    </update>
 </mapper>

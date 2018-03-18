@@ -17,4 +17,8 @@ public interface CoachDao {
     public Coach queryCoachById(Integer coachId);
 
     public void deleteCoach(Integer coachId);
+
+    public void addCoach(Coach coach);
+
+    public void updateCoach(Coach coach);
 }

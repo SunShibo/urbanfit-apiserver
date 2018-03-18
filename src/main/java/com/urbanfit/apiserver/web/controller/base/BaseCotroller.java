@@ -1,6 +1,7 @@
 package com.urbanfit.apiserver.web.controller.base;
 
 import com.google.common.collect.Lists;
+import com.urbanfit.apiserver.cfg.pop.SystemConfig;
 import com.urbanfit.apiserver.common.constants.SysConstants;
 import com.urbanfit.apiserver.entity.bo.UserBO;
 import com.urbanfit.apiserver.query.PageObject;
@@ -13,11 +14,14 @@ import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.*;
 import java.util.Iterator;
 import java.util.List;
@@ -238,7 +242,7 @@ public class BaseCotroller {
     /**
      * session赋值
      */
-    private void putSession (String key , Object value) {
+    public void putSession (String key , Object value) {
         RedissonHandler.getInstance().set(key , value , null);
 //        RedisUtil.set(value , key) ;
     }
@@ -315,5 +319,24 @@ public class BaseCotroller {
 
     public void setPager(PageObject pager) {
         this.pager = pager;
+    }
+
+    /**
+     * 初始化系统访问图片路径
+     */
+    protected void initBaseImageUrl() {
+        sput("base_image", SystemConfig.getString("image_base_url"));
+    }
+
+    protected void sput(String key, Object value) {
+        getSession().setAttribute(key, value);
+    }
+
+    protected HttpServletRequest getRequest() {
+        return ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+    }
+
+    protected HttpSession getSession() {
+        return getRequest().getSession();
     }
 }

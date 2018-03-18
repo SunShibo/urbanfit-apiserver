@@ -9,6 +9,11 @@
     <script type="text/javascript" src="/static/js/manage/coach_list.js"></script>
 </head>
 <body>
+    <a href="/message/list">活动资讯</a>&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="/course/list">课程介绍</a>&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="/coach/list">教练团队</a>&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="/store/list">门店管理</a>&nbsp;&nbsp;&nbsp;&nbsp;
+    <a href="/auth/list">认证管理</a><br/><br/>
     <input type="button" id="B_add" value="添加"><br/>
     <form id="coachForm" action="list" method="post">
         <input type="text" name="coachName" value="${coachName}">&nbsp;&nbsp;&nbsp;&nbsp;

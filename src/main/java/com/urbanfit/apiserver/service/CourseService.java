@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Administrator on 2018/3/2.
@@ -53,5 +54,13 @@ public class CourseService {
         course.setIntroduce(introduce);
         courseDao.updateCourse(course);
         return JsonUtils.getJsonString4JavaPOJO(ResultDTOBuilder.failure("0000001", "修改课程成功")) ;
+    }
+
+    public List<Course> queryCourseList(){
+        return courseDao.queryCourseList();
+    }
+
+    public Course queryCourseById(Integer courseId){
+        return courseDao.queryCourseByCourseId(courseId);
     }
 }

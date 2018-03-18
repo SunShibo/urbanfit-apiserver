@@ -17,4 +17,8 @@ public interface ActivityMessageDao {
     public ActivityMessage queryActivityMessageById(Integer messageId);
 
     public void deleteActivityMessage(Integer messageId);
+
+    public void addActivityMessage(ActivityMessage activityMessage);
+
+    public void updateActivityMessage(ActivityMessage activityMessage);
 }
