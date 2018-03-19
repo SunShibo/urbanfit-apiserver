@@ -1,4 +1,5 @@
 $(function(){
+    $("#Pagination").pagination(totalRecord);
     $("a[name^='A_update']").click(redirectUpdatePage);
     $("a[name^='A_delete']").click(deleteCoach);
     $("#B_add").click(addCoach);
