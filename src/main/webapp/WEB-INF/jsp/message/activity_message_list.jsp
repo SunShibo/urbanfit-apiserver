@@ -9,35 +9,48 @@
     <script type="text/javascript" src="/static/js/manage/activity_message_list.js"></script>
 </head>
 <body>
-    <a href="/message/list">活动资讯</a>&nbsp;&nbsp;&nbsp;&nbsp;
-    <a href="/course/list">课程介绍</a>&nbsp;&nbsp;&nbsp;&nbsp;
-    <a href="/coach/list">教练团队</a>&nbsp;&nbsp;&nbsp;&nbsp;
-    <a href="/store/list">门店管理</a>&nbsp;&nbsp;&nbsp;&nbsp;
-    <a href="/auth/list">认证管理</a><br/><br/>
-    <input type="button" id="B_add" value="添加"><br/>
-    <form id="activityMessageForm" action="list" method="post">
-        <input type="text" name="title" value="${title}">&nbsp;&nbsp;&nbsp;&nbsp;
-        <input type="button" id="B_query" value="查询">
-        <table>
-            <tr>
-                <td>标题</td>
-                <td>创建时间</td>
-                <td>操作</td>
-            </tr>
-            <c:forEach items="${lstActivityMessage}" var="activityMessage">
-                <tr>
-                    <td>${activityMessage.title}</td>
-                    <td>
-                        <fmt:formatDate value="${activityMessage.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
-                    </td>
-                    <td>
-                        <a href="javascript:void(0);" name="A_update_${activityMessage.messageId}"
-                           data-messageid="${activityMessage.messageId}">编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                        <a href="javascript:void(0);" name="A_delete_${activityMessage.messageId}"
-                           data-messageid="${activityMessage.messageId}">删除</a>
-                    </td>
-                </tr>
-            </c:forEach>
-        </table>
-    </form>
+    <div class="index clear">
+        <jsp:include page="../main.jsp"></jsp:include>
+        <div class="indexRight1">
+            <div class="title">门店管理 > 门店管理列表</div>
+            <form id="activityMessageForm" action="list" method="post">
+                <div class="screen clear">
+                    <input type="text" placeholder="请输入文章标题" name="title" value="${title}">
+                    <a href="javascript:void(0);" id="B_query">搜索</a>
+                    <a href="javascript:void(0);" id="B_add">新建教练</a>
+                </div>
+                <div class="tablebox1">
+                    <table cellpadding="0" cellspacing="0" border="0">
+                        <tr class="tr">
+                            <td>标题</td>
+                            <td>创建时间</td>
+                            <td>操作</td>
+                        </tr>
+                        <c:forEach items="${lstActivityMessage}" var="activityMessage">
+                            <tr>
+                                <td>${activityMessage.title}</td>
+                                <td>
+                                    <fmt:formatDate value="${activityMessage.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
+                                </td>
+                                <td>
+                                    <a href="javascript:void(0);" name="A_update_${activityMessage.messageId}"
+                                       data-messageid="${activityMessage.messageId}">编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <a href="javascript:void(0);" name="A_delete_${activityMessage.messageId}"
+                                       data-messageid="${activityMessage.messageId}">删除</a>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </table>
+                </div>
+                <div class="page clear">
+                    <div class="pages">
+                        <jsp:include page="../common/pager.jsp">
+                            <jsp:param value="${pager.totalRecord}" name="totalRecord"/>
+                            <jsp:param value="list" name="url"/>
+                        </jsp:include>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 </body>

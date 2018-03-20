@@ -5,31 +5,77 @@
 <head>
     <meta charset="utf-8" />
     <title>教练修改</title>
+    <link type="text/css" href="/static/css/main.css" rel="stylesheet"/>
     <script type="text/javascript" src="/static/js/mainJs/jquery.min.js"></script>
     <script charset="utf-8" src="/static/js/kindeditor/kindeditor-all-min.js"></script>
     <script charset="utf-8" src="/static/js/kindeditor/zh_CN.js"></script>
     <script type="text/javascript" src="/static/js/common/ajaxupload.js"></script>
     <script type="text/javascript" src="/static/js/manage/coach_update.js"></script>
 </head>
-<body>
-    <form id="coachForm" method="post">
-        教练名称：<input type="text" name="coachName" value="${coach.coachName}"><br/>
-        教练职称：<input type="text" name="coachTitle" value="${coach.coachTitle}"><br/>
-        头像：
-        <c:if test="${empty coach.headPortrait}">
-            <img width="65px;" height="65px;" id="uploadImage"/>
-        </c:if>
-        <c:if test="${not empty coach.headPortrait}">
-            <img width="65px;" height="65px;" id="uploadImage" src="${baseUrl}${coach.headPortrait}"/>
-        </c:if>
-        &nbsp;&nbsp;&nbsp;&nbsp;
-        <input type="button" value="删除" id="B_delete_headPortrait">
-        <input type="hidden" name="headPortrait" value="${coach.headPortrait}"><br/>
-        内容：
-        <textarea name="content">${coach.introduce}</textarea>
-        <input name="introduce" type="hidden"/><br/>
-        <input type="hidden" name="coachId" value="${coach.coachId}">
-        <input type="button" value="发布" id="B_submit">
-    </form>
+    <div class="index clear">
+        <jsp:include page="../main.jsp"></jsp:include>
+        <div class="indexRight1">
+            <div class="title">教练团队 > 教练编辑</div>
+            <div class="tablebox2">
+                <form id="coachForm" method="post">
+                    <table cellpadding="0" cellspacing="0" border="0">
+                        <tr>
+                            <tr>
+                                <td class="td1">教练名称：</td>
+                                <td class="td2">
+                                    <input type="text" name="coachName" value="${coach.coachName}"><em>*必填</em>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>教练职称：</td>
+                                <td>
+                                    <input type="text" name="coachTitle" value="${coach.coachTitle}"><em>*必填</em>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span>头像：</span></td>
+                                <td>
+                                    <div class="suolue">
+                                        <div class="wrap">
+                                            <div class="album-old">
+                                                <div class="upload-img">
+                                                    <c:if test="${empty coach.headPortrait}">
+                                                        <img width="160px;" height="160px;" id="uploadImage"/>
+                                                    </c:if>
+                                                    <c:if test="${not empty coach.headPortrait}">
+                                                        <img width="160px;" height="160px;" id="uploadImage" src="${baseUrl}${coach.headPortrait}"/>
+                                                    </c:if>
+                                                    <input type="hidden" name="headPortrait" value="${coach.headPortrait}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="zi">
+                                            <span style="color:#FF0000;">*必填</span>
+                                            <p class="del" id="B_delete_headPortrait">删除</p>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span>内容：</span></td>
+                                <td>
+                                    <textarea name="content">${coach.introduce}</textarea>
+                                    <input name="introduce" type="hidden"/>
+                                    <input type="hidden" name="coachId" value="${coach.coachId}">
+                                    <em>*必填</em>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>
+                                    <a href="javascript:void(0);" id="B_submit">发布</a>
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

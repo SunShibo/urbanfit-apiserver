@@ -7,11 +7,7 @@
     <title>教练列表</title>
     <link type="text/css" href="/static/css/main.css" rel="stylesheet"/>
     <script type="text/javascript" src="/static/js/mainJs/jquery.min.js"></script>
-    <script type="text/javascript" src="/static/js/common/jquery.pagination.js"></script>
     <script type="text/javascript" src="/static/js/manage/coach_list.js"></script>
-    <script type="text/javascript">
-        var totalRecord = ${pager.totalRecord};
-    </script>
 </head>
 <body>
     <div class="index clear">
@@ -51,19 +47,11 @@
                 </div>
                 <div class="page clear">
                     <div class="pages">
-                        <div id="Pagination"></div>
-                        <div class="searchPage">
-                            <span class="page-sum">共<strong class="allPage">${pager.totalRecord}</strong>页</span>
-                            <span class="page-go">跳转<input type="text">页</span>
-                            <a href="javascript:void(0);" class="page-btn">GO</a>
-                        </div>
+                        <jsp:include page="../common/pager.jsp">
+                            <jsp:param value="${pager.totalRecord}" name="totalRecord"/>
+                            <jsp:param value="list" name="url"/>
+                        </jsp:include>
                     </div>
-                </div>
-                <div id="paginationnew" class="pager">
-                    <jsp:include page="../common/pager.jsp">
-                        <jsp:param value="${pager.totalRecord}" name="totalRecord"/>
-                        <jsp:param value="queryClient" name="url"/>
-                    </jsp:include>
                 </div>
             </form>
         </div>
