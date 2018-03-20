@@ -1,9 +1,9 @@
 <%@ page language="java" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
-<html>
 <head>
-  <meta charset="utf-8" />
+    <meta charset="utf-8" />
     <title>教练认证</title>
+    <link type="text/css" href="/static/css/main.css" rel="stylesheet"/>
     <script type="text/javascript" src="/static/js/mainJs/jquery.min.js"></script>
     <script type="text/javascript">
         $(function (){
@@ -48,4 +48,3 @@
     <input type="hidden" name="authId" value="${coachAuth.authId}">
     <input type="button" value="提交" id="B_submit"/>
 </body>
-</html>

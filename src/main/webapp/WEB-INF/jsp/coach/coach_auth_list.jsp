@@ -2,12 +2,12 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
-<html>
 <head>
-  <meta charset="utf-8" />
-  <title>教练认证</title>
-  <script type="text/javascript" src="/static/js/mainJs/jquery.min.js"></script>
-  <script type="text/javascript">
+    <meta charset="utf-8" />
+    <title>教练认证</title>
+    <link type="text/css" href="/static/css/main.css" rel="stylesheet"/>
+    <script type="text/javascript" src="/static/js/mainJs/jquery.min.js"></script>
+    <script type="text/javascript">
       $(function(){
           $("a[name^='A_delete']").click(deleteCothAuth);
           $("a[name^='A_update']").click(updateCoachAuth);
@@ -58,9 +58,11 @@
             <div class="title">认证管理 > 认证管理列表</div>
             <form id="coachAuthForm" action="list" method="post">
                 <div class="screen clear">
-                    <input type="text" placeholder="请输入教练名称或是教练证号码" name="authInfo" value="${authInfo}">
-                    <a href="javascript:void(0);" id="B_query">搜索</a>
-                    <a href="javascript:void(0);" id="B_add">新建教练</a>
+                    <div class="form">
+                        <input type="text" placeholder="请输入教练名称或是教练证号码" name="authInfo" value="${authInfo}">
+                        <a href="javascript:void(0);" id="B_query">搜索</a>
+                    </div>
+                    <a href="javascript:void(0);" id="B_add">新建认证</a>
                 </div>
                 <div class="tablebox1">
                     <table cellpadding="0" cellspacing="0" border="0">
@@ -97,4 +99,3 @@
         </div>
     </body>
 </body>
-</html>

@@ -3,8 +3,6 @@
 <head>
     <meta charset="utf-8" />
     <title>众力飞特后台管理系统</title>
-    <link type="text/css" href="/static/css/main.css" rel="stylesheet"/>
-    <script type="text/javascript" src="/static/js/mainJs/jquery.min.js"></script>
 </head>
 <body>
     <div class="indexLeft">
@@ -27,7 +25,7 @@
     <div class="indexRight">
         <div class="top">
             <ul>
-                <li><a href="#"><img src="/static/img/exit.png">退出</a></li>
+                <li><a href="javascript:void(0);"><img src="/static/img/exit.png">退出</a></li>
             </ul>
         </div>
 </body>

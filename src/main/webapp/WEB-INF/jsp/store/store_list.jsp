@@ -5,6 +5,7 @@
 <head>
     <meta charset="utf-8" />
     <title>门店列表</title>
+    <link type="text/css" href="/static/css/main.css" rel="stylesheet"/>
     <script type="text/javascript" src="/static/js/mainJs/jquery.min.js"></script>
     <script type="text/javascript" src="/static/js/manage/store_list.js"></script>
 </head>
@@ -15,9 +16,11 @@
             <div class="title">门店管理 > 门店管理列表</div>
             <form id="storeForm" action="list" method="post">
                 <div class="screen clear">
-                    <input type="text" placeholder="请输入门店名称" name="storeName" value="${storeName}">
-                    <a href="javascript:void(0);" id="B_query">搜索</a>
-                    <a href="javascript:void(0);" id="B_add">新建教练</a>
+                    <div class="form">
+                        <input type="text" placeholder="请输入门店名称" name="storeName" value="${storeName}">
+                        <a href="javascript:void(0);" id="B_query">搜索</a>
+                    </div>
+                    <a href="javascript:void(0);" id="B_add">新建门店</a>
                 </div>
                 <div class="tablebox1">
                     <table cellpadding="0" cellspacing="0" border="0">
