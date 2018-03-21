@@ -4,16 +4,13 @@ import com.urbanfit.apiserver.service.CourseService;
 import com.urbanfit.apiserver.web.controller.base.BaseCotroller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import javax.annotation.Resource;
 
-/**
- * Created by Administrator on 2018/3/21.
- */
-@Controller("ccourse")
-@RequestMapping()
+
+@Controller()
+@RequestMapping("/ccourse")
 public class CourseController extends BaseCotroller{
-    @Resource(name = "coachAuthService")
+    @Resource(name = "courseService")
     private CourseService courseService;
 
 

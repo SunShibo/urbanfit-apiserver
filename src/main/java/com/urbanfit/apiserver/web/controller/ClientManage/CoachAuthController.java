@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
  * Created by Administrator on 2018/3/21.
  */
 @Controller()
-@RequestMapping("cauth")
+@RequestMapping("/cauth")
 public class CoachAuthController extends BaseCotroller{
     @Resource(name = "coachAuthService")
     private CoachAuthService coachAuthService;
