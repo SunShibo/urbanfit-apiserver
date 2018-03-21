@@ -17,6 +17,9 @@ public class CoachAuthController extends BaseCotroller{
     @Resource(name = "coachAuthService")
     private CoachAuthService coachAuthService;
 
+    /**
+     * 查询教练认证信息
+     */
     @RequestMapping("/query")
     public void queryCoachAuth(HttpServletResponse response, String coachName, String coachCardNum){
         String result = coachAuthService.queryCoachAuth(coachName, coachCardNum);
