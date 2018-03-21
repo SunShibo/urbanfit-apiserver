@@ -25,4 +25,6 @@ public interface CoachAuthDao{
     public int queryCoachAuthCount(Map<String, Object> map);
 
     public List<CoachAuth> queryCoachAuthList(Map<String, Object> map);
+
+    public CoachAuth queryCoachAuth(Map<String, Object> map);
 }

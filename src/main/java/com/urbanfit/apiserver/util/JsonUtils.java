@@ -441,4 +441,17 @@ public class JsonUtils {
 		return json ;
 	}
 
+	public static JSONObject encapsulationJSON(int code, String msg, String data) {
+		if(data == null) {
+			data = "";
+		}
+		if(msg == null) {
+			msg = "";
+		}
+		JSONObject json = new JSONObject();
+		json.put("code", Integer.valueOf(code));
+		json.put("msg", msg);
+		json.put("data", data);
+		return json;
+	}
 }

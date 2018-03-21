@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <title>门店信息添加</title>
+    <link type="text/css" href="/static/css/main.css" rel="stylesheet"/>
 </head>
 <body>
     <div class="index clear">

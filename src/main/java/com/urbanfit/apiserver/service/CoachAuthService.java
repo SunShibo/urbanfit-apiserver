@@ -1,5 +1,6 @@
 package com.urbanfit.apiserver.service;
 
+import com.urbanfit.apiserver.cfg.pop.Constant;
 import com.urbanfit.apiserver.dao.CoachAuthDao;
 import com.urbanfit.apiserver.entity.CoachAuth;
 import com.urbanfit.apiserver.entity.dto.ResultDTOBuilder;
@@ -59,7 +60,7 @@ public class CoachAuthService {
      */
     public String updateCoachAuth(Integer authId, String coachName, String coachCardNum){
         if(authId == null || StringUtils.isEmpty(coachName) || StringUtils.isEmpty(coachCardNum)){
-            return JsonUtils.getJsonString4JavaPOJO(ResultDTOBuilder.failure("0000001", "参数有误")) ;
+            return JsonUtils.getJsonString4JavaPOJO(ResultDTOBuilder.failure("0", "参数有误")) ;
         }
         CoachAuth auth = coachAuthDao.queryCoachAuthById(authId);
         if(auth == null){
@@ -95,5 +96,19 @@ public class CoachAuthService {
         PageObjectUtil page = new PageObjectUtil<CoachAuth>();
         return page.savePageObject(coachAuthDao.queryCoachAuthCount(map), coachAuthDao.
                 queryCoachAuthList(map), queryInfo);
+    }
+
+    public String queryCoachAuth(String coachName, String coachCardNum){
+        if(StringUtils.isEmpty(coachName) || StringUtils.isEmpty(coachCardNum)){
+            return JsonUtils.encapsulationJSON(Constant.INTERFACE_PARAM_ERROR, "参数有误", "").toString();
+        }
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("coachName", coachName);
+        map.put("coachCardNum", coachCardNum);
+        CoachAuth coachAuth = coachAuthDao.queryCoachAuth(map);
+        if(coachAuth == null){
+            return JsonUtils.encapsulationJSON(Constant.INTERFACE_FAIL, "没有查询到数据", "").toString();
+        }
+        return JsonUtils.encapsulationJSON(Constant.INTERFACE_SUCC, "查询认证成功", "").toString();
     }
 }

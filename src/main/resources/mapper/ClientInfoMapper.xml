@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.urbanfit.apiserver.dao.ClientInfoDao">
+    <!-- 添加用户信息 -->
+    <insert id="addClientInfo" parameterType="com.urbanfit.apiserver.entity.ClientInfo"
+            useGeneratedKeys="true" keyProperty="clientId">
+        insert into t_clientinfo (mobile, password, status, createTime) values (#{mobile}, #{password}, 0, now())
+    </insert>
+    <!-- 根据手机号码查询用户信息 -->
+    <select id="queryClientInfoByMobile" parameterType="String" resultType="com.urbanfit.apiserver.entity.ClientInfo">
+        select * from t_clientinfo where status = 0 and mobile = #{mobile}
+    </select>
+    <!-- 修改密码 -->
+    <update id="updatePassword" parameterType="map">
+        update t_clientinfo set password = #{password} where mobile = #{mobile} and status = 0
+    </update>
+    <!-- 根据客户id查询用户信息 -->
+    <select id="queryClientById" parameterType="int" resultType="com.urbanfit.apiserver.entity.ClientInfo">
+        select * from t_clientinfo where clientId = #{clientId} and status = 0
+    </select>
+</mapper>

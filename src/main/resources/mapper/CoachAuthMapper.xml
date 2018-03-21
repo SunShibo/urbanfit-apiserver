@@ -49,4 +49,7 @@
         order by createTime desc
         <include refid="limit"/>
     </select>
+    <select id="queryCoachAuth" parameterType="map" resultType="com.urbanfit.apiserver.entity.CoachAuth">
+        select * from t_coach_auth where coachName = #{coachName} and coachCardNum = #{coachCardNum} limi t
+    </select>
 </mapper>
