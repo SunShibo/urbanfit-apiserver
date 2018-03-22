@@ -1,6 +1,6 @@
 package com.urbanfit.apiserver.service;
 
-import com.alibaba.fastjson.JSONObject;
+import com.urbanfit.apiserver.cfg.pop.Constant;
 import com.urbanfit.apiserver.cfg.pop.SystemConfig;
 import com.urbanfit.apiserver.dao.ActivityMessageDao;
 import com.urbanfit.apiserver.entity.ActivityMessage;
@@ -9,6 +9,7 @@ import com.urbanfit.apiserver.query.PageObject;
 import com.urbanfit.apiserver.query.PageObjectUtil;
 import com.urbanfit.apiserver.query.QueryInfo;
 import com.urbanfit.apiserver.util.*;
+import net.sf.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -128,5 +129,39 @@ public class ActivityMessageService {
         resultJo.put("message", "success");
         resultJo.put("data", jo.toString());
         return resultJo.toString();
+    }
+
+    public String queryActivityMessageList(QueryInfo queryInfo){
+        if(queryInfo == null){
+            return JsonUtils.encapsulationJSON(Constant.INTERFACE_PARAM_ERROR, "参数有误", "").toString();
+        }
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("pageOffset", queryInfo.getPageOffset());
+        map.put("pageSize", queryInfo.getPageSize());
+
+        PageObjectUtil page = new PageObjectUtil<ActivityMessage>();
+        PageObject<ActivityMessage> pager = page.savePageObject(activityMessageDao.queryActivityMessageCount(map),
+                activityMessageDao.queryActivityMessageList(map), queryInfo);
+        JSONObject jo = new JSONObject();
+        jo.put("baseUrl", SystemConfig.getString("image_base_url"));
+        jo.put("lstMessage", JsonUtils.getJsonString4JavaListDate(pager.getDatas(), DateUtils.LONG_DATE_PATTERN));
+        jo.put("totalRecord", pager.getTotalRecord());
+        return JsonUtils.encapsulationJSON(Constant.INTERFACE_SUCC, "查询成功", jo.toString()).toString();
+    }
+
+    public String queryActivityMessageDetail(Integer messageId){
+        if(messageId == null){
+            return JsonUtils.encapsulationJSON(Constant.INTERFACE_PARAM_ERROR, "参数有误", "").toString();
+        }
+        ActivityMessage activityMessage = activityMessageDao.queryActivityMessageById(messageId);
+        if(activityMessage == null){
+            return JsonUtils.encapsulationJSON(Constant.INTERFACE_FAIL, "查询不到数据", "").toString();
+        }
+
+        JSONObject jo = new JSONObject();
+        jo.put("baseUrl", SystemConfig.getString("image_base_url"));
+        jo.put("activityMessage", JsonUtils.getJsonObject4JavaPOJO(activityMessage, DateUtils.LONG_DATE_PATTERN));
+
+        return JsonUtils.encapsulationJSON(Constant.INTERFACE_SUCC, "查询成功", jo.toString()).toString();
     }
 }

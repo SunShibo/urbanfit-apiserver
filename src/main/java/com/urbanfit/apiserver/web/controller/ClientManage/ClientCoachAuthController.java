@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Controller()
 @RequestMapping("/cauth")
-public class CoachAuthController extends BaseCotroller{
+public class ClientCoachAuthController extends BaseCotroller{
     @Resource(name = "coachAuthService")
     private CoachAuthService coachAuthService;
 

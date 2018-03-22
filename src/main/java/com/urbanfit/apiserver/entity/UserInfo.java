@@ -20,6 +20,7 @@ public class UserInfo extends BaseModel{
      * 用户状态  0：正常 1：删除
      */
     private int status;
+    private String uuid;
     private Date createTime;
 
     public Integer getUserId() {
@@ -68,5 +69,13 @@ public class UserInfo extends BaseModel{
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 }

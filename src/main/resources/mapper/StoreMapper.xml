@@ -49,4 +49,36 @@
     <update id="updateStoreStatus" parameterType="int">
         update t_store set status = 1 where storeId = #{storeId}
     </update>
+
+    <select id="queryClientStoreCount" parameterType="map" resultType="int">
+        select count(m.storeId) from (
+            select * from t_store where status = 0
+            <if test="provice != null and city != null and district != null">
+                and (storeDistrict like CONCAT("%", #{provice}, "%") or storeDistrict like CONCAT("%", #{city}, "%")
+                or storeDistrict like CONCAT("%", #{district}, "%"))
+            </if>
+            <if test="provice != null and city != null">
+                and (storeDistrict like CONCAT("%", #{provice}, "%") or storeDistrict like CONCAT("%", #{city}, "%"))
+            </if>
+            <if test="provice != null">
+                and (storeDistrict like CONCAT("%", #{provice}, "%"))
+            </if>
+        ) m
+    </select>
+
+    <select id="queryClientStoreList" parameterType="map" resultType="com.urbanfit.apiserver.entity.Store">
+        select * from t_store where status = 0
+        <if test="provice != null and city != null and district != null">
+            and (storeDistrict like CONCAT("%", #{provice}, "%") or storeDistrict like CONCAT("%", #{city}, "%")
+                or storeDistrict like CONCAT("%", #{district}, "%"))
+        </if>
+        <if test="provice != null and city != null">
+            and (storeDistrict like CONCAT("%", #{provice}, "%") or storeDistrict like CONCAT("%", #{city}, "%"))
+        </if>
+        <if test="provice != null">
+            and (storeDistrict like CONCAT("%", #{provice}, "%"))
+        </if>
+        order by createTime desc
+        <include refid="limit"/>
+    </select>
 </mapper>

@@ -42,5 +42,6 @@ public class ClientInfoController extends BaseCotroller{
     public void updatePassword(HttpServletResponse response, String mobile, String newPassword,
                                String confirmPassword){
         String result = clientInfoService.updatePassword(mobile, newPassword, confirmPassword);
+        safeJsonPrint(response, result);
     }
 }

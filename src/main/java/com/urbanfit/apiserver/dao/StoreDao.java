@@ -35,4 +35,8 @@ public interface StoreDao {
     public int queryStoreCount(Map<String, Object> map);
 
     public void updateStoreStatus(Integer storeId);
+
+    public int queryClientStoreCount(Map<String, Object> map);
+
+    public List<Store> queryClientStoreList(Map<String, Object> map);
 }

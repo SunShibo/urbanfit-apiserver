@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.urbanfit.apiserver.dao.UserInfoDao">
+    <select id="queryUserInfoByAccount" parameterType="String" resultType="com.urbanfit.apiserver.entity.UserInfo">
+        select * from t_userinfo where status = 0 and account = #{account}
+    </select>
+</mapper>

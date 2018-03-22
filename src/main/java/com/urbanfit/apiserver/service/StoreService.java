@@ -1,13 +1,16 @@
 package com.urbanfit.apiserver.service;
 
+import com.urbanfit.apiserver.cfg.pop.Constant;
 import com.urbanfit.apiserver.dao.StoreDao;
 import com.urbanfit.apiserver.entity.Store;
 import com.urbanfit.apiserver.entity.dto.ResultDTOBuilder;
 import com.urbanfit.apiserver.query.PageObject;
 import com.urbanfit.apiserver.query.PageObjectUtil;
 import com.urbanfit.apiserver.query.QueryInfo;
+import com.urbanfit.apiserver.util.DateUtils;
 import com.urbanfit.apiserver.util.JsonUtils;
 import com.urbanfit.apiserver.util.StringUtils;
+import net.sf.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
@@ -86,5 +89,30 @@ public class StoreService {
         // 删除数据
         storeDao.updateStoreStatus(storeId);
         return JsonUtils.getJsonString4JavaPOJO(ResultDTOBuilder.failure("1", "删除数据成功")).toString();
+    }
+
+    public String queryStoreList(String provice, String city, String district, QueryInfo queryInfo){
+        if(queryInfo == null){
+            return JsonUtils.encapsulationJSON(Constant.INTERFACE_PARAM_ERROR, "参数有误", "").toString();
+        }
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("pageOffset", queryInfo.getPageOffset());
+        map.put("pageSize", queryInfo.getPageSize());
+        if(!StringUtils.isEmpty(provice)){
+            map.put("provice", provice);
+        }
+        if(!StringUtils.isEmpty(city)){
+            map.put("city", city);
+        }
+        if(!StringUtils.isEmpty(district)){
+            map.put("district", "district");
+        }
+        PageObjectUtil page = new PageObjectUtil<Store>();
+        PageObject<Store> pager = page.savePageObject(storeDao.queryClientStoreCount(map),
+                storeDao.queryClientStoreList(map), queryInfo);
+        JSONObject jo = new JSONObject();
+        jo.put("lstStore", JsonUtils.getJsonString4JavaListDate(pager.getDatas(), DateUtils.LONG_DATE_PATTERN));
+        jo.put("totalRecord", pager.getTotalRecord());
+        return JsonUtils.encapsulationJSON(Constant.INTERFACE_SUCC, "查询成功", jo.toString()).toString();
     }
 }

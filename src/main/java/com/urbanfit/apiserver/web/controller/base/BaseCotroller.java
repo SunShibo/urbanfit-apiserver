@@ -3,6 +3,7 @@ package com.urbanfit.apiserver.web.controller.base;
 import com.google.common.collect.Lists;
 import com.urbanfit.apiserver.cfg.pop.SystemConfig;
 import com.urbanfit.apiserver.common.constants.SysConstants;
+import com.urbanfit.apiserver.entity.UserInfo;
 import com.urbanfit.apiserver.entity.bo.UserBO;
 import com.urbanfit.apiserver.query.PageObject;
 import com.urbanfit.apiserver.query.QueryInfo;
@@ -209,6 +210,10 @@ public class BaseCotroller {
 
     /** putLoginUser*/
     public void putLoginUser (String loginId , UserBO loginUser) {
+        this.putSession(createKey(loginId, SysConstants.CURRENT_LOGIN_USER), loginUser) ;
+    }
+
+    public void putLoginUser (String loginId , UserInfo loginUser) {
         this.putSession(createKey(loginId, SysConstants.CURRENT_LOGIN_USER), loginUser) ;
     }
 

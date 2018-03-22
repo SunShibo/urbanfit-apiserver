@@ -9,7 +9,7 @@ import javax.annotation.Resource;
 
 @Controller()
 @RequestMapping("/ccourse")
-public class CourseController extends BaseCotroller{
+public class ClientCourseController extends BaseCotroller{
     @Resource(name = "courseService")
     private CourseService courseService;
 
