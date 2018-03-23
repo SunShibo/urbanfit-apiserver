@@ -23,6 +23,7 @@ function login(){
                 alert(result.msg);
                 return ;
             }else {
+                alert("ett");
                 window.location.href = "/message/list";
             }
         }

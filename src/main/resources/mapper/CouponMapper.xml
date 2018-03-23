@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.urbanfit.apiserver.dao.CouponDao">
+    <sql id="limit">
+        limit #{pageOffset}, #{pageSize}
+    </sql>
+    <insert id="addCoupon" parameterType="com.urbanfit.apiserver.entity.Coupon"
+            useGeneratedKeys="true" keyProperty="couponId">
+        insert into t_coupon (couponName, sourceName, percent, createTime, beginTime, endTime, couponNum, userId)
+        values (#{couponName}, #{sourceName}, #{percent}, now(), #{beginTime}, #{endTime}, #{couponNum}, #{userId})
+    </insert>
+
+    <select id="queryCouponByNum" parameterType="String" resultType="com.urbanfit.apiserver.entity.Coupon">
+        select * from t_coupon where couponNum = #{couponNum} limit 1
+    </select>
+
+    <select id="queryCouponCountByNum" parameterType="String" resultType="int">
+        select count(couponId) from t_coupon where couponNum = #{couponNum}
+    </select>
+
+    <select id="queryCouponCount" parameterType="map" resultType="int">
+        select count(m.couponId) from (
+            select * from t_coupon where 1 = 1
+            <if test="couponInfo != null">
+                and (couponName like CONCAT("%", #{couponInfo}, "%") or sourceName like CONCAT("%", #{couponInfo}, "%")
+                or couponNum like CONCAT("%", #{couponInfo}, "%"))
+            </if>
+            <if test="status != null">
+                and status = #{status}
+            </if>
+        ) m
+    </select>
+
+    <select id="queryCouponList" parameterType="map" resultType="com.urbanfit.apiserver.entity.Coupon">
+        select * from t_coupon where 1 = 1
+        <if test="couponInfo != null">
+            and (couponName like CONCAT("%", #{couponInfo}, "%") or sourceName like CONCAT("%", #{couponInfo}, "%")
+            or couponNum like CONCAT("%", #{couponInfo}, "%"))
+        </if>
+        <if test="status != null">
+            and status = #{status}
+        </if>
+        order by createTime desc
+        <include refid="limit"/>
+    </select>
+
+    <select id="queryCouponById" parameterType="int" resultType="com.urbanfit.apiserver.entity.Coupon">
+        select * from t_coupon where couponId = #{couponId}
+    </select>
+</mapper>
