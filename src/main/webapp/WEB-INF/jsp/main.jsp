@@ -17,6 +17,8 @@
                 <div class="navboxa"><a href="/coach/list">教练团队</a></div>
                 <div class="navboxa"><a href="/store/list">门店管理</a></div>
                 <div class="navboxa"><a href="/auth/list">认证管理</a></div>
+                <div class="navboxa"><a href="/coupon/list">优惠码管理</a></div>
+                <div class="navboxa"><a href="/order/list">订单管理</a></div>
                 <div class="navboxa"><a href="#">报名线索</a></div>
                 <div class="navboxa"><a href="#">模块管理</a></div>
             </div>

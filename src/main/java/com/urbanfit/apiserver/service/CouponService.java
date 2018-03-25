@@ -6,6 +6,7 @@ import com.urbanfit.apiserver.entity.Coupon;
 import com.urbanfit.apiserver.query.PageObject;
 import com.urbanfit.apiserver.query.PageObjectUtil;
 import com.urbanfit.apiserver.query.QueryInfo;
+import com.urbanfit.apiserver.util.DateUtils;
 import com.urbanfit.apiserver.util.JsonUtils;
 import com.urbanfit.apiserver.util.RandomUtils;
 import com.urbanfit.apiserver.util.StringUtils;
@@ -33,19 +34,24 @@ public class CouponService {
         if(!StringUtils.isEmpty(couponInfo)){
             map.put("couponInfo", couponInfo);
         }
+        if(status != null){
+            map.put("status", status);
+        }
         PageObjectUtil<Coupon> page = new PageObjectUtil<Coupon>();
         return page.savePageObject(couponDao.queryCouponCount(map), couponDao.queryCouponList(map), queryInfo);
     }
 
-    public String addCoupon(Coupon coupon){
-        if(coupon == null){
+    public String addCoupon(String couponName, String sourceName, Double percent, String beginTime, String endTime){
+        if(StringUtils.isEmpty(couponName) || StringUtils.isEmpty(sourceName) || percent == null
+                || StringUtils.isEmpty(beginTime) || StringUtils.isEmpty(endTime)){
             return JsonUtils.encapsulationJSON(Constant.INTERFACE_PARAM_ERROR, "参数有误", "").toString();
         }
-        if(StringUtils.isEmpty(coupon.getCouponName()) || StringUtils.isEmpty(coupon.getSourceName())
-                || coupon.getPercent() == null || coupon.getBeginTime() == null || coupon.getEndTime() == null){
-
-            return JsonUtils.encapsulationJSON(Constant.INTERFACE_PARAM_ERROR, "参数有误", "").toString();
-        }
+        Coupon coupon = new Coupon();
+        coupon.setCouponName(couponName);
+        coupon.setSourceName(sourceName);
+        coupon.setPercent(percent);
+        coupon.setBeginTime(DateUtils.parseDate(beginTime, DateUtils.DATE_PATTERN));
+        coupon.setEndTime(DateUtils.parseDate(endTime, DateUtils.DATE_PATTERN));
         // 生成优惠码
         coupon.setCouponNum(getCouponNum());
         couponDao.addCoupon(coupon);
@@ -56,10 +62,26 @@ public class CouponService {
         return couponDao.queryCouponById(couponId);
     }
 
+    public String updateCouponStatus(Integer couponId){
+        if(couponId == null){
+            return JsonUtils.encapsulationJSON(Constant.INTERFACE_PARAM_ERROR, "参数有误", "").toString();
+        }
+        Coupon coupon = couponDao.queryCouponById(couponId);
+        if(coupon == null){
+            return JsonUtils.encapsulationJSON(Constant.INTERFACE_FAIL, "数据不存在", "").toString();
+        }
+        if(coupon.getStatus() == Coupon.STATUS_EXPIRED){
+            return JsonUtils.encapsulationJSON(Constant.INTERFACE_FAIL, "优惠码以为过期状态", "").toString();
+        }
+        // 修改状态
+        couponDao.updateCouponStatus(couponId);
+        return JsonUtils.encapsulationJSON(Constant.INTERFACE_SUCC, "设置为过期状态成功", "").toString();
+    }
+
     private String getCouponNum() {
         String couponNum = "";
         do {
-            couponNum = RandomUtils.getRandomNumber(11);
+            couponNum = RandomUtils.getRandomNumber(9);
             //查询邀请码是否存在
             if (couponDao.queryCouponCountByNum(couponNum) == 0)
                 break;

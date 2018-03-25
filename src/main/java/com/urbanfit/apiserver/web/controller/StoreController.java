@@ -23,13 +23,13 @@ public class StoreController extends BaseCotroller{
     @Resource(name = "storeService")
     private StoreService storeService;
 
-    @RequestMapping( value = "/add" )
+    @RequestMapping("/add" )
     public void addStore(HttpServletResponse response, Store store){
         String result = storeService.addStore(store);
         safeJsonPrint(response, result);
     }
 
-    @RequestMapping(value = "/list")
+    @RequestMapping("/list")
     public ModelAndView queryStoreList(Integer pageNo, Integer pageSize, String storeName){
         pager = storeService.queryStoreList(storeName, getQueryInfo(pageNo, pageSize));
         ModelAndView view = new ModelAndView();
@@ -42,20 +42,20 @@ public class StoreController extends BaseCotroller{
         return view;
     }
 
-    @RequestMapping(value = "/update")
+    @RequestMapping("/update")
     public void updateStore(HttpServletResponse response, Store store){
         String result = storeService.updateStore(store);
         safeJsonPrint(response, result);
     }
 
-    @RequestMapping(value = "/toAdd")
+    @RequestMapping("/toAdd")
     public ModelAndView redirectAddPage(){
         ModelAndView view = new ModelAndView();
         view.setViewName("/store/store_add");
         return view;
     }
 
-    @RequestMapping(value = "/toUpdate")
+    @RequestMapping("/toUpdate")
     public ModelAndView redirectUpdatePage(Integer storeId){
         ModelAndView view = new ModelAndView();
         view.setViewName("/store/store_update");
@@ -63,7 +63,7 @@ public class StoreController extends BaseCotroller{
         return view;
     }
 
-    @RequestMapping(value = "/delete")
+    @RequestMapping("/delete")
     public void deleteStore(HttpServletResponse response, Integer storeId){
         String result = storeService.deleteStore(storeId);
         safeJsonPrint(response, result);

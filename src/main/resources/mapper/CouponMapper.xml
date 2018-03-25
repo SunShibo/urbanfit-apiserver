@@ -48,4 +48,8 @@
     <select id="queryCouponById" parameterType="int" resultType="com.urbanfit.apiserver.entity.Coupon">
         select * from t_coupon where couponId = #{couponId}
     </select>
+
+    <update id="updateCouponStatus" parameterType="int">
+        update t_coupon set status = 1 where couponId = #{couponId}
+    </update>
 </mapper>

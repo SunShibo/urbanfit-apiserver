@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.urbanfit.apiserver.dao.OrderMasterDao">
+    <sql id="limit">
+        limit #{pageOffset}, #{pageSize}
+    </sql>
+
+    <select id="queryOrderMasterCount" parameterType="map" resultType="int">
+        select count(m.orderId) from (
+            select m.*, n.`name` clientName, n.mobile clientMobile, c.courseType from t_client_order_master m left join
+            t_clientinfo n on m.clientId = n.clientId left join t_course c on m.courseId = c.courseId where 1 = 1
+            <if test="orderInfo != null">
+                and (orderNum like CONCAT("%", #{orderInfo}, "%") or clientName like CONCAT("%", #{orderInfo}, "%"))
+            </if>
+            <if test="status != null">
+                and m.status = #{status}
+            </if>
+            <if test="provice != null and city != null and district != null">
+                and (courseDistrict like CONCAT("%", #{provice}, "%") or courseDistrict like CONCAT("%", #{city}, "%")
+                or courseDistrict like CONCAT("%", #{district}, "%"))
+            </if>
+            <if test="provice != null and city != null">
+                and (courseDistrict like CONCAT("%", #{provice}, "%") or courseDistrict like CONCAT("%", #{city}, "%"))
+            </if>
+            <if test="provice != null">
+                and (courseDistrict like CONCAT("%", #{provice}, "%"))
+            </if>
+        ) m
+    </select>
+
+    <select id="queryOrderMasterList" parameterType="map" resultType="com.urbanfit.apiserver.entity.OrderMaster">
+        select m.*, n.`name` clientName, n.mobile clientMobile, c.courseType from t_client_order_master m left join
+        t_clientinfo n on m.clientId = n.clientId left join t_course c on m.courseId = c.courseId where 1 = 1
+        <if test="orderInfo != null">
+            and (orderNum like CONCAT("%", #{orderInfo}, "%") or clientName like CONCAT("%", #{orderInfo}, "%"))
+        </if>
+        <if test="status != null">
+            and m.status = #{status}
+        </if>
+        <if test="provice != null and city != null and district != null">
+            and (courseDistrict like CONCAT("%", #{provice}, "%") or courseDistrict like CONCAT("%", #{city}, "%")
+            or courseDistrict like CONCAT("%", #{district}, "%"))
+        </if>
+        <if test="provice != null and city != null">
+            and (courseDistrict like CONCAT("%", #{provice}, "%") or courseDistrict like CONCAT("%", #{city}, "%"))
+        </if>
+        <if test="provice != null">
+            and (courseDistrict like CONCAT("%", #{provice}, "%"))
+        </if>
+        order by m.createTime desc
+        <include refid="limit"/>
+    </select>
+</mapper>

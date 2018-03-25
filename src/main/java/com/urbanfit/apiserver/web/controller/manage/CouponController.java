@@ -41,16 +41,23 @@ public class CouponController extends BaseCotroller{
     }
 
     @RequestMapping("/add")
-    public void addCoupon(HttpServletResponse response, Coupon coupon){
-        String result = couponService.addCoupon(coupon);
+    public void addCoupon(HttpServletResponse response, String couponName, String sourceName, Double percent,
+                          String beginTime, String endTime){
+        String result = couponService.addCoupon(couponName, sourceName, percent, beginTime, endTime);
         safeJsonPrint(response, result);
     }
 
     @RequestMapping("/detail")
-    public ModelAndView queryCouponDetail(HttpServletResponse response, Integer couponId){
+    public ModelAndView queryCouponDetail(Integer couponId){
         ModelAndView view = new ModelAndView();
         view.setViewName("/coupon/coupon_detail");
         view.addObject("coupon", couponService.queryCouponById(couponId));
         return view;
+    }
+
+    @RequestMapping("/update")
+    public void updateCouponStatus(HttpServletResponse response, Integer couponId){
+        String result = couponService.updateCouponStatus(couponId);
+        safeJsonPrint(response, result);
     }
 }

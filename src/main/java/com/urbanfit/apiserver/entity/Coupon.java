@@ -9,6 +9,8 @@ import java.util.Date;
  */
 public class Coupon extends BaseModel{
 
+    public static final int STATUS_EXPIRED = 1;
+
     private Integer couponId;
     private String couponName;
     private String sourceName;

@@ -46,7 +46,7 @@ function addStore(){
         return ;
     }
     // 判断电话号码是否有误
-    var mobilePattern =/^[1][3,4,5,7,8][0-9]{9}$/;
+    var mobilePattern = /^[1][3,4,5,7,8][0-9]{9}$/;
     if (!mobilePattern.test(mobile)){
         alert("联系电话输入格式有误");
         return ;

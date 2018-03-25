@@ -20,4 +20,6 @@ public interface CouponDao{
     public List<Coupon> queryCouponList(Map<String, Object> map);
 
     public Coupon queryCouponById(Integer couponId);
+
+    public void updateCouponStatus(Integer couponId);
 }
