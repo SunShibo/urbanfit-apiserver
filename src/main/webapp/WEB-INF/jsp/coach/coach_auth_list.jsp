@@ -9,6 +9,10 @@
     <script type="text/javascript" src="/static/js/mainJs/jquery.min.js"></script>
     <script type="text/javascript">
       $(function(){
+          // 添加菜单样式
+          $("div[id^='menu_']").removeClass("on");
+          $("div[id='menu_auth']").addClass("on");
+
           $("a[name^='A_delete']").click(deleteCothAuth);
           $("a[name^='A_update']").click(updateCoachAuth);
           $("#B_add").click(addCoachAuth);

@@ -6,6 +6,14 @@
     <meta charset="utf-8" />
     <title>优惠码信息添加</title>
     <link type="text/css" href="/static/css/main.css" rel="stylesheet"/>
+    <script type="text/javascript" src="/static/js/mainJs/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function (){
+            // 添加菜单样式
+            $("div[id^='menu_']").removeClass("on");
+            $("div[id='menu_coupon']").addClass("on");
+        })
+    </script>
 </head>
 <body>
     <div class="index clear">

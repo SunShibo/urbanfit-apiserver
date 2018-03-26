@@ -7,16 +7,7 @@
     <title>课程列表</title>
     <link type="text/css" href="/static/css/main.css" rel="stylesheet"/>
     <script type="text/javascript" src="/static/js/mainJs/jquery.min.js"></script>
-    <script type="text/javascript">
-        $(function(){
-            $("a[name^='A_update']").click(redirectUpdatePage);
-        })
-        // 跳转到修改页面
-        function redirectUpdatePage(){
-            var courseId = $(this).data("courseid");
-            window.location.href = "toUpdate?courseId=" + courseId;
-        }
-    </script>
+    <script type="text/javascript" src="/static/js/manage/course_list.js"></script>
 </head>
 <body>
     <div class="index clear">
@@ -43,6 +34,14 @@
                                         <td>
                                             <a href="javascript:void(0);" name="A_update_${course.courseId}"
                                                data-courseid="${course.courseId}">编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <c:if test="${course.status == 0}">
+                                                <a href="javascript:void(0);" name="A_down_${course.courseId}"
+                                                   data-courseid="${course.courseId}">下架</a>
+                                            </c:if>
+                                            <c:if test="${course.status == 1}">
+                                                <a href="javascript:void(0);" name="A_up_${course.courseId}"
+                                                   data-courseid="${course.courseId}">上架</a>
+                                            </c:if>
                                         </td>
                                     </tr>
                                 </c:forEach>

@@ -8,6 +8,7 @@
     <script type="text/javascript" src="/static/js/mainJs/jquery.min.js"></script>
     <script charset="utf-8" src="/static/js/kindeditor/kindeditor-all-min.js"></script>
     <script charset="utf-8" src="/static/js/kindeditor/zh_CN.js"></script>
+    <script type="text/javascript" src="/static/js/common/ajaxupload.js"></script>
     <script type="text/javascript" src="/static/js/manage/course_update.js"></script>
     <style>
         .ke-container{width: 96% !important;}
@@ -34,12 +35,47 @@
                                 </td>
                             </tr>
                             <tr>
+                                <td>标题：</td>
+                                <td>
+                                    <input type="text" name="courseTitle" value="${course.courseTitle}"
+                                           placeholder="请输入课程标题"><em>*必填</em>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>价格：</td>
+                                <td>
+                                    <input type="text" name="coursePrice" value="${course.coursePrice}"
+                                           placeholder="请输入课程价格"><em>*必填</em>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>课程图片：</td>
+                                <td>
+                                    <div class="suolue">
+                                        <div class="uploadimg">
+                                            <c:if test="${course.courseImageUrl == null}">
+                                                <img width="160px;" height="160px;" id="uploadImage" src="/static/img/u37.png"/>
+                                            </c:if>
+                                            <c:if test="${course.courseImageUrl != null}">
+                                                <img width="160px;" height="160px;" id="uploadImage" src="${baseUrl}${course.courseImageUrl}"/>
+                                            </c:if>
+                                            <input type="hidden" name="courseImageUrl" value="${ccourse.courseImageUrl}"><br/>
+                                        </div>
+                                        <div class="zi">
+                                            <span style="color:#FF0000;">*必填</span>
+                                            <p class="del" id="B_delete_image">删除</p>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
                                 <td>课程内容：</td>
                                 <td>
                                     <div class="edit">
                                         <textarea name="content">${course.introduce}</textarea>
                                         <input name="introduce" type="hidden"/>
                                         <input type="hidden" name="courseId" value="${course.courseId}">
+                                        <input type="hidden" name="courseName" value="${course.courseName}">
                                         <input type="hidden" name="courseType" value="${course.courseType}">
                                     </div>
                                     <em>*必填</em>

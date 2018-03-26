@@ -12,15 +12,14 @@
         </div>
         <div class="nav">
             <div class="navbox">
-                <div class="navboxa"><a href="/message/list">活动资讯</a></div>
-                <div class="navboxa on"><a href="/course/list">课程介绍</a></div>
-                <div class="navboxa"><a href="/coach/list">教练团队</a></div>
-                <div class="navboxa"><a href="/store/list">门店管理</a></div>
-                <div class="navboxa"><a href="/auth/list">认证管理</a></div>
-                <div class="navboxa"><a href="/coupon/list">优惠码管理</a></div>
-                <div class="navboxa"><a href="/order/list">订单管理</a></div>
-                <div class="navboxa"><a href="#">报名线索</a></div>
-                <div class="navboxa"><a href="#">模块管理</a></div>
+                <div class="navboxa" id="menu_message"><a href="/message/list">活动资讯</a></div>
+                <div class="navboxa on" id="menu_course"><a href="/course/list">课程介绍</a></div>
+                <div class="navboxa" id="menu_coach"><a href="/coach/list">教练团队</a></div>
+                <div class="navboxa" id="menu_store"><a href="/store/list">门店管理</a></div>
+                <div class="navboxa" id="menu_auth"><a href="/auth/list">认证管理</a></div>
+                <div class="navboxa" id="menu_coupon"><a href="/coupon/list">优惠码管理</a></div>
+                <div class="navboxa" id="menu_order"><a href="/order/list">订单管理</a></div>
+                <div class="navboxa" id="menu_module"><a href="#">模块管理</a></div>
             </div>
         </div>
     </div>

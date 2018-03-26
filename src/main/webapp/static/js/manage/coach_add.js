@@ -1,5 +1,9 @@
 var editor;
 $(function (){
+    // 添加菜单样式
+    $("div[id^='menu_']").removeClass("on");
+    $("div[id='menu_coach']").addClass("on");
+
     KindEditor.ready(function(K) {
         editor = K.create('textarea[name="content"]', {
             allowFileManager : true,
@@ -86,7 +90,7 @@ function uploadHeadPortrait(){
                 alert("修改失败，请重新修改！");
                 return ;
             }else if(response.message == "success"){
-                var resultData = JSON.parse(response.data);
+                var resultData = response.data;
                 $("#uploadImage").attr("src", resultData.baseUrl + resultData.headPortrait);
                 $("input[name='headPortrait']").val(resultData.headPortrait);
             }

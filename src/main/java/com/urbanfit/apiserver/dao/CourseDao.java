@@ -3,6 +3,7 @@ package com.urbanfit.apiserver.dao;
 import com.urbanfit.apiserver.entity.Course;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2018/3/2.
@@ -21,4 +22,6 @@ public interface CourseDao {
     public Course queryCourseByCourseId(Integer courseId);
 
     public List<Course> queryCourseList();
+
+    public void updateCourseStatus(Map<String, Object> map);
 }

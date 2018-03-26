@@ -1,4 +1,8 @@
 $(function (){
+    // 添加菜单样式
+    $("div[id^='menu_']").removeClass("on");
+    $("div[id='menu_coupon']").addClass("on");
+
     $("select[name='status']").change(queryCoupon);
     $("#B_query").click(queryCoupon);
     initCouponStatus();

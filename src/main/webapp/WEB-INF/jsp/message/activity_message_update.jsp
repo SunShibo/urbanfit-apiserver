@@ -23,7 +23,7 @@
                     <form id="activityMessageForm" method="post">
                         <table cellpadding="0" cellspacing="0" border="0">
                             <tr>
-                                <td class="td1">标题：</td>
+                                <td class="td1">标&nbsp;&nbsp;题：</td>
                                 <td class="td2">
                                     <input type="text" name="title" value="${activityMessage.title}"><em>*必填</em>
                                 </td>
@@ -49,7 +49,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>内&nbsp;&nbsp;&nbsp;&nbsp;容：</td>
+                                <td>内&nbsp;&nbsp;容：</td>
                                 <td>
                                     <div class="edit">
                                         <textarea name="messageContent">${activityMessage.content}</textarea>

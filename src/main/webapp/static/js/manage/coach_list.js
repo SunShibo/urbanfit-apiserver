@@ -1,4 +1,8 @@
 $(function(){
+    // 添加菜单样式
+    $("div[id^='menu_']").removeClass("on");
+    $("div[id='menu_coach']").addClass("on");
+
     $("a[name^='A_update']").click(redirectUpdatePage);
     $("a[name^='A_delete']").click(deleteCoach);
     $("#B_add").click(addCoach);

@@ -1,5 +1,9 @@
 var editor;
 $(function (){
+    // 添加菜单样式
+    $("div[id^='menu_']").removeClass("on");
+    $("div[id='menu_message']").addClass("on");
+
     KindEditor.ready(function(K) {
         editor = K.create('textarea[name="messageContent"]', {
             allowFileManager : true,
@@ -76,7 +80,7 @@ function uploadThumbnails(){
                 alert("修改失败，请重新修改！");
                 return ;
             }else if(response.message == "success"){
-                var resultData = JSON.parse(response.data);
+                var resultData = response.data;
                 $("#uploadImage").attr("src", resultData.baseUrl + resultData.thumbnailsUrl);
                 $("input[name='thumbnails']").val(resultData.thumbnailsUrl);
             }

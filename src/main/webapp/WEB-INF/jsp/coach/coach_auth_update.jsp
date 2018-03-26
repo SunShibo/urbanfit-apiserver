@@ -7,6 +7,10 @@
     <script type="text/javascript" src="/static/js/mainJs/jquery.min.js"></script>
     <script type="text/javascript">
         $(function (){
+            // 添加菜单样式
+            $("div[id^='menu_']").removeClass("on");
+            $("div[id='menu_auth']").addClass("on");
+
             $("#B_submit").click(updateCoachAuth);
         })
 
@@ -43,8 +47,34 @@
     </script>
 </head>
 <body>
-    教练姓名：<input type="text" name="coachName" value="${coachAuth.coachName}"><br/>
-    教练证号码：<input type="text" name="coachCardNum" value="${coachAuth.coachCardNum}"><br/>
-    <input type="hidden" name="authId" value="${coachAuth.authId}">
-    <input type="button" value="提交" id="B_submit"/>
+    <div class="index clear">
+        <jsp:include page="../main.jsp"></jsp:include>
+            <div class="indexRight1">
+                <div class="title">门店管理 > 门店修改</div>
+                <div class="tablebox2">
+                    <table cellpadding="0" cellspacing="0" border="0">
+                        <tr>
+                            <td class="td1">教练姓名：</td>
+                            <td class="td2">
+                                <input type="text" name="coachName" value="${coachAuth.coachName}"><em>*必填</em>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>教练证号码：</td>
+                            <td>
+                                <input type="text" name="coachCardNum" value="${coachAuth.coachCardNum}"><em>*必填</em>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <input type="hidden" name="authId" value="${coachAuth.authId}">
+                                <a href="javascript:void(0);" id="B_submit">保存</a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>

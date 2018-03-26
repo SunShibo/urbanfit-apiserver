@@ -1,4 +1,8 @@
 $(function(){
+    // 添加菜单样式
+    $("div[id^='menu_']").removeClass("on");
+    $("div[id='menu_store']").addClass("on");
+
     // 初始化省市区信息
     var proviceInfo;
     var cityInfo;

@@ -1,4 +1,8 @@
 $(function(){
+    // 添加菜单样式
+    $("div[id^='menu_']").removeClass("on");
+    $("div[id='menu_message']").addClass("on");
+
     $("a[name^='A_update']").click(redirectUpdatePage);
     $("a[name^='A_delete']").click(deleteActivityMessage);
     $("#B_add").click(addActivityMessage);

@@ -8,6 +8,10 @@
 
   <script type="text/javascript">
       $(function (){
+          // 添加菜单样式
+          $("div[id^='menu_']").removeClass("on");
+          $("div[id='menu_auth']").addClass("on");
+
           $("#B_submit").click(addCoachAuth);
       })
 
