@@ -39,6 +39,7 @@ public class OrderMaster extends BaseModel{
     private Integer couponId;
     private String couponNum;
     private Double couponPercent;
+    private Double couponPrice;
     /**
      * 支付类型  0：支付宝  1：微信
      */
@@ -53,6 +54,10 @@ public class OrderMaster extends BaseModel{
     private String clientName;
     private String clientMobile;
     private Integer courseType;
+    private String courseName;
+    private String couponName;
+    private String sourceName;
+
 
     public Integer getOrderId() {
         return orderId;
@@ -196,5 +201,37 @@ public class OrderMaster extends BaseModel{
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public String getCouponName() {
+        return couponName;
+    }
+
+    public void setCouponName(String couponName) {
+        this.couponName = couponName;
+    }
+
+    public String getSourceName() {
+        return sourceName;
+    }
+
+    public void setSourceName(String sourceName) {
+        this.sourceName = sourceName;
+    }
+
+    public Double getCouponPrice() {
+        return couponPrice;
+    }
+
+    public void setCouponPrice(Double couponPrice) {
+        this.couponPrice = couponPrice;
+    }
+
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
     }
 }

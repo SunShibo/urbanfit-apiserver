@@ -4,9 +4,8 @@
     <meta charset="utf-8" />
     <title>优惠码信息添加</title>
     <link type="text/css" href="/static/css/main.css" rel="stylesheet"/>
-    <link type="text/css" href="/static/plugins/daterangepicker/daterangepicker-bs3.css"/>
     <script type="text/javascript" src="/static/js/mainJs/jquery.min.js"></script>
-    <script type="text/javascript" src="/static/plugins/daterangepicker/daterangepicker.js"></script>
+    <script type="text/javascript" src="/static/js/datepicker/WdatePicker.js"></script>
     <script type="text/javascript" src="/static/js/manage/coupon_add.js"></script>
 </head>
 <body>
@@ -38,13 +37,17 @@
                             <tr>
                                 <td>开始时间：</td>
                                 <td>
-                                    <input name="beginTime" type="text"><em>*必填</em>
+                                    <input type="text" class="mp_input" name="beginTime" id="sDate"
+                                        onclick="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'})"
+                                        readonly="readonly"/><em>*必填</em>
                                 </td>
                             </tr>
                             <tr>
                                 <td>结束时间</td>
                                 <td>
-                                    <input name="endTime" type="text"><em>*必填</em>
+                                    <input type="text" class="mp_input" name="endTime" id="eDate"
+                                           onclick="WdatePicker({skin:'whyGreen',dateFmt:'yyyy-MM-dd'})"
+                                           readonly="readonly"/><em>*必填</em>
                                 </td>
                             </tr>
                             <tr>

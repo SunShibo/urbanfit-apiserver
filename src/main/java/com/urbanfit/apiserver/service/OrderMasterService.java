@@ -1,10 +1,12 @@
 package com.urbanfit.apiserver.service;
 
+import com.urbanfit.apiserver.cfg.pop.Constant;
 import com.urbanfit.apiserver.dao.OrderMasterDao;
 import com.urbanfit.apiserver.entity.OrderMaster;
 import com.urbanfit.apiserver.query.PageObject;
 import com.urbanfit.apiserver.query.PageObjectUtil;
 import com.urbanfit.apiserver.query.QueryInfo;
+import com.urbanfit.apiserver.util.JsonUtils;
 import com.urbanfit.apiserver.util.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,5 +48,27 @@ public class OrderMasterService {
         PageObjectUtil<OrderMaster> page = new PageObjectUtil<OrderMaster>();
         return page.savePageObject(orderMasterDao.queryOrderMasterCount(map), orderMasterDao.
                 queryOrderMasterList(map), queryInfo);
+    }
+
+    public OrderMaster queryOderMaterDetail(String orderNum){
+        return orderMasterDao.queryOderMaterDetail(orderNum);
+    }
+
+    public String updateOrderMasterStatus(String orderNum){
+        if(StringUtils.isEmpty(orderNum)){
+            return JsonUtils.encapsulationJSON(Constant.INTERFACE_PARAM_ERROR, "参数有误", "").toString();
+        }
+        OrderMaster orderMaster = orderMasterDao.queryOrderMasterByOrderNum(orderNum);
+        if(orderMaster == null){
+            return JsonUtils.encapsulationJSON(Constant.INTERFACE_FAIL, "订单不存在", "").toString();
+        }
+        if(orderMaster.getStatus() == OrderMaster.STATUS_WAITING_PAY){
+            return JsonUtils.encapsulationJSON(Constant.INTERFACE_FAIL, "订单待支付", "").toString();
+        }
+        if(orderMaster.getStatus() == OrderMaster.STATUS_REFUND){
+            return JsonUtils.encapsulationJSON(Constant.INTERFACE_FAIL, "订单状态已经为已退款", "").toString();
+        }
+        orderMasterDao.updateOrderMasterStatus(orderNum);
+        return JsonUtils.encapsulationJSON(Constant.INTERFACE_SUCC, "修改成功", "").toString();
     }
 }

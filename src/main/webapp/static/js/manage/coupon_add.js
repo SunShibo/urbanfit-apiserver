@@ -24,7 +24,16 @@ function addCoupon(){
         alert("优惠码折扣输入格式有误");
         return ;
     }
-
+    var beginTime = $("input[name='beginTime']").val();
+    if(beginTime == ""){
+        alert("请选择开始时间");
+        return ;
+    }
+    var endTime = $("input[name='endTime']").val();
+    if(endTime == ""){
+        alert("请选择结束时间");
+        return ;
+    }
     $.ajax({
         type : "post",
         url : "add",

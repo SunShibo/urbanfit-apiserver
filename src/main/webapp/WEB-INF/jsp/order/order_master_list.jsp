@@ -6,8 +6,14 @@
     <meta charset="utf-8" />
     <title>订单列表</title>
     <link type="text/css" href="/static/css/main.css" rel="stylesheet"/>
-    <script type="text/javascript" src="/static/js/mainJs/jquery.min.js"></script>
-    <script type="text/javascript" src="/static/js/manage/order_master_list.js"></script>
+    <script type="text/javascript">
+        var orderMaster = {
+            "status" : '${status}',
+            "provice" : '${provice}',
+            "city" : '${city}',
+            "district" : '${district}'
+        };
+    </script>
 </head>
 <body>
     <div class="index clear">
@@ -19,6 +25,13 @@
                         <div class="form">
                             <input type="text" placeholder="订单号/课程名/报名人" name="orderInfo" value="${orderInfo}">
                             <a href="javascript:void(0);" id="B_query">搜索</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <div class="select">
+                                <div id="city_info">
+                                    <select class="prov" id="proviceId" name="provice"></select>
+                                    <select class="city" id="cityId" disabled="disabled" name="city"></select>
+                                    <select class="dist" id="districtId" disabled="disabled" name="district"></select>
+                                </div>
+                            </div>&nbsp;&nbsp;&nbsp;&nbsp;
                             <select name="status">
                                 <option value="">--全部--</option>
                                 <option value="0">未付款</option>
@@ -34,7 +47,8 @@
                                 <td>价格</td>
                                 <td>区域</td>
                                 <td>报名人</td>
-                                <td>时间</td>
+                                <td>创建时间</td>
+                                <td>支付时间</td>
                                 <td>状态</td>
                                 <td>操作</td>
                             </tr>
@@ -53,10 +67,13 @@
                                         <fmt:formatDate value="${order.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
                                     </td>
                                     <td>
+                                        <fmt:formatDate value="${order.payTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
+                                    </td>
+                                    <td>
                                         <label id="status_${order.orderNum}">
-                                            <c:if test="${order.courseType == 0}">未支付</c:if>
-                                            <c:if test="${order.courseType == 1}">已支付</c:if>
-                                            <c:if test="${order.courseType == 2}">已退款</c:if>
+                                            <c:if test="${order.status == 0}">未支付</c:if>
+                                            <c:if test="${order.status == 1}">已支付</c:if>
+                                            <c:if test="${order.status == 2}">已退款</c:if>
                                         </label>
                                     </td>
                                     <td>
@@ -85,4 +102,7 @@
             </div>
         </div>
     </div>
+    <script type="text/javascript" src="/static/js/mainJs/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/common/cityselect.js"></script>
+    <script type="text/javascript" src="/static/js/manage/order_master_list.js"></script>
 </body>

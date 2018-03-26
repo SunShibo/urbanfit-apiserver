@@ -16,6 +16,13 @@ public class Course extends BaseModel {
     private String introduce;
     private Integer userId;
     private Date createTime;
+    private String courseName;
+    private String courseTitle;
+    private Double coursePrice;
+    private String courseDistrict;
+    private String courseImageUrl;
+    private int status;
+
 
     public Integer getCourseId() {
         return courseId;
@@ -55,5 +62,53 @@ public class Course extends BaseModel {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
+    }
+
+    public String getCourseTitle() {
+        return courseTitle;
+    }
+
+    public void setCourseTitle(String courseTitle) {
+        this.courseTitle = courseTitle;
+    }
+
+    public Double getCoursePrice() {
+        return coursePrice;
+    }
+
+    public void setCoursePrice(Double coursePrice) {
+        this.coursePrice = coursePrice;
+    }
+
+    public String getCourseDistrict() {
+        return courseDistrict;
+    }
+
+    public void setCourseDistrict(String courseDistrict) {
+        this.courseDistrict = courseDistrict;
+    }
+
+    public String getCourseImageUrl() {
+        return courseImageUrl;
+    }
+
+    public void setCourseImageUrl(String courseImageUrl) {
+        this.courseImageUrl = courseImageUrl;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 }

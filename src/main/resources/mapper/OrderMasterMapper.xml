@@ -8,47 +8,65 @@
 
     <select id="queryOrderMasterCount" parameterType="map" resultType="int">
         select count(m.orderId) from (
-            select m.*, n.`name` clientName, n.mobile clientMobile, c.courseType from t_client_order_master m left join
-            t_clientinfo n on m.clientId = n.clientId left join t_course c on m.courseId = c.courseId where 1 = 1
+            select m.*, n.`name` clientName, n.mobile clientMobile, c.courseType, c.courseName from
+            t_client_order_master m left join t_clientinfo n on m.clientId = n.clientId left join t_course c
+            on m.courseId = c.courseId where 1 = 1
             <if test="orderInfo != null">
-                and (orderNum like CONCAT("%", #{orderInfo}, "%") or clientName like CONCAT("%", #{orderInfo}, "%"))
+                and (orderNum like CONCAT("%", #{orderInfo}, "%") or n.name like CONCAT("%", #{orderInfo}, "%")
+                or c.courseName like CONCAT("%", #{orderInfo}, "%"))
             </if>
             <if test="status != null">
                 and m.status = #{status}
             </if>
             <if test="provice != null and city != null and district != null">
-                and (courseDistrict like CONCAT("%", #{provice}, "%") or courseDistrict like CONCAT("%", #{city}, "%")
-                or courseDistrict like CONCAT("%", #{district}, "%"))
+                and (m.courseDistrict like CONCAT("%", #{provice}, "%") or m.courseDistrict like CONCAT("%", #{city}, "%")
+                or m.courseDistrict like CONCAT("%", #{district}, "%"))
             </if>
             <if test="provice != null and city != null">
-                and (courseDistrict like CONCAT("%", #{provice}, "%") or courseDistrict like CONCAT("%", #{city}, "%"))
+                and (m.courseDistrict like CONCAT("%", #{provice}, "%") or m.courseDistrict like CONCAT("%", #{city}, "%"))
             </if>
             <if test="provice != null">
-                and (courseDistrict like CONCAT("%", #{provice}, "%"))
+                and (m.courseDistrict like CONCAT("%", #{provice}, "%"))
             </if>
         ) m
     </select>
 
     <select id="queryOrderMasterList" parameterType="map" resultType="com.urbanfit.apiserver.entity.OrderMaster">
-        select m.*, n.`name` clientName, n.mobile clientMobile, c.courseType from t_client_order_master m left join
-        t_clientinfo n on m.clientId = n.clientId left join t_course c on m.courseId = c.courseId where 1 = 1
+        select m.*, n.`name` clientName, n.mobile clientMobile, c.courseType, c.courseName from
+        t_client_order_master m left join t_clientinfo n on m.clientId = n.clientId left join t_course c
+        on m.courseId = c.courseId where 1 = 1
         <if test="orderInfo != null">
-            and (orderNum like CONCAT("%", #{orderInfo}, "%") or clientName like CONCAT("%", #{orderInfo}, "%"))
+            and (orderNum like CONCAT("%", #{orderInfo}, "%") or n.name like CONCAT("%", #{orderInfo}, "%")
+            or c.courseName like CONCAT("%", #{orderInfo}, "%"))
         </if>
         <if test="status != null">
             and m.status = #{status}
         </if>
         <if test="provice != null and city != null and district != null">
-            and (courseDistrict like CONCAT("%", #{provice}, "%") or courseDistrict like CONCAT("%", #{city}, "%")
-            or courseDistrict like CONCAT("%", #{district}, "%"))
+            and (m.courseDistrict like CONCAT("%", #{provice}, "%") or m.courseDistrict like CONCAT("%", #{city}, "%")
+            or m.courseDistrict like CONCAT("%", #{district}, "%"))
         </if>
         <if test="provice != null and city != null">
-            and (courseDistrict like CONCAT("%", #{provice}, "%") or courseDistrict like CONCAT("%", #{city}, "%"))
+            and (m.courseDistrict like CONCAT("%", #{provice}, "%") or m.courseDistrict like CONCAT("%", #{city}, "%"))
         </if>
         <if test="provice != null">
-            and (courseDistrict like CONCAT("%", #{provice}, "%"))
+            and (m.courseDistrict like CONCAT("%", #{provice}, "%"))
         </if>
         order by m.createTime desc
         <include refid="limit"/>
+    </select>
+
+    <select id="queryOderMaterDetail" parameterType="String" resultType="com.urbanfit.apiserver.entity.OrderMaster">
+        select m.*, n.`name` clientName, n.mobile clientMobile, c.courseType, p.couponName, p.sourceName from
+        t_client_order_master m left join t_clientinfo n on m.clientId = n.clientId left join t_course c on
+        m.courseId = c.courseId left join t_coupon p on m.couponId = p.couponId where orderNum = #{orderNum}
+    </select>
+
+    <select id="queryOrderMasterByOrderNum" parameterType="String" resultType="com.urbanfit.apiserver.entity.OrderMaster">
+        select * from t_client_order_master where orderNum = #{orderNum}
+    </select>
+
+    <select id="updateOrderMasterStatus" parameterType="String">
+        update t_client_order_master set status = 2 where orderNum = #{orderNum}
     </select>
 </mapper>

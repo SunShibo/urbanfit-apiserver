@@ -1,5 +1,6 @@
 package com.urbanfit.apiserver.web.controller.manage;
 
+import com.urbanfit.apiserver.entity.OrderMaster;
 import com.urbanfit.apiserver.service.OrderMasterService;
 import com.urbanfit.apiserver.web.controller.base.BaseCotroller;
 import org.springframework.stereotype.Controller;
@@ -7,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by Administrator on 2018/3/25.
@@ -34,5 +36,20 @@ public class OrderMasterController extends BaseCotroller{
         view.addObject("district", district);
         view.addObject("status", status);
         return view;
+    }
+
+    @RequestMapping("/detail")
+    public ModelAndView queryOderMaterDetail(String orderNum){
+        OrderMaster orderMaster = orderMasterService.queryOderMaterDetail(orderNum);
+        ModelAndView view = new ModelAndView();
+        view.setViewName("/order/order_master_detail");
+        view.addObject("orderMaster", orderMaster);
+        return view;
+    }
+
+    @RequestMapping("/update")
+    public void updateOrderMasterStatus(HttpServletResponse response, String orderNum){
+        String result = orderMasterService.updateOrderMasterStatus(orderNum);
+        safeJsonPrint(response, result);
     }
 }
