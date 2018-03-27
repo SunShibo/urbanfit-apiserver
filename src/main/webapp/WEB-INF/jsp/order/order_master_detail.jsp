@@ -29,7 +29,7 @@
                             </tr>
                             <tr>
                                 <td>学生姓名：</td>
-                                <td>${orderMaster.clientName}</td>
+                                <td>${orderMaster.childrenName}</td>
                             </tr>
                             <tr>
                                 <td>手机号：</td>

@@ -24,4 +24,8 @@ public interface CourseDao {
     public List<Course> queryCourseList();
 
     public void updateCourseStatus(Map<String, Object> map);
+
+    public List<Course> queryUpCourseList();
+
+    public Course queryUpCourseByCourseId(Integer courseId);
 }

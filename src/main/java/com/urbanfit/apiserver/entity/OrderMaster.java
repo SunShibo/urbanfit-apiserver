@@ -11,8 +11,8 @@ public class OrderMaster extends BaseModel{
     /**
      * 是否使用优惠码  0：否  1：是
      */
-    public static final int USE_COUPON = 0;
-    public static final int NO_USE_COUPON = 1;
+    public static final int NO_USE_COUPON = 0;
+    public static final int USE_COUPON = 1;
     /**
      * 支付状态 0：未支付  1：已支付  2：已退款
      */
@@ -27,8 +27,11 @@ public class OrderMaster extends BaseModel{
 
     private Integer orderId;
     private String orderNum;
+    private String childrenName;
+    private String clientMobile;
     private Integer clientId;
     private Integer courseId;
+    private String courseName;
     private String courseDistrict;
     private Double price;
     private Double payPrice;
@@ -52,9 +55,7 @@ public class OrderMaster extends BaseModel{
     private Date payTime;
 
     private String clientName;
-    private String clientMobile;
     private Integer courseType;
-    private String courseName;
     private String couponName;
     private String sourceName;
 
@@ -233,5 +234,13 @@ public class OrderMaster extends BaseModel{
 
     public void setCourseName(String courseName) {
         this.courseName = courseName;
+    }
+
+    public String getChildrenName() {
+        return childrenName;
+    }
+
+    public void setChildrenName(String childrenName) {
+        this.childrenName = childrenName;
     }
 }

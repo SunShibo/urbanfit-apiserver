@@ -27,4 +27,12 @@
     <update id="updateCourseStatus" parameterType="map">
         update t_course set status = #{status} where courseId = #{courseId}
     </update>
+
+    <select id="queryUpCourseList" resultType="com.urbanfit.apiserver.entity.Course">
+        select * from t_course where status = 0
+    </select>
+
+    <select id="queryUpCourseByCourseId" parameterType="int" resultType="com.urbanfit.apiserver.entity.Course">
+        select * from t_course where courseId = #{courseId} and status = 0
+    </select>
 </mapper>

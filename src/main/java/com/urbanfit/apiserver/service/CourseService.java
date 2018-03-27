@@ -9,6 +9,7 @@ import com.urbanfit.apiserver.util.*;
 import net.sf.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
@@ -132,5 +133,30 @@ public class CourseService {
         map.put("status", status);
         courseDao.updateCourseStatus(map);
         return JsonUtils.encapsulationJSON(Constant.INTERFACE_SUCC, "修改成功", "").toString();
+    }
+
+    public String queryClientCourseList(){
+        List<Course> lstCourse = courseDao.queryCourseList();
+        if(CollectionUtils.isEmpty(lstCourse)){
+            return JsonUtils.encapsulationJSON(Constant.INTERFACE_FAIL, "没有课程数据", "").toString();
+        }
+        JSONObject jo = new JSONObject();
+        jo.put("baseUrl", SystemConfig.getString("image_base_url"));
+        jo.put("lstCourse", JsonUtils.getJsonString4JavaListDate(lstCourse, DateUtils.LONG_DATE_PATTERN));
+        return JsonUtils.encapsulationJSON(Constant.INTERFACE_SUCC, "查询成功", jo.toString()).toString();
+    }
+
+    public String queryCourseDetail(Integer courseId){
+        if(courseId == null){
+            return JsonUtils.encapsulationJSON(Constant.INTERFACE_PARAM_ERROR, "参数有误", "").toString();
+        }
+        Course course = courseDao.queryUpCourseByCourseId(courseId);
+        if(course == null){
+            return JsonUtils.encapsulationJSON(Constant.INTERFACE_FAIL, "课程不存在或已经下架", "").toString();
+        }
+        JSONObject jo = new JSONObject();
+        jo.put("baseUrl", SystemConfig.getString("image_base_url"));
+        jo.put("course", JsonUtils.getJsonObject4JavaPOJO(course, DateUtils.LONG_DATE_PATTERN));
+        return JsonUtils.encapsulationJSON(Constant.INTERFACE_SUCC, "查询成功", jo.toString()).toString();
     }
 }
