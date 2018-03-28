@@ -27,4 +27,6 @@ public interface OrderMasterDao {
     public OrderMaster queryClientOrderMaterDetail(Map<String, Object> map);
 
     public void addOrderMaster(OrderMaster orderMaster);
+
+    public void updateOrderMaster(Map<String, Object> map);
 }

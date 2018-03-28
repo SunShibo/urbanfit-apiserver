@@ -15,6 +15,7 @@ import org.apache.commons.fileupload.FileItemFactory;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.log4j.Logger;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
@@ -31,6 +32,7 @@ import java.util.List;
  * @author Shibo Sun
  */
 public class BaseCotroller {
+    protected transient final Logger log = Logger.getLogger(getClass());
 
     @Resource( name = "loginService" )
     LoginService loginService;

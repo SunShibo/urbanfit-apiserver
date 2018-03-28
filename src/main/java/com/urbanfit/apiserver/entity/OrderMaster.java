@@ -17,7 +17,7 @@ public class OrderMaster extends BaseModel{
      * 支付状态 0：未支付  1：已支付  2：已退款
      */
     public static final int STATUS_WAITING_PAY = 0;
-    public static final int STATUS_PAYES = 1;
+    public static final int STATUS_PAYED = 1;
     public static final int STATUS_REFUND = 2;
     /**
      * 支付类型  0：支付宝  1：微信
@@ -52,6 +52,7 @@ public class OrderMaster extends BaseModel{
      */
     private int status;
     private Date createTime;
+    private Date systemCancleTime;
     private Date payTime;
 
     private String clientName;
@@ -242,5 +243,13 @@ public class OrderMaster extends BaseModel{
 
     public void setChildrenName(String childrenName) {
         this.childrenName = childrenName;
+    }
+
+    public Date getSystemCancleTime() {
+        return systemCancleTime;
+    }
+
+    public void setSystemCancleTime(Date systemCancleTime) {
+        this.systemCancleTime = systemCancleTime;
     }
 }

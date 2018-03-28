@@ -4,6 +4,8 @@ import com.github.qcloudsms.SmsSingleSender;
 import com.github.qcloudsms.SmsSingleSenderResult;
 import org.apache.log4j.Logger;
 
+import java.util.ArrayList;
+
 /**
  * Created by Administrator on 2018/3/27.
  */
@@ -17,7 +19,7 @@ public class SendMessageUtil {
         String sendResult = "fail";
         try {
             SmsSingleSender sender = new SmsSingleSender(APPID, APPKEY);
-            SmsSingleSenderResult result = sender.send(0, "86", mobile, "【众力飞特】" + content, "", "123");
+            SmsSingleSenderResult result = sender.send(0, "86", mobile, "【众力飞特】" + content, "", "98018");
             System.out.print(result);
         } catch (Exception e) {
             e.printStackTrace();
@@ -25,7 +27,13 @@ public class SendMessageUtil {
         return sendResult;
     }
 
-    public static void main(String args[]){
-        sendMessage("17610895083", "您的验证为123456");
+    public static void main(String args[]) throws Exception{
+        /*sendMessage("17610895083", "您的验证为123456");*/
+
+        SmsSingleSender sender = new SmsSingleSender(APPID, APPKEY);
+        ArrayList<String> params = new ArrayList<String>();
+        params.add("123456");
+        SmsSingleSenderResult result = sender.sendWithParam("86", "17610895083", 98018, params, "", "", "");
+        System.out.println(result);
     }
 }

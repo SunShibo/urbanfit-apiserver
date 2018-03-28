@@ -1,6 +1,7 @@
 package com.urbanfit.apiserver.service;
 
 import com.urbanfit.apiserver.cfg.pop.Constant;
+import com.urbanfit.apiserver.cfg.pop.SystemConfig;
 import com.urbanfit.apiserver.dao.ClientInfoDao;
 import com.urbanfit.apiserver.dao.CouponDao;
 import com.urbanfit.apiserver.dao.CourseDao;
@@ -9,6 +10,8 @@ import com.urbanfit.apiserver.entity.ClientInfo;
 import com.urbanfit.apiserver.entity.Coupon;
 import com.urbanfit.apiserver.entity.Course;
 import com.urbanfit.apiserver.entity.OrderMaster;
+import com.urbanfit.apiserver.pay.AlipayUtil;
+import com.urbanfit.apiserver.pay.WeChatPayUtil;
 import com.urbanfit.apiserver.query.PageObject;
 import com.urbanfit.apiserver.query.PageObjectUtil;
 import com.urbanfit.apiserver.query.QueryInfo;
@@ -22,6 +25,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -135,7 +140,7 @@ public class OrderMasterService {
                 getJsonString4JavaPOJO(orderMaster, DateUtils.LONG_DATE_PATTERN)).toString();
     }
 
-    public String addClientOrderMaster(String params){
+    public String addClientOrderMaster(String params, HttpServletRequest request, HttpServletResponse response){
         if(StringUtils.isEmpty(params)){
             return JsonUtils.encapsulationJSON(Constant.INTERFACE_PARAM_ERROR, "参数有误", "").toString();
         }
@@ -171,13 +176,65 @@ public class OrderMasterService {
         }
         //生成主订单编号
         String orderNum  = "mall" + System.currentTimeMillis() + "" + RandomUtils.getRandomNumber(6);
-        addOrderMasterDetail(order, coupon, course, orderNum);
+        OrderMaster orderMaster = addOrderMasterDetail(order, coupon, course, orderNum);
         if (order.getPayment() == OrderMaster.PAYMENT_ALIPAY) {  // 支付宝支付
 
+            String alipayCallbackUrl = SystemConfig.getString("project_base_url") + SystemConfig.
+                    getString("alipay_order_callback_url");
+            String alipayResult = AlipayUtil.submitClientlipay("众力飞特", "众力飞特课程支付",
+                    orderNum, orderMaster.getPrice(), alipayCallbackUrl);
+            return JsonUtils.encapsulationJSON(Constant.INTERFACE_SUCC, "调用支付宝", alipayResult).toString();
         }else if(order.getPayment() == OrderMaster.PAYMENT_WECHAT) {  // 微信支付
 
+            String tenpayCallbackUrl =SystemConfig.getString("project_base_url") +  SystemConfig.
+                    getString("wxpay_order_callback_url");
+            return WeChatPayUtil.submitPrepayToWeChat(request, response, orderNum, "众力飞特课程支付",
+                    (int) (orderMaster.getPayPrice() * 100), "众力飞特课程支付", "", tenpayCallbackUrl).toString();
         }
-        return null;
+        return JsonUtils.encapsulationJSON(Constant.INTERFACE_PARAM_ERROR, "参数有误", "").toString();
+    }
+
+    /**
+     * 订单再支付
+     */
+    public String payOrderMasterAgain(HttpServletRequest request, HttpServletResponse response, String params){
+        if(StringUtils.isEmpty(params)){
+            return JsonUtils.encapsulationJSON(Constant.INTERFACE_PARAM_ERROR, "参数有误", "").toString();
+        }
+        OrderMaster order = null;
+        try {
+            order = (OrderMaster)JsonUtils.getObject4JsonString(params, OrderMaster.class);
+        }catch (Exception e){
+            e.printStackTrace();
+            return JsonUtils.encapsulationJSON(Constant.INTERFACE_PARAM_ERROR, "参数有误", "").toString();
+        }
+        if(order.getPayment() == null || StringUtils.isEmpty(order.getOrderNum())){
+            return JsonUtils.encapsulationJSON(Constant.INTERFACE_PARAM_ERROR, "参数有误", "").toString();
+        }
+        OrderMaster orderMaster = orderMasterDao.queryOrderMaterDetail(order.getOrderNum());
+        if(orderMaster == null || (orderMaster != null && (orderMaster.getStatus() == OrderMaster.STATUS_PAYED
+                || orderMaster.getStatus() == OrderMaster.STATUS_REFUND))){
+
+            return JsonUtils.encapsulationJSON(Constant.INTERFACE_FAIL, "订单不存在或已经支付", "").toString();
+        }
+
+        return "";
+    }
+
+    /**
+     * 支付成功回调函数
+     */
+    public void payOrderMasterSuccess(String orderNum, Integer payment){
+        OrderMaster orderMaster = orderMasterDao.queryOrderMaterDetail(orderNum);
+        if(orderMaster != null && orderMaster.getStatus() == OrderMaster.STATUS_WAITING_PAY){
+            // 修改支付状态、支付时间、支付类型
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("orderNum", orderNum);
+            map.put("status", OrderMaster.STATUS_PAYED);
+            map.put("payTime", new Date());
+            map.put("payment", payment);
+            orderMasterDao.updateOrderMaster(map);
+        }
     }
 
     private OrderMaster addOrderMasterDetail(OrderMaster order, Coupon coupon, Course course, String orderNum){

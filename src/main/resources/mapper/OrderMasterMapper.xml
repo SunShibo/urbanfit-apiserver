@@ -109,4 +109,9 @@
         #{courseDistrict}, #{price}, #{payPrice}, #{isUseCoupon}, #{couponId}, #{couponNum}, #{couponPercent}, #{couponPrice}, #{payment},
         #{status}, #{createTime)
     </insert>
+
+    <update id="updateOrderMaster" parameterType="map">
+        update t_client_order_master set status = #{status}, payment = #{payment}, payTime = #{payTime}
+        where orderNum = #{orderNum}
+    </update>
 </mapper>
