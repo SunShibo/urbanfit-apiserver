@@ -97,7 +97,7 @@
     <select id="queryClientOrderMaterDetail" parameterType="map" resultType="com.urbanfit.apiserver.entity.OrderMaster">
         select m.*, n.`name` clientName, c.courseType, p.couponName, p.sourceName from
         t_client_order_master m left join t_clientinfo n on m.clientId = n.clientId left join t_course c on
-        m.courseId = c.courseId left join t_coupon p on m.couponId = p.couponId where clientId = #{clientId}
+        m.courseId = c.courseId left join t_coupon p on m.couponId = p.couponId where m.clientId = #{clientId}
         and orderNum = #{orderNum}
     </select>
 
@@ -105,9 +105,9 @@
             useGeneratedKeys="true" keyProperty="orderId">
         insert into t_client_order_master (orderNum, clientId, childrenName, clientMobile, courseId, courseName,
         courseDistrict, price, payPrice, isUseCoupon, couponId, couponNum, couponPercent, couponPrice, payment,
-        status, createTime) values (#{orderNum}, #{clientId}, #{childrenName}, #{clientMobile}, #{courseId}, #{courseName},
-        #{courseDistrict}, #{price}, #{payPrice}, #{isUseCoupon}, #{couponId}, #{couponNum}, #{couponPercent}, #{couponPrice}, #{payment},
-        #{status}, #{createTime)
+        status, createTime) values (#{orderNum}, #{clientId}, #{childrenName}, #{clientMobile}, #{courseId},
+        #{courseName}, #{courseDistrict}, #{price}, #{payPrice}, #{isUseCoupon}, #{couponId}, #{couponNum},
+        #{couponPercent}, #{couponPrice}, #{payment}, #{status}, #{createTime})
     </insert>
 
     <update id="updateOrderMaster" parameterType="map">

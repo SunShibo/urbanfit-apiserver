@@ -120,7 +120,7 @@ public class OrderMasterService {
             return JsonUtils.encapsulationJSON(Constant.INTERFACE_FAIL, "没有订单", "").toString();
         }
         JSONObject jo = new JSONObject();
-        jo.put("totalRecord", pager.getTotalRecord());
+        jo.put("totalRecord", JsonUtils.getJsonString4JavaListDate(pager.getDatas(), DateUtils.LONG_DATE_PATTERN));
         jo.put("lstOrder", pager.getDatas());
         return JsonUtils.encapsulationJSON(Constant.INTERFACE_SUCC, "查询成功", jo.toString()).toString();
     }
@@ -251,7 +251,7 @@ public class OrderMasterService {
         orderMaster.setPayPrice(payPrice);
         // 获取支付价格，如果没有使用优惠码，支付价格为课程价格，如果使用优惠码，支付价格为课程价格-优惠码价格
         if(coupon != null){
-            payPrice = payPrice - payPrice * coupon.getPercent();
+            payPrice = payPrice - (payPrice * coupon.getPercent() / (double)100);
             orderMaster.setPayPrice(payPrice);
             orderMaster.setIsUseCoupon(OrderMaster.USE_COUPON);
             orderMaster.setCouponId(coupon.getCouponId());

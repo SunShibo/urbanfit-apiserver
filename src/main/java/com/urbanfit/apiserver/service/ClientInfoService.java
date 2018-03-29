@@ -42,7 +42,7 @@ public class ClientInfoService {
         newClient.setMobile(mobile);
         newClient.setPassword(password);
         clientInfoDao.addClientInfo(newClient);
-        return JsonUtils.encapsulationJSON(Constant.INTERFACE_SUCC, "查询成功", "").toString();
+        return JsonUtils.encapsulationJSON(Constant.INTERFACE_SUCC, "注册成功", "").toString();
     }
 
     public String login(String mobile, String password){

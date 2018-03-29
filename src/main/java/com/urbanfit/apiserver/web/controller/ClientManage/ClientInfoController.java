@@ -1,6 +1,7 @@
 package com.urbanfit.apiserver.web.controller.ClientManage;
 
 import com.urbanfit.apiserver.service.ClientInfoService;
+import com.urbanfit.apiserver.service.ClientMessageService;
 import com.urbanfit.apiserver.web.controller.base.BaseCotroller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,8 @@ public class ClientInfoController extends BaseCotroller{
 
     @Resource(name = "clientInfoService")
     private ClientInfoService clientInfoService;
+    @Resource(name = "clientMessageService")
+    private ClientMessageService clientMessageService;
 
     /**
      * 客户注册
@@ -42,6 +45,15 @@ public class ClientInfoController extends BaseCotroller{
     public void updatePassword(HttpServletResponse response, String mobile, String newPassword,
                                String confirmPassword){
         String result = clientInfoService.updatePassword(mobile, newPassword, confirmPassword);
+        safeJsonPrint(response, result);
+    }
+
+    /**
+     * 发送验证码
+     */
+    @RequestMapping("/codeSignIn")
+    public void getCodeFoSignIn(HttpServletResponse response, String mobile, Integer type){
+        String result = clientMessageService.sendCodeForSignIn(mobile, type);
         safeJsonPrint(response, result);
     }
 }

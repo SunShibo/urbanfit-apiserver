@@ -1,7 +1,6 @@
 package com.urbanfit.apiserver.entity;
 
 import com.urbanfit.apiserver.common.base.BaseModel;
-
 import java.util.Date;
 
 /**

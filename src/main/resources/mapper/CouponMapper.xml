@@ -54,7 +54,7 @@
     </update>
 
     <select id="queryCouponByCouponNum" parameterType="String" resultType="com.urbanfit.apiserver.entity.Coupon">
-        select * from t_coupon where couponNum = #{couponNum} and status = 0 and beginTime &gt;= now()
-        and endTime &lt;= now()
+        select * from t_coupon where couponNum = #{couponNum} and status = 0 and beginTime &lt;= now()
+        and endTime &gt;= now()
     </select>
 </mapper>

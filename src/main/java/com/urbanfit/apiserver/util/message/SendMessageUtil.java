@@ -15,21 +15,19 @@ public class SendMessageUtil {
     private static final int APPID = 1400077931;
     private static final String APPKEY = "f0f83079a2c7fd091a039a04bc260741";
 
-    public static String sendMessage(String mobile, String content){
-        String sendResult = "fail";
+    public static void sendSignInCodeMessage(String mobile, String content){
         try {
             SmsSingleSender sender = new SmsSingleSender(APPID, APPKEY);
-            SmsSingleSenderResult result = sender.send(0, "86", mobile, "【众力飞特】" + content, "", "98018");
-            System.out.print(result);
+            ArrayList<String> params = new ArrayList<String>();
+            params.add(content);
+            SmsSingleSenderResult result = sender.sendWithParam("86", mobile, 98018, params, "", "", "");
+            System.out.println(result);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return sendResult;
     }
 
     public static void main(String args[]) throws Exception{
-        /*sendMessage("17610895083", "您的验证为123456");*/
-
         SmsSingleSender sender = new SmsSingleSender(APPID, APPKEY);
         ArrayList<String> params = new ArrayList<String>();
         params.add("123456");

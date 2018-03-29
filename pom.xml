@@ -140,6 +140,13 @@
       <version>${spring.retry.version}</version>
     </dependency>
 
+    <!--spring test依赖 -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-test</artifactId>
+      <version>${spring.version}</version>
+    </dependency>
+
     <!-- DB -->
     <dependency>
       <groupId>com.alibaba</groupId>
@@ -298,10 +305,11 @@
       <artifactId>mail</artifactId>
       <version>1.4.4</version>
     </dependency>
+
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>3.8.1</version>
+      <version>4.10</version>
       <scope>test</scope>
     </dependency>
 
