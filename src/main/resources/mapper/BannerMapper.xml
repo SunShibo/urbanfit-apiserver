@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.urbanfit.apiserver.dao.BannerDao">
+    <sql id="limit">
+        limit #{pageOffset}, #{pageSize}
+    </sql>
+
+    <select id="queryBannerCount" parameterType="map" resultType="int">
+        select count(m.bannerId) from (
+            select * from t_banner where 1 = 1
+            <if test="type != null">
+                and type = #{type}
+            </if>
+        ) m
+    </select>
+
+    <select id="queryBannerList" parameterType="map" resultType="com.urbanfit.apiserver.entity.Banner">
+        select * from t_banner where 1 = 1
+        <if test="type != null">
+            and type = #{type}
+        </if>
+        order by createTime desc
+        <include refid="limit"/>
+    </select>
+
+    <select id="queryBannerById" parameterType="int" resultType="com.urbanfit.apiserver.entity.Banner">
+        select * from t_banner where bannerId = #{bannerId}
+    </select>
+
+    <delete id="deleteBanner" parameterType="int">
+        delete from t_banner where bannerId = #{bannerId}
+    </delete>
+
+    <insert id="addBanner" parameterType="com.urbanfit.apiserver.entity.Banner"
+            useGeneratedKeys="true" keyProperty="bannerId">
+        insert into t_banner (title, type, sort, imageUrl, linkUrl, createTime, userId) values
+        (#{title}, #{type}, #{sort}, #{imageUrl}, #{linkUrl}, now(), #{userId})
+    </insert>
+
+    <update id="updateBanner" parameterType="com.urbanfit.apiserver.entity.Banner">
+        update t_banner set title = #{title}, type = #{type}, sort = #{sort}, imageUrl = #{imageUrl},
+        linkUrl = #{linkUrl}, userId = #{userId} where bannerId = #{bannerId}
+    </update>
+</mapper>

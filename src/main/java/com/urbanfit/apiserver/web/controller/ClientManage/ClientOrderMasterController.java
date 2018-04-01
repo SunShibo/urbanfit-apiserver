@@ -26,22 +26,22 @@ public class ClientOrderMasterController extends BaseCotroller{
 
     @RequestMapping("/list")
     public void queryClientOrderMaster(HttpServletResponse response, Integer clientId, String orderNum,
-                                       Integer status, Integer pageNo){
+                                       Integer status, Integer pageNo, Integer pageSize){
         String result = orderMasterService.queryClientOrderMaster(clientId, orderNum, status,
-                getQueryInfo(pageNo, null));
-        safeJsonPrint(response, result);
+                getQueryInfo(pageNo, pageSize));
+        safeTextPrint(response, result);
     }
 
     @RequestMapping("/detail")
     public void queryClientOrderMasterDetail(HttpServletResponse response, Integer clientId, String orderNum){
         String result = orderMasterService.queryClientOrderMasterDetail(clientId, orderNum);
-        safeJsonPrint(response, result);
+        safeTextPrint(response, result);
     }
 
     @RequestMapping("/add")
     public void addClientOrderMaster(HttpServletRequest request, HttpServletResponse response, String params){
         String result = orderMasterService.addClientOrderMaster(params, request, response);
-        safeJsonPrint(response, result);
+        safeTextPrint(response, result);
     }
 
     /**
@@ -50,7 +50,7 @@ public class ClientOrderMasterController extends BaseCotroller{
     @RequestMapping("/payAgain")
     public void payOrderMasterAgain(HttpServletRequest request, HttpServletResponse response, String params){
         String result = orderMasterService.payOrderMasterAgain(request, response, params);
-        safeJsonPrint(response, result);
+        safeTextPrint(response, result);
     }
 
     @RequestMapping("/orderAlipayCallback")
@@ -72,7 +72,7 @@ public class ClientOrderMasterController extends BaseCotroller{
         }else {
             log.debug("---------------支付宝回调签名验证失败-------------");
         }
-        safeJsonPrint(response, result);
+        safeTextPrint(response, result);
     }
 
     @RequestMapping("/orderWeChatPayCallback")
@@ -105,7 +105,7 @@ public class ClientOrderMasterController extends BaseCotroller{
                 result.append("<return_msg>签名验证失败</return_code>");
             }
             result.append("</xml>");
-            safeJsonPrint(response, result.toString());
+            safeTextPrint(response, result.toString());
         }catch (Exception e) {
             Logger.getLogger(getClass()).error("qlydweixinotify.do", e);
         } finally {

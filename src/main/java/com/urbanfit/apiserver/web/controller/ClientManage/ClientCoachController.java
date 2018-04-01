@@ -19,6 +19,6 @@ public class ClientCoachController extends BaseCotroller{
     @RequestMapping("list")
     public void queryCoachList(HttpServletResponse response, Integer pageNo, Integer pageSize){
         String result = coachService.queryCoachList(getQueryInfo(pageNo, pageSize));
-        safeJsonPrint(response, result);
+        safeTextPrint(response, result);
     }
 }

@@ -19,7 +19,7 @@
                 <div class="navboxa" id="menu_auth"><a href="/auth/list">认证管理</a></div>
                 <div class="navboxa" id="menu_coupon"><a href="/coupon/list">优惠码管理</a></div>
                 <div class="navboxa" id="menu_order"><a href="/order/list">订单管理</a></div>
-                <div class="navboxa" id="menu_module"><a href="#">模块管理</a></div>
+                <div class="navboxa" id="menu_module"><a href="/banner/list">banner管理</a></div>
             </div>
         </div>
     </div>

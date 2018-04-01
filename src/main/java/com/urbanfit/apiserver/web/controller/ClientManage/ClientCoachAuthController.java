@@ -23,6 +23,6 @@ public class ClientCoachAuthController extends BaseCotroller{
     @RequestMapping("/query")
     public void queryCoachAuth(HttpServletResponse response, String coachName, String coachCardNum){
         String result = coachAuthService.queryCoachAuth(coachName, coachCardNum);
-        safeJsonPrint(response, result);
+        safeTextPrint(response, result);
     }
 }

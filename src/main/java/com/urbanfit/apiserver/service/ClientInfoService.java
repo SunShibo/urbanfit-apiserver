@@ -3,6 +3,7 @@ package com.urbanfit.apiserver.service;
 import com.urbanfit.apiserver.cfg.pop.Constant;
 import com.urbanfit.apiserver.dao.ClientInfoDao;
 import com.urbanfit.apiserver.entity.ClientInfo;
+import com.urbanfit.apiserver.util.DateUtils;
 import com.urbanfit.apiserver.util.JsonUtils;
 import com.urbanfit.apiserver.util.StringUtils;
 import net.sf.json.JSONObject;
@@ -58,7 +59,7 @@ public class ClientInfoService {
             return JsonUtils.encapsulationJSON(2, "密码输入不正确", "").toString();
         }
         return JsonUtils.encapsulationJSON(Constant.INTERFACE_SUCC, "登录成功", JsonUtils.
-                getJsonString4JavaPOJO(clientInfo)).toString();
+                getJsonString4JavaPOJO(clientInfo, DateUtils.LONG_DATE_PATTERN)).toString();
     }
 
     public String updatePassword(String mobile, String newPassword, String confirmPassword){

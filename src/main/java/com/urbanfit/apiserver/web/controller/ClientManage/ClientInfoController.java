@@ -26,7 +26,7 @@ public class ClientInfoController extends BaseCotroller{
     @RequestMapping( value = "/register" )
     public void register(HttpServletResponse response, String mobile, String password, String confirmPassword){
         String result = clientInfoService.register(mobile, password, confirmPassword);
-        safeJsonPrint(response, result);
+        safeTextPrint(response, result);
     }
 
     /**
@@ -35,7 +35,7 @@ public class ClientInfoController extends BaseCotroller{
     @RequestMapping(value = "/login")
     public void login(HttpServletResponse response, String mobile, String password){
         String result = clientInfoService.login(mobile, password);
-        safeJsonPrint(response, result);
+        safeTextPrint(response, result);
     }
 
     /**
@@ -45,7 +45,7 @@ public class ClientInfoController extends BaseCotroller{
     public void updatePassword(HttpServletResponse response, String mobile, String newPassword,
                                String confirmPassword){
         String result = clientInfoService.updatePassword(mobile, newPassword, confirmPassword);
-        safeJsonPrint(response, result);
+        safeTextPrint(response, result);
     }
 
     /**
@@ -54,6 +54,6 @@ public class ClientInfoController extends BaseCotroller{
     @RequestMapping("/codeSignIn")
     public void getCodeFoSignIn(HttpServletResponse response, String mobile, Integer type){
         String result = clientMessageService.sendCodeForSignIn(mobile, type);
-        safeJsonPrint(response, result);
+        safeTextPrint(response, result);
     }
 }

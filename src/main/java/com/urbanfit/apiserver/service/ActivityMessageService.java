@@ -135,6 +135,7 @@ public class ActivityMessageService {
         if(queryInfo == null){
             return JsonUtils.encapsulationJSON(Constant.INTERFACE_PARAM_ERROR, "参数有误", "").toString();
         }
+
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("pageOffset", queryInfo.getPageOffset());
         map.put("pageSize", queryInfo.getPageSize());

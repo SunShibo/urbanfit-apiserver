@@ -120,8 +120,8 @@ public class OrderMasterService {
             return JsonUtils.encapsulationJSON(Constant.INTERFACE_FAIL, "没有订单", "").toString();
         }
         JSONObject jo = new JSONObject();
-        jo.put("totalRecord", JsonUtils.getJsonString4JavaListDate(pager.getDatas(), DateUtils.LONG_DATE_PATTERN));
-        jo.put("lstOrder", pager.getDatas());
+        jo.put("totalRecord", pager.getTotalRecord());
+        jo.put("lstOrder", JsonUtils.getJsonString4JavaListDate(pager.getDatas(), DateUtils.LONG_DATE_PATTERN));
         return JsonUtils.encapsulationJSON(Constant.INTERFACE_SUCC, "查询成功", jo.toString()).toString();
     }
 
@@ -214,11 +214,24 @@ public class OrderMasterService {
         OrderMaster orderMaster = orderMasterDao.queryOrderMaterDetail(order.getOrderNum());
         if(orderMaster == null || (orderMaster != null && (orderMaster.getStatus() == OrderMaster.STATUS_PAYED
                 || orderMaster.getStatus() == OrderMaster.STATUS_REFUND))){
-
             return JsonUtils.encapsulationJSON(Constant.INTERFACE_FAIL, "订单不存在或已经支付", "").toString();
         }
 
-        return "";
+        if (order.getPayment() == OrderMaster.PAYMENT_ALIPAY) {  // 支付宝支付
+
+            String alipayCallbackUrl = SystemConfig.getString("project_base_url") + SystemConfig.
+                    getString("alipay_order_callback_url");
+            String alipayResult = AlipayUtil.submitClientlipay("众力飞特", "众力飞特课程支付",
+                    orderMaster.getOrderNum(), orderMaster.getPrice(), alipayCallbackUrl);
+            return JsonUtils.encapsulationJSON(Constant.INTERFACE_SUCC, "调用支付宝", alipayResult).toString();
+        }else if(order.getPayment() == OrderMaster.PAYMENT_WECHAT) {  // 微信支付
+
+            String tenpayCallbackUrl =SystemConfig.getString("project_base_url") +  SystemConfig.
+                    getString("wxpay_order_callback_url");
+            return WeChatPayUtil.submitPrepayToWeChat(request, response, order.getOrderNum(), "众力飞特课程支付",
+                    (int) (orderMaster.getPayPrice() * 100), "众力飞特课程支付", "", tenpayCallbackUrl).toString();
+        }
+        return JsonUtils.encapsulationJSON(Constant.INTERFACE_PARAM_ERROR, "参数有误", "").toString();
     }
 
     /**
@@ -257,7 +270,7 @@ public class OrderMasterService {
             orderMaster.setCouponId(coupon.getCouponId());
             orderMaster.setCouponNum(coupon.getCouponNum());
             orderMaster.setCouponPercent(coupon.getPercent());
-            orderMaster.setCouponPrice(payPrice * coupon.getPercent());
+            orderMaster.setCouponPrice(payPrice * coupon.getPercent() / (double)100);
         }
         orderMaster.setPayment(order.getPayment());
         orderMaster.setStatus(OrderMaster.STATUS_WAITING_PAY);

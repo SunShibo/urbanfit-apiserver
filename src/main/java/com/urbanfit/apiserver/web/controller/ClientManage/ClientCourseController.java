@@ -17,12 +17,12 @@ public class ClientCourseController extends BaseCotroller{
     @RequestMapping("/list")
     public void queryCourseList(HttpServletResponse response){
         String result = courseService.queryClientCourseList();
-        safeJsonPrint(response, result);
+        safeTextPrint(response, result);
     }
 
     @RequestMapping("/detail")
     public void queryCourseDetail(HttpServletResponse response, Integer courseId){
         String result = courseService.queryCourseDetail(courseId);
-        safeJsonPrint(response, result);
+        safeTextPrint(response, result);
     }
 }

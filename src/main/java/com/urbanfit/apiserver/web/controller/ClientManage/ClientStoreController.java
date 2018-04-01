@@ -21,6 +21,6 @@ public class ClientStoreController extends BaseCotroller{
     public void queryStoreList(HttpServletResponse response, String provice, String city, String district,
                                Integer pageNo, Integer pageSize){
         String result = storeService.queryStoreList(provice, city, district, getQueryInfo(pageNo, pageSize));
-        safeJsonPrint(response, result);
+        safeTextPrint(response, result);
     }
 }

@@ -21,12 +21,12 @@ public class ClientActivityMessageController extends BaseCotroller{
     @RequestMapping("/list")
     public void queryActivityMessage(HttpServletResponse response, Integer pageNo, Integer pageSize){
         String result = activityMessageService.queryActivityMessageList(getQueryInfo(pageNo, pageSize));
-        safeJsonPrint(response, result);
+        safeTextPrint(response, result);
     }
 
     @RequestMapping("/detail")
     public void queryActivityMessageDetail(HttpServletResponse response, Integer messageId){
         String result = activityMessageService.queryActivityMessageDetail(messageId);
-        safeJsonPrint(response, result);
+        safeTextPrint(response, result);
     }
 }
