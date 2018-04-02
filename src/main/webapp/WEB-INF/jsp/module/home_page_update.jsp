@@ -5,9 +5,10 @@
     <title>首页模块修改</title>
     <link type="text/css" href="${pageContext.request.contextPath}/static/css/main.css" rel="stylesheet"/>
     <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/mainJs/jquery.min.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/common/ajaxupload.js"></script>
     <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/manage/home_page_update.js"></script>
     <script type="text/javascript">
-        var content = '${module.content}';
+        var moduleId = '${moduleId}';
     </script>
 </head>
 <body>
@@ -102,9 +103,8 @@
                     <tr>
                         <td></td>
                         <td>
-                            <input type="hidden" name="content" value="${module.content}">
-                            <input type="hidden" name="type" value="${module.type}">
-                            <input type="hidden" name="moduleId" value="${module.moduleId}">
+                            <input type="hidden" name="content" >
+                            <input type="hidden" name="moduleId" value="${moduleId}">
                             <a href="javascript:void(0);" id="B_submit">发布</a>
                         </td>
                     </tr>
