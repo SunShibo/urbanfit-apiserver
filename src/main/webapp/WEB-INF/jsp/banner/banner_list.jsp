@@ -5,9 +5,9 @@
 <head>
   <meta charset="utf-8" />
   <title>banner列表</title>
-  <link type="text/css" href="/static/css/main.css" rel="stylesheet"/>
-  <script type="text/javascript" src="/static/js/mainJs/jquery.min.js"></script>
-  <script type="text/javascript" src="/static/js/manage/banner_list.js"></script>
+  <link type="text/css" href="${pageContext.request.contextPath}/static/css/main.css" rel="stylesheet"/>
+  <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/mainJs/jquery.min.js"></script>
+  <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/manage/banner_list.js"></script>
   <script type="text/javascript">
       var type = '${type}';
   </script>
@@ -17,7 +17,7 @@
         <jsp:include page="../main.jsp"></jsp:include>
             <div class="indexRight1">
                 <div class="title">banner管理 > banner列表</div>
-                <form id="activityMessageForm" action="list" method="post">
+                <form id="bannerForm" action="list" method="post">
                     <div class="screen clear">
                         <div class="form">
                             <select name="type">

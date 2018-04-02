@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <title>banner添加</title>
-  <link type="text/css" href="/static/css/main.css" rel="stylesheet"/>
-  <script type="text/javascript" src="/static/js/mainJs/jquery.min.js"></script>
-  <script type="text/javascript" src="/static/js/common/ajaxupload.js"></script>
-  <script type="text/javascript" src="/static/js/manage/banner_add.js"></script>
+  <link type="text/css" href="${pageContext.request.contextPath}/static/css/main.css" rel="stylesheet"/>
+  <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/mainJs/jquery.min.js"></script>
+  <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/common/ajaxupload.js"></script>
+  <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/manage/banner_add.js"></script>
 </head>
 <body>
     <div class="index clear">
@@ -38,7 +38,7 @@
                                 <td>
                                     <div class="suolue">
                                         <div class="uploadimg">
-                                            <img width="160px;" height="160px;" id="uploadImage" src="/static/img/u37.png"/>
+                                            <img width="160px;" height="160px;" id="uploadImage" src="../static/img/u37.png"/>
                                             <input type="hidden" name="imageUrl"><br/>
                                         </div>
                                         <div class="zi">

@@ -3,8 +3,8 @@
 <head>
     <meta charset="utf-8" />
     <title>教练认证</title>
-    <link type="text/css" href="/static/css/main.css" rel="stylesheet"/>
-    <script type="text/javascript" src="/static/js/mainJs/jquery.min.js"></script>
+    <link type="text/css" href="${pageContext.request.contextPath}/static/css/main.css" rel="stylesheet"/>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/mainJs/jquery.min.js"></script>
     <script type="text/javascript">
         $(function (){
             // 添加菜单样式

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.urbanfit.apiserver.dao.ModuleDao">
+
+    <select id="queryModule" resultType="com.urbanfit.apiserver.entity.Module">
+        select * from t_module
+    </select>
+
+    <select id="queryModuleById" parameterType="int" resultType="com.urbanfit.apiserver.entity.Module">
+        select * from t_module where moduleId = #{moduleId}
+    </select>
+
+    <update id="updateModule" parameterType="com.urbanfit.apiserver.entity.Module">
+        update t_module set content = #{content} where moduleId = #{moduleId}
+    </update>
+
+    <update id="updateModuleStatus" parameterType="map">
+        update t_module set status = #{status} where moduleId = #{moduleId}
+    </update>
+</mapper>
