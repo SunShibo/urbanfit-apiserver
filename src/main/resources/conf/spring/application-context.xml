@@ -3,11 +3,16 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:p="http://www.springframework.org/schema/p"
        xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:task="http://www.springframework.org/schema/task"
        xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+	    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd 
-        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/task
+        http://www.springframework.org/schema/task/spring-task-3.0.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
     <import resource="../mybatis/datasource.xml"/>
 
@@ -33,4 +38,10 @@
           class="com.urbanfit.apiserver.system.systemConfig.SystemInitializationConfigurer" >
     </bean>
 
+    <!--定时任务配置-->
+    <context:component-scan base-package="com.urbanfit.apiserver.timer"/>
+    <!-- Enables the Spring Task @Scheduled programming model -->
+    <task:executor id="executor" pool-size="1"/>
+    <task:scheduler id="scheduler" pool-size="1"/>
+    <task:annotation-driven executor="executor" scheduler="scheduler"/>
 </beans>
