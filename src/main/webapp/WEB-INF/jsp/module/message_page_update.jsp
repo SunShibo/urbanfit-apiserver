@@ -19,49 +19,65 @@
                     <div class="tablebox2">
                         <table cellpadding="0" cellspacing="0" border="0">
                             <tr>
-                                <td class="td1">标题一：</td>
+                                <td class="td1"><strong>位置一：</strong></td>
+                                <td class="td2"></td>
+                            </tr>
+                            <tr>
+                                <td class="td1">标题：</td>
                                 <td class="td2">
                                     <input type="text" name="title_1" placeholder="请输入标题" data-mid="1" data-mtext="一">
                                 </td>
                             </tr>
                             <tr>
-                                <td class="td1">链接地址一：</td>
+                                <td class="td1">链接地址：</td>
                                 <td class="td2">
                                     <input type="text" name="linkUrl_1" placeholder="请输入链接地址" data-mid="1" data-mtext="一">
                                 </td>
                             </tr>
                             <tr>
-                                <td>标题二：</td>
+                                <td><strong>位置二：</strong></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>标题：</td>
                                 <td>
                                     <input type="text" name="title_2" placeholder="请输入标题" data-mid="2" data-mtext="二">
                                 </td>
                             </tr>
                             <tr>
-                                <td>链接地址二：</td>
+                                <td>链接地址：</td>
                                 <td>
                                     <input type="text" name="linkUrl_2" placeholder="请输入链接地址" data-mid="2" data-mtext="二">
                                 </td>
                             </tr>
                             <tr>
-                                <td>标题三：</td>
+                                <td><strong>位置三：</strong></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>标题：</td>
                                 <td>
                                     <input type="text" name="title_3" placeholder="请输入标题" data-mid="3" data-mtext="三">
                                 </td>
                             </tr>
                             <tr>
-                                <td>链接地址三：</td>
+                                <td>链接地址：</td>
                                 <td>
                                     <input type="text" name="linkUrl_3" placeholder="请输入链接地址" data-mid="3" data-mtext="三">
                                 </td>
                             </tr>
                             <tr>
-                                <td>标题四：</td>
+                                <td><strong>位置四：</strong></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>标题：</td>
                                 <td>
                                     <input type="text" name="title_4" placeholder="请输入标题" data-mid="4" data-mtext="四">
                                 </td>
                             </tr>
                             <tr>
-                                <td>链接地址四：</td>
+                                <td>链接地址：</td>
                                 <td>
                                     <input type="text" name="linkUrl_4" placeholder="请输入链接地址" data-mid="4" data-mtext="四">
                                 </td>

@@ -17,17 +17,17 @@ function initHomePageInfo(){
                 return ;
             }else{
                 var content = result.data.module.content;
+                var baseUrl = result.data.baseUrl;
                 if(content != ""){
-                    $.each(JSON.parse(content), function (i, n){
+                    $.each(content, function (i, n){
                         var index = parseInt(i + 1);
                         $("input[name='title_" + index + "']").val(n.title);
                         $("input[name='linkUrl_" + index + "']").val(n.linkUrl);
-                        if(n.imageUrl != "undefined"){
+                        // 缩略图地址
+                        if(index == 1){
                             $("#uploadImage").attr("src", baseUrl + n.imageUrl);
-                            $("input[name='imageUrl']").val(resultData.imageUrl);
-                        }
-                        if(n.remark != "undefined"){
-                            $("input[name='remark']").val(n.remark);
+                            $("input[name='imageUrl_" + index + "']").val(n.imageUrl);
+                            $("input[name='remark_" + index + "']").val(n.remark);
                         }
                     })
                 }
@@ -57,12 +57,12 @@ function updateHomePageInfo(){
         var imageUrl = "";
         var remark = "";
         if(mid == 1){
-            imageUrl = $("input[name='imageUrl']").val();
-            remark = $("input[name='remark']").val();
+            imageUrl = $("input[name='imageUrl_" + mid + "']").val();
+            remark = $("input[name='remark_" + mid + "']").val();
         }
         if(title != "" && linkUrl != ""){
             contentArr.push('{"title":"' + title + '","linkUrl":"' + linkUrl + '","imageUrl":"'
-                + imageUrl + ',"remark":"' + remark + '"}');
+                + imageUrl + '","remark":"' + remark + '"}');
         }
     });
     // 如果不满足添加修改条件，直接返回
@@ -125,7 +125,7 @@ function uploadImageUrl(){
             }else if(response.message == "success"){
                 var resultData = response.data;
                 $("#uploadImage").attr("src", resultData.baseUrl + resultData.imageUrl);
-                $("input[name='imageUrl']").val(resultData.imageUrl);
+                $("input[name='imageUrl_1']").val(resultData.imageUrl);
             }
         }
     });
