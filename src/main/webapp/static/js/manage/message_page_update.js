@@ -1,4 +1,8 @@
 $(function(){
+    // 添加菜单样式
+    $("div[id^='menu_']").removeClass("on");
+    $("div[id='menu_module']").addClass("on");
+
     initMessagePageInfo();
     $("#B_submit").click(updateMessagePageInfo);
 })

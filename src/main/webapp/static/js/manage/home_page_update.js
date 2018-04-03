@@ -1,4 +1,8 @@
 $(function(){
+    // 添加菜单样式
+    $("div[id^='menu_']").removeClass("on");
+    $("div[id='menu_module']").addClass("on");
+
     initHomePageInfo();  // 初始化页面信息
     $("#B_submit").click(updateHomePageInfo);
     uploadImageUrl();    // 上传图片
