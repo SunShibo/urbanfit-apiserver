@@ -14,7 +14,7 @@ public class OrderMaster extends BaseModel{
     public static final int NO_USE_COUPON = 0;
     public static final int USE_COUPON = 1;
     /**
-     * 支付状态 0：未支付  1：已支付  2：已退款
+     * 支付状态 0：未支付  1：已支付  2：已退款  3：系统自动取消
      */
     public static final int STATUS_WAITING_PAY = 0;
     public static final int STATUS_PAYED = 1;

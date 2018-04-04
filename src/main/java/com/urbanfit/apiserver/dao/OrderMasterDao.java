@@ -29,4 +29,6 @@ public interface OrderMasterDao {
     public void addOrderMaster(OrderMaster orderMaster);
 
     public void updateOrderMaster(Map<String, Object> map);
+
+    public void systemCancleOrderMaster();
 }

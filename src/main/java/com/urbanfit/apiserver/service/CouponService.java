@@ -78,6 +78,10 @@ public class CouponService {
         return JsonUtils.encapsulationJSON(Constant.INTERFACE_SUCC, "设置为过期状态成功", "").toString();
     }
 
+    public void updateCouponExpired(){
+        couponDao.updateCouponExpired();
+    }
+
     private String getCouponNum() {
         String couponNum = "";
         do {

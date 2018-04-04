@@ -250,6 +250,10 @@ public class OrderMasterService {
         }
     }
 
+    public void systemCancleOrderMaster(){
+        orderMasterDao.systemCancleOrderMaster();
+    }
+
     private OrderMaster addOrderMasterDetail(OrderMaster order, Coupon coupon, Course course, String orderNum){
         OrderMaster orderMaster = new OrderMaster();
         orderMaster.setClientId(order.getClientId());
