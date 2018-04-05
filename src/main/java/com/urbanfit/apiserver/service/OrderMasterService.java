@@ -27,6 +27,7 @@ import org.springframework.util.CollectionUtils;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -279,8 +280,20 @@ public class OrderMasterService {
         orderMaster.setPayment(order.getPayment());
         orderMaster.setStatus(OrderMaster.STATUS_WAITING_PAY);
         orderMaster.setCreateTime(new Date());
+        // 设置订单自动取消时间  半个小时之后取消
+        orderMaster.setSystemCancleTime(getSystemCancleTime());
         // 添加订单
         orderMasterDao.addOrderMaster(orderMaster);
         return orderMaster;
+    }
+
+
+    private Date getSystemCancleTime() {
+        long curren = System.currentTimeMillis();
+        curren += 30 * 60 * 1000;
+        Date systemCancleTime = new Date(curren);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        System.out.println(dateFormat.format(systemCancleTime));
+        return systemCancleTime;
     }
 }

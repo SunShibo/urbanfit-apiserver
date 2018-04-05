@@ -18,4 +18,8 @@
     <update id="updateModuleStatus" parameterType="map">
         update t_module set status = #{status} where moduleId = #{moduleId}
     </update>
+
+    <select id="queryModuleByType" parameterType="int" resultType="com.urbanfit.apiserver.entity.Module">
+        select * from t_module where type = #{type} and status = 0
+    </select>
 </mapper>

@@ -50,8 +50,8 @@ public class CouponService {
         coupon.setCouponName(couponName);
         coupon.setSourceName(sourceName);
         coupon.setPercent(percent);
-        coupon.setBeginTime(DateUtils.parseDate(beginTime, DateUtils.DATE_PATTERN));
-        coupon.setEndTime(DateUtils.parseDate(endTime, DateUtils.DATE_PATTERN));
+        coupon.setBeginTime(DateUtils.getCurrentDayStartTime(DateUtils.parseDate(beginTime, DateUtils.DATE_PATTERN)));
+        coupon.setEndTime(DateUtils.getCurrentDayEndTime(DateUtils.parseDate(endTime, DateUtils.DATE_PATTERN)));
         // 生成优惠码
         coupon.setCouponNum(getCouponNum());
         couponDao.addCoupon(coupon);

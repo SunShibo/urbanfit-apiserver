@@ -2,13 +2,16 @@ package com.urbanfit.apiserver.service;
 
 import com.urbanfit.apiserver.cfg.pop.Constant;
 import com.urbanfit.apiserver.cfg.pop.SystemConfig;
+import com.urbanfit.apiserver.dao.BannerDao;
 import com.urbanfit.apiserver.dao.ModuleDao;
+import com.urbanfit.apiserver.entity.Banner;
 import com.urbanfit.apiserver.entity.Module;
 import com.urbanfit.apiserver.entity.dto.ResultDTOBuilder;
 import com.urbanfit.apiserver.util.DateUtils;
 import com.urbanfit.apiserver.util.JsonUtils;
 import com.urbanfit.apiserver.util.UploadImageUtil;
 import net.sf.json.JSONObject;
+import org.apache.commons.collections.CollectionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -26,6 +29,8 @@ import java.util.Map;
 public class ModuleService {
     @Resource
     private ModuleDao moduleDao;
+    @Resource
+    private BannerDao bannerDao;
 
     public List<Module> queryModule(){
         return moduleDao.queryModule();
@@ -85,6 +90,20 @@ public class ModuleService {
         JSONObject jo = new JSONObject();
         jo.put("baseUrl", SystemConfig.getString("image_base_url"));
         jo.put("module", JsonUtils.getJsonString4JavaPOJO(module, DateUtils.LONG_DATE_PATTERN));
+        return JsonUtils.encapsulationJSON(Constant.INTERFACE_SUCC, "查询成功", jo.toString()).toString();
+    }
+
+    public String queryModuleList(Integer type){
+        if(type == null){
+            return JsonUtils.encapsulationJSON(Constant.INTERFACE_PARAM_ERROR, "参数有误", "").toString();
+        }
+        List<Banner> lstBanner = bannerDao.queryBannerByType(type);
+        Module module = moduleDao.queryModuleByType(type);
+        JSONObject jo = new JSONObject();
+        jo.put("baseUrl", SystemConfig.getString("image_base_url"));
+        jo.put("lstBanner", CollectionUtils.isEmpty(lstBanner) ? "" : JsonUtils.getJsonString4JavaListDate(
+                lstBanner, DateUtils.LONG_DATE_PATTERN));
+        jo.put("module", module == null ? "" : JsonUtils.getJsonString4JavaPOJO(module, DateUtils.LONG_DATE_PATTERN));
         return JsonUtils.encapsulationJSON(Constant.INTERFACE_SUCC, "查询成功", jo.toString()).toString();
     }
 }

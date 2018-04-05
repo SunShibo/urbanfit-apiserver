@@ -33,7 +33,7 @@ public class Timer {
     /**
      * 优惠码设置为已过期
      */
-    @Scheduled(cron = "0 0/5 * * * *")
+    @Scheduled(cron = "1 0 0 * * *")
     public void systemSetCouponExpired(){
         log.info("===================优惠码过期定时器开始=========================");
         couponService.updateCouponExpired();

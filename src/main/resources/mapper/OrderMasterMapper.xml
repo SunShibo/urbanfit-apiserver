@@ -105,9 +105,9 @@
             useGeneratedKeys="true" keyProperty="orderId">
         insert into t_client_order_master (orderNum, clientId, childrenName, clientMobile, courseId, courseName,
         courseDistrict, price, payPrice, isUseCoupon, couponId, couponNum, couponPercent, couponPrice, payment,
-        status, createTime) values (#{orderNum}, #{clientId}, #{childrenName}, #{clientMobile}, #{courseId},
-        #{courseName}, #{courseDistrict}, #{price}, #{payPrice}, #{isUseCoupon}, #{couponId}, #{couponNum},
-        #{couponPercent}, #{couponPrice}, #{payment}, #{status}, #{createTime})
+        status, createTime, systemCancleTime) values (#{orderNum}, #{clientId}, #{childrenName}, #{clientMobile},
+        #{courseId},#{courseName}, #{courseDistrict}, #{price}, #{payPrice}, #{isUseCoupon}, #{couponId}, #{couponNum},
+        #{couponPercent}, #{couponPrice}, #{payment}, #{status}, #{createTime}, #{systemCancleTime})
     </insert>
 
     <update id="updateOrderMaster" parameterType="map">
@@ -116,6 +116,6 @@
     </update>
 
     <update id="systemCancleOrderMaster">
-        update t_client_order_master set status = 3 where status = 0 and expireTime &lt;= now()
+        update t_client_order_master set status = 3 where status = 0 and systemCancleTime &lt;= now()
     </update>
 </mapper>

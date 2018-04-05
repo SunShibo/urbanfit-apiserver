@@ -42,4 +42,8 @@
         update t_banner set title = #{title}, type = #{type}, sort = #{sort}, imageUrl = #{imageUrl},
         linkUrl = #{linkUrl}, userId = #{userId} where bannerId = #{bannerId}
     </update>
+
+    <select id="queryBannerByType" parameterType="int" resultType="com.urbanfit.apiserver.entity.Banner">
+        select * from t_banner where type = #{type}
+    </select>
 </mapper>

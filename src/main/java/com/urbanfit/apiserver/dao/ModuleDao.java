@@ -17,4 +17,6 @@ public interface ModuleDao {
     public void updateModule(Module module);
 
     public void updateModuleStatus(Map<String, Object> map);
+
+    public Module queryModuleByType(Integer type);
 }

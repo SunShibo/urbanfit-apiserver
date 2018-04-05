@@ -21,4 +21,6 @@ public interface BannerDao {
     public void addBanner(Banner banner);
 
     public void updateBanner(Banner banner);
+
+    public List<Banner> queryBannerByType(Integer type);
 }
