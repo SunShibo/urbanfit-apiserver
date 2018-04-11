@@ -5,11 +5,6 @@
     <meta charset="utf-8" />
     <title>课程修改</title>
     <link type="text/css" href="${pageContext.request.contextPath}/static/css/main.css" rel="stylesheet"/>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/mainJs/jquery.min.js"></script>
-    <script charset="utf-8" src="${pageContext.request.contextPath}/static/js/kindeditor/kindeditor-all-min.js"></script>
-    <script charset="utf-8" src="${pageContext.request.contextPath}/static/js/kindeditor/zh_CN.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/common/ajaxupload.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/manage/course_update.js"></script>
     <style>
         .ke-container{width: 96% !important;}
     </style>
@@ -49,6 +44,14 @@
                                 </td>
                             </tr>
                             <tr>
+                                <td>所属区域：</td>
+                                <td>
+                                    <div id="courseDistrictDiv" class="select"></div>
+                                    <input type="hidden" name="districtIndex" value="1">
+                                    <input type="hidden" name="courseDistrict" value="${course.courseDistrict}">
+                                </td>
+                            </tr>
+                            <tr>
                                 <td>课程图片：</td>
                                 <td>
                                     <div class="suolue">
@@ -59,7 +62,7 @@
                                             <c:if test="${course.courseImageUrl != null}">
                                                 <img width="160px;" height="160px;" id="uploadImage" src="${baseUrl}${course.courseImageUrl}"/>
                                             </c:if>
-                                            <input type="hidden" name="courseImageUrl" value="${ccourse.courseImageUrl}"><br/>
+                                            <input type="hidden" name="courseImageUrl" value="${course.courseImageUrl}"><br/>
                                         </div>
                                         <div class="zi">
                                             <span style="color:#FF0000;">*必填</span>
@@ -93,4 +96,11 @@
             </div>
         </div>
     </div>
+
+    <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/mainJs/jquery.min.js"></script>
+    <script charset="utf-8" src="${pageContext.request.contextPath}/static/js/kindeditor/kindeditor-all-min.js"></script>
+    <script charset="utf-8" src="${pageContext.request.contextPath}/static/js/kindeditor/zh_CN.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/common/ajaxupload.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/common/cityselect.js"></script>
+    <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/manage/course_update.js"></script>
 </body>
