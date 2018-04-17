@@ -3,10 +3,10 @@
 <head>
     <meta charset="utf-8" />
     <title>首页模块修改</title>
-    <link type="text/css" href="${pageContext.request.contextPath}/static/css/main.css" rel="stylesheet"/>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/mainJs/jquery.min.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/common/ajaxupload.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/manage/home_page_update.js"></script>
+    <link type="text/css" href="/static/css/main.css" rel="stylesheet"/>
+    <script type="text/javascript" src="/static/js/mainJs/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/common/ajaxupload.js"></script>
+    <script type="text/javascript" src="/static/js/manage/home_page_update.js"></script>
     <script type="text/javascript">
         var moduleId = '${moduleId}';
     </script>

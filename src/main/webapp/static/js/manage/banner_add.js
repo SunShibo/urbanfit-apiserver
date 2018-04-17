@@ -1,4 +1,8 @@
 $(function (){
+    // 添加菜单样式
+    $("div[id^='menu_']").removeClass("on");
+    $("div[id='menu_banner']").addClass("on");
+
     $("#B_submit").click(addBanner);
     uploadImageUrl();
     $("#B_delete_imageUrl").click(deleteImageUrl);

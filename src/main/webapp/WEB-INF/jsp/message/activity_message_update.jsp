@@ -4,12 +4,12 @@
 <head>
     <meta charset="utf-8" />
     <title>活动资讯修改</title>
-    <link type="text/css" href="${pageContext.request.contextPath}/static/css/main.css" rel="stylesheet"/>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/mainJs/jquery.min.js"></script>
-    <script charset="utf-8" src="${pageContext.request.contextPath}/static/js/kindeditor/kindeditor-all-min.js"></script>
-    <script charset="utf-8" src="${pageContext.request.contextPath}/static/js/kindeditor/zh_CN.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/common/ajaxupload.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/manage/activity_message_update.js"></script>
+    <link type="text/css" href="/static/css/main.css" rel="stylesheet"/>
+    <script type="text/javascript" src="/static/js/mainJs/jquery.min.js"></script>
+    <script charset="utf-8" src="/static/js/kindeditor/kindeditor-all-min.js"></script>
+    <script charset="utf-8" src="/static/js/kindeditor/zh_CN.js"></script>
+    <script type="text/javascript" src="/static/js/common/ajaxupload.js"></script>
+    <script type="text/javascript" src="/static/js/manage/activity_message_update.js"></script>
     <style>
         .ke-container{width: 96% !important;}
     </style>

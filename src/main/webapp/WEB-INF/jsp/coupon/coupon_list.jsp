@@ -5,9 +5,9 @@
 <head>
     <meta charset="utf-8" />
     <title>优惠券列表</title>
-    <link type="text/css" href="${pageContext.request.contextPath}/static/css/main.css" rel="stylesheet"/>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/mainJs/jquery.min.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/manage/coupon_list.js"></script>
+    <link type="text/css" href="static/css/main.css" rel="stylesheet"/>
+    <script type="text/javascript" src="static/js/mainJs/jquery.min.js"></script>
+    <script type="text/javascript" src="static/js/manage/coupon_list.js"></script>
     <script type="text/javascript">
         var stauts = '${status}';
     </script>

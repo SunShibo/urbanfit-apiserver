@@ -3,9 +3,9 @@
 <head>
     <meta charset="utf-8" />
     <title>活动资讯模块修改</title>
-    <link type="text/css" href="${pageContext.request.contextPath}/static/css/main.css" rel="stylesheet"/>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/mainJs/jquery.min.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/manage/message_page_update.js"></script>
+    <link type="text/css" href="/static/css/main.css" rel="stylesheet"/>
+    <script type="text/javascript" src="/static/js/mainJs/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/manage/message_page_update.js"></script>
     <script type="text/javascript">
         var content = '${module.content}';
     </script>

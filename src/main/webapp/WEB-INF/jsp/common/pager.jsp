@@ -2,8 +2,8 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="pg" uri="http://jsptags.com/tags/navigation/pager" %>
 
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/mainJs/jquery.min.js"></script>
-<script type="text/javascript" src="${pageContext.request.contextPath}/static/js/common/pager.js"></script>
+<script type="text/javascript" src="/static/js/mainJs/jquery.min.js"></script>
+<script type="text/javascript" src="/static/js/common/pager.js"></script>
 <%
   String pageSize = request.getParameter("pageSize");
   if (null == pageSize || "".equals(pageSize)) {

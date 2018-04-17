@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <title>门店信息添加</title>
-    <link type="text/css" href="${pageContext.request.contextPath}/static/css/main.css" rel="stylesheet"/>
+    <link type="text/css" href="/static/css/main.css" rel="stylesheet"/>
 </head>
 <body>
     <div class="index clear">
@@ -63,7 +63,7 @@
         </div>
     </div>
 
-    <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/mainJs/jquery.min.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/common/cityselect.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/manage/store_add.js"></script>
+    <script type="text/javascript" src="/static/js/mainJs/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/common/cityselect.js"></script>
+    <script type="text/javascript" src="/static/js/manage/store_add.js"></script>
 </body>

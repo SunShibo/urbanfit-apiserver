@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8" />
     <title>订单列表</title>
-    <link type="text/css" href="${pageContext.request.contextPath}/static/css/main.css" rel="stylesheet"/>
+    <link type="text/css" href="/static/css/main.css" rel="stylesheet"/>
     <script type="text/javascript">
         var orderMaster = {
             "status" : '${status}',
@@ -102,7 +102,7 @@
             </div>
         </div>
     </div>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/mainJs/jquery.min.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/common/cityselect.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/manage/order_master_list.js"></script>
+    <script type="text/javascript" src="/static/js/mainJs/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/common/cityselect.js"></script>
+    <script type="text/javascript" src="/static/js/manage/order_master_list.js"></script>
 </body>

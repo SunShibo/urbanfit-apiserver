@@ -3,10 +3,10 @@
 <head>
     <meta charset="utf-8" />
     <title>优惠码信息添加</title>
-    <link type="text/css" href="${pageContext.request.contextPath}/static/css/main.css" rel="stylesheet"/>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/mainJs/jquery.min.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/datepicker/WdatePicker.js"></script>
-    <script type="text/javascript" src="${pageContext.request.contextPath}/static/js/manage/coupon_add.js"></script>
+    <link type="text/css" href="/static/css/main.css" rel="stylesheet"/>
+    <script type="text/javascript" src="/static/js/mainJs/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/datepicker/WdatePicker.js"></script>
+    <script type="text/javascript" src="/static/js/manage/coupon_add.js"></script>
 </head>
 <body>
     <div class="index clear">
