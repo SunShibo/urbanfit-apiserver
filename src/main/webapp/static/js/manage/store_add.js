@@ -44,7 +44,7 @@ function addStore(){
         alert("详细地址不能为空");
         return ;
     }
-    var mobile = $("input[name='mobile']").val();
+    /*var mobile = $("input[name='mobile']").val();
     if(mobile == ""){
         alert("联系电话不能为空");
         return ;
@@ -59,7 +59,7 @@ function addStore(){
     if(contactName == ""){
         alert("联系人不能为空");
         return ;
-    }
+    }*/
     $.ajax({
         type : "post",
         url : "add",

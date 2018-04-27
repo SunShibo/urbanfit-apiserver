@@ -30,7 +30,7 @@ public class StoreService {
     public String addStore(Store store){
         if(store == null || (store != null && (StringUtils.isEmpty(store.getStoreName())
                 || StringUtils.isEmpty(store.getStoreDistrict()) || StringUtils.isEmpty(store.getStoreAddress())
-                || StringUtils.isEmpty(store.getMobile()) || StringUtils.isEmpty(store.getContactName())))){
+                /*|| StringUtils.isEmpty(store.getMobile()) || StringUtils.isEmpty(store.getContactName())*/))){
             return JsonUtils.getJsonString4JavaPOJO(ResultDTOBuilder.failure("0", "参数有误")) ;
         }
         // 根据门店名称查询是否添加过该门店
@@ -45,7 +45,7 @@ public class StoreService {
     public String updateStore(Store store){
         if(store == null || (store != null && (store.getStoreId() == null || StringUtils.isEmpty(store.getStoreName())
                 || StringUtils.isEmpty(store.getStoreDistrict()) || StringUtils.isEmpty(store.getStoreAddress())
-                || StringUtils.isEmpty(store.getMobile()) || StringUtils.isEmpty(store.getContactName())))){
+                /*|| StringUtils.isEmpty(store.getMobile()) || StringUtils.isEmpty(store.getContactName())*/))){
             return JsonUtils.getJsonString4JavaPOJO(ResultDTOBuilder.failure("0", "参数有误")) ;
         }
         Map<String, Object> map = new HashMap<String, Object>();
