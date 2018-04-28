@@ -40,6 +40,21 @@
                                 </td>
                             </tr>
                             <tr>
+                                <td>详情图：</td>
+                                <td>
+                                    <div class="suolue">
+                                        <div class="uploadimg">
+                                            <img width="160px;" height="160px;" id="uploadDetailImage" src="../static/img/u37.png"/>
+                                            <input type="hidden" name="detailImage" value="${activityMessage.detailImage}"><br/>
+                                        </div>
+                                        <div class="zi">
+                                            <span style="color:#FF0000;">*必填</span>
+                                            <p class="del" id="B_delete_detailImage">删除</p>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
                                 <td>内&nbsp;&nbsp;容：</td>
                                 <td>
                                     <div class="edit">

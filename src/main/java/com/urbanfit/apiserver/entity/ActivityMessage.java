@@ -11,6 +11,7 @@ public class ActivityMessage extends BaseModel{
     private Integer messageId;
     private String title;
     private String thumbnails;
+    private String detailImage;
     private String content;
     private Integer userId;
     private Date createTime;
@@ -61,5 +62,13 @@ public class ActivityMessage extends BaseModel{
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public String getDetailImage() {
+        return detailImage;
+    }
+
+    public void setDetailImage(String detailImage) {
+        this.detailImage = detailImage;
     }
 }

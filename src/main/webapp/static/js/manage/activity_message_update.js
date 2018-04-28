@@ -19,13 +19,22 @@ $(function (){
 
     // 上传缩略图
     uploadThumbnails();
-    $("#B_submit").click(updateActivityMessage);
     $("#B_delete_thumbnails").click(deleteThumbnails);
+    // 上传详情图
+    uploadDetailImage();
+    $("#B_delete_detailImage").click(deleteDetailImage);
+
+    $("#B_submit").click(updateActivityMessage);
 })
 
 function deleteThumbnails(){
     $("#uploadImage").attr("src", "");
     $("input[name='thumbnails']").val("");
+}
+
+function deleteDetailImage(){
+    $("#uploadDetailImage").attr("src", "");
+    $("input[name='detailImage']").val("");
 }
 
 function updateActivityMessage(){
@@ -83,6 +92,38 @@ function uploadThumbnails(){
                 var resultData = response.data;
                 $("#uploadImage").attr("src", resultData.baseUrl + resultData.thumbnailsUrl);
                 $("input[name='thumbnails']").val(resultData.thumbnailsUrl);
+            }
+        }
+    });
+}
+
+function uploadDetailImage(){
+    var button = $("#uploadDetailImage"), interval;
+    new AjaxUpload(button, {
+        action: "uploadThumbnails",
+        type:"post",
+        name: 'myFile',
+        responseType : 'json',
+        onSubmit: function(file, ext) {
+            if (!(ext && /^(jpg|JPG|png|PNG|gif|GIF)$/.test(ext))) {
+                alert("您上传的图片格式不对，请重新选择！");
+                return false;
+            }
+        },
+        onComplete: function(file, response) {
+            if(response.message == "big"){
+                alert("图片太大，请重新选择！");
+                return ;
+            }else if(response.message == "paramError"){
+                alert("参数有误！");
+                return ;
+            }else if(response.message == "fail"){
+                alert("修改失败，请重新修改！");
+                return ;
+            }else if(response.message == "success"){
+                var resultData = response.data;
+                $("#uploadDetailImage").attr("src", resultData.baseUrl + resultData.thumbnailsUrl);
+                $("input[name='detailImage']").val(resultData.thumbnailsUrl);
             }
         }
     });
