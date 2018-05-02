@@ -34,11 +34,9 @@ function addStore(){
         alert("请选择省市区信息");
         return ;
     }
-    var storeDistrict = proviceInfo + "," + cityInfo;
-    if(districtInfo != null){
-        storeDistrict += "," + districtInfo;
-    }
+    var storeDistrict = proviceInfo + "," + cityInfo + "," + districtInfo;
     $("input[name='storeDistrict']").val(storeDistrict);
+
     var storeAddress = $("input[name='storeAddress']").val();
     if(storeAddress == ""){
         alert("详细地址不能为空");

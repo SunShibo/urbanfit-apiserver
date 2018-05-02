@@ -11,9 +11,7 @@ $(function(){
         var storeDistrictArr = storeDistrict.split(",");
         proviceInfo = storeDistrictArr[0];
         cityInfo = storeDistrictArr[1];
-        if(storeDistrictArr.length == 3){
-            districtInfo = storeDistrictArr[2];
-        }
+        districtInfo = storeDistrictArr[2];
     }
     $("#city_info").citySelect({
         prov : proviceInfo,
@@ -47,11 +45,9 @@ function updateStore(){
         alert("请选择省市区信息");
         return ;
     }
-    var storeDistrict = proviceInfo + "," + cityInfo;
-    if(districtInfo != null){
-        storeDistrict += "," + districtInfo;
-    }
+    var storeDistrict = proviceInfo + "," + cityInfo +  "," + districtInfo;;
     $("input[name='storeDistrict']").val(storeDistrict);
+
     var storeAddress = $("input[name='storeAddress']").val();
     if(storeAddress == ""){
         alert("详细地址不能为空");

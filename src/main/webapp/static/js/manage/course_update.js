@@ -72,10 +72,7 @@ function updateCourse(){
             isCity = false;
             return false;
         }
-        var courseDistrict = proviceInfo + "," + cityInfo;
-        if(districtInfo != null){
-            courseDistrict += "," + districtInfo;
-        }
+        var courseDistrict = proviceInfo + "," + cityInfo + "," + districtInfo;;
         courseDistrictArr.push(courseDistrict);
     });
 
@@ -165,10 +162,7 @@ function initCityInfo(){
             var courseDirectArr = n.split(",");
             var proviceInfo = courseDirectArr[0];
             var cityInfo = courseDirectArr[1];
-            var districtInfo;
-            if(courseDirectArr.length == 3){
-                districtInfo = courseDirectArr[2];
-            }
+            var districtInfo = courseDirectArr[2];
 
             $("input[id^='delete_courseDistrict_']").click(function (){
                 var index = $(this).data("index");
