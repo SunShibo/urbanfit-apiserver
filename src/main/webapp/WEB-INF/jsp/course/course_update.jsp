@@ -101,6 +101,6 @@
     <script charset="utf-8" src="/static/js/kindeditor/kindeditor-all-min.js"></script>
     <script charset="utf-8" src="/static/js/kindeditor/zh_CN.js"></script>
     <script type="text/javascript" src="/static/js/common/ajaxupload.js"></script>
-    <script type="text/javascript" src="/static/js/common/cityselect.js"></script>
+    <script type="text/javascript" src="/static/js/common/distpicker.js"></script>
     <script type="text/javascript" src="/static/js/manage/course_update.js"></script>
 </body>

@@ -23,10 +23,10 @@
                                 <td>所属区域：</td>
                                 <td>
                                     <div class="select">
-                                        <div id="city_info">
+                                        <div id="distpicker">
                                             <select class="prov" id="proviceId" name="provice"></select>
-                                            <select class="city" id="cityId" disabled="disabled" name="city"></select>
-                                            <select class="dist" id="districtId" disabled="disabled" name="district"></select>
+                                            <select class="city" id="cityId" name="city"></select>
+                                            <select class="dist" id="districtId" name="district"></select>
                                             <input type="hidden" name="storeDistrict" value="${store.storeDistrict}">
                                         </div>
                                     </div>
@@ -65,7 +65,7 @@
     </div>
 
     <script type="text/javascript" src="/static/js/mainJs/jquery.min.js"></script>
-    <script type="text/javascript" src="/static/js/common/cityselect.js"></script>
+    <script type="text/javascript" src="/static/js/common/distpicker.js"></script>
     <script type="text/javascript" src="/static/js/manage/store_update.js"></script>
     <script type="text/javascript">
         var storeDistrict = '${store.storeDistrict}';

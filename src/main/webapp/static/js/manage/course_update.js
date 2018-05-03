@@ -72,7 +72,7 @@ function updateCourse(){
             isCity = false;
             return false;
         }
-        var courseDistrict = proviceInfo + "," + cityInfo + "," + districtInfo;;
+        var courseDistrict = proviceInfo + "," + cityInfo + "," + districtInfo;
         courseDistrictArr.push(courseDistrict);
     });
 
@@ -169,12 +169,10 @@ function initCityInfo(){
                 $("#city_info_" + index +"").remove();
             });
 
-            $("#city_info_" + districtIndex + "").citySelect({
-                prov : proviceInfo,
-                city : cityInfo,
-                dist : districtInfo,
-                nodata: "none",
-                required: false
+            $("#city_info_" + districtIndex + "").distpicker({
+                province: proviceInfo,
+                city: cityInfo,
+                district: districtInfo
             });
         });
         $("#btn_add_courseDistrict").click(addCourseDistrict);
@@ -190,12 +188,11 @@ function initCityInfo(){
         $("#courseDistrictDiv").append(courseDistrictHtmlArr.join(""));
         $("input[name='districtIndex']").val(1);
         $("#btn_add_courseDistrict").click(addCourseDistrict);
-        $("#city_info_1").citySelect({
-            prov : null,
-            city : null,
-            dist : null,
-            nodata: "none",
-            required: false
+
+        $("#city_info_1").distpicker({
+            province: "",
+            city: "",
+            district: "",
         });
     }
 }
@@ -214,12 +211,10 @@ function addCourseDistrict(){
     $("#courseDistrictDiv").append(courseDistrictArr.join(""));
     $("input[name='districtIndex']").val(districtIndex);
 
-    $("#city_info_" + districtIndex + "").citySelect({
-        prov : null,
-        city : null,
-        dist : null,
-        nodata: "none",
-        required: false
+    $("#city_info_" + districtIndex + "").distpicker({
+        province: null,
+        city: null,
+        district: null
     });
 
     $("input[id^='delete_courseDistrict_']").click(function (){

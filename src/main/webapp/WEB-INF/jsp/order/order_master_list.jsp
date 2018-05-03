@@ -26,10 +26,10 @@
                             <input type="text" placeholder="订单号/课程名/报名人" name="orderInfo" value="${orderInfo}">
                             <a href="javascript:void(0);" id="B_query">搜索</a>&nbsp;&nbsp;&nbsp;&nbsp;
                             <div class="select">
-                                <div id="city_info">
+                                <div id="distpicker">
                                     <select class="prov" id="proviceId" name="provice"></select>
-                                    <select class="city" id="cityId" disabled="disabled" name="city"></select>
-                                    <select class="dist" id="districtId" disabled="disabled" name="district"></select>
+                                    <select class="city" id="cityId" name="city"></select>
+                                    <select class="dist" id="districtId" name="district"></select>
                                 </div>
                             </div>&nbsp;&nbsp;&nbsp;&nbsp;
                             <select name="status">
@@ -103,6 +103,6 @@
         </div>
     </div>
     <script type="text/javascript" src="/static/js/mainJs/jquery.min.js"></script>
-    <script type="text/javascript" src="/static/js/common/cityselect.js"></script>
+    <script type="text/javascript" src="/static/js/common/distpicker.js"></script>
     <script type="text/javascript" src="/static/js/manage/order_master_list.js"></script>
 </body>

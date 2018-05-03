@@ -3,12 +3,10 @@ $(function (){
     $("div[id^='menu_']").removeClass("on");
     $("div[id='menu_order']").addClass("on");
 
-    $("#city_info").citySelect({
-        prov : orderMaster.provice,
-        city : orderMaster.city,
-        dist : orderMaster.district,
-        nodata: "none",
-        required: false
+    $("#distpicker").distpicker({
+        province: orderMaster.provice,
+        city: orderMaster.city,
+        district: orderMaster.district,
     });
 
     initOrderMasterStatus();
