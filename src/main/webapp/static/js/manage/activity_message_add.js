@@ -10,7 +10,8 @@ $(function (){
             items : [
                 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
                 'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
-                'insertunorderedlist', '|', 'emoticons', 'image', 'link','code','source','fullscreen'],
+                'insertunorderedlist', '|', 'emoticons', 'image', 'media', 'link','code','source',
+                'fullscreen'],
             uploadJson : '/static/js/kindeditor/kd_upload_image.jsp',
             allowFileManager : true,
             fileManagerJson : '/static/js/kindeditor/kd_upload_file.jsp'
@@ -20,9 +21,6 @@ $(function (){
     // 上传缩略图
     uploadThumbnails();
     $("#B_delete_thumbnails").click(deleteThumbnails);
-    // 上传详情图
-    uploadDetailImage();
-    $("#B_delete_detailImage").click(deleteDetailImage);
     $("#B_submit").click(addActivityMessage);
 })
 

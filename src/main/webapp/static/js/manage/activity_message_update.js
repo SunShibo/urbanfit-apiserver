@@ -20,10 +20,6 @@ $(function (){
     // 上传缩略图
     uploadThumbnails();
     $("#B_delete_thumbnails").click(deleteThumbnails);
-    // 上传详情图
-    uploadDetailImage();
-    $("#B_delete_detailImage").click(deleteDetailImage);
-
     $("#B_submit").click(updateActivityMessage);
 })
 
