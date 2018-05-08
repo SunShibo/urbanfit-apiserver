@@ -5,6 +5,7 @@
 <head>
     <meta charset="utf-8" />
     <title>教练列表</title>
+    <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon"/>
     <link type="text/css" href="/static/css/main.css" rel="stylesheet"/>
     <script type="text/javascript" src="/static/js/mainJs/jquery.min.js"></script>
     <script type="text/javascript" src="/static/js/manage/coach_list.js"></script>

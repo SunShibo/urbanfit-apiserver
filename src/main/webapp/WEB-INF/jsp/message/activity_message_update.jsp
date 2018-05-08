@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <title>活动资讯修改</title>
+    <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon"/>
     <link type="text/css" href="/static/css/main.css" rel="stylesheet"/>
     <script type="text/javascript" src="/static/js/mainJs/jquery.min.js"></script>
     <script charset="utf-8" src="/static/js/kindeditor/kindeditor-all-min.js"></script>

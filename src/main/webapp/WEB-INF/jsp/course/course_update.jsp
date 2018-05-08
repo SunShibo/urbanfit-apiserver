@@ -4,6 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <title>课程修改</title>
+    <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon"/>
     <link type="text/css" href="/static/css/main.css" rel="stylesheet"/>
     <style>
         .ke-container{width: 96% !important;}
