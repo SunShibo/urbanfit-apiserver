@@ -55,12 +55,7 @@
                             </tr>
                             <c:forEach items="${lstOrder}" var="order">
                                 <tr>
-                                    <td>
-                                        <c:if test="${order.courseType == 1}">成人课程</c:if>
-                                        <c:if test="${order.courseType == 2}">青少年课程</c:if>
-                                        <c:if test="${order.courseType == 3}">私教课程</c:if>
-                                        <c:if test="${order.courseType == 4}">特色课程</c:if>
-                                    </td>
+                                    <td>${order.courseName}</td>
                                     <td>${order.payPrice}</td>
                                     <td>${order.courseDistrict}</td>
                                     <td>${order.clientName}</td>

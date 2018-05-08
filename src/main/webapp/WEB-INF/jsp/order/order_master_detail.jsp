@@ -67,12 +67,7 @@
                             </tr>
                             <tr>
                                 <td>课程名称：</td>
-                                <td>
-                                    <c:if test="${orderMaster.courseType == 1}">成人课程</c:if>
-                                    <c:if test="${orderMaster.courseType == 2}">青少年课程</c:if>
-                                    <c:if test="${orderMaster.courseType == 3}">私教课程</c:if>
-                                    <c:if test="${orderMaster.courseType == 4}">特色课程</c:if>
-                                </td>
+                                <td>${orderMaster.courseName}</td>
                             </tr>
                             <tr>
                                 <td>课程价格：</td>
@@ -85,6 +80,10 @@
                                         -${orderMaster.couponPrice} &nbsp;&nbsp;${orderMaster.couponName}
                                     </c:if>
                                 </td>
+                            </tr>
+                            <tr>
+                                <td>备注信息：</td>
+                                <td>${orderMaster.remarks}</td>
                             </tr>
                         </table>
                     </div>

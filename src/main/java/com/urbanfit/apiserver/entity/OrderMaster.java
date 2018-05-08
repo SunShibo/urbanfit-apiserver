@@ -54,6 +54,7 @@ public class OrderMaster extends BaseModel{
     private Date createTime;
     private Date systemCancleTime;
     private Date payTime;
+    private String remarks;
 
     private String clientName;
     private Integer courseType;
@@ -251,5 +252,13 @@ public class OrderMaster extends BaseModel{
 
     public void setSystemCancleTime(Date systemCancleTime) {
         this.systemCancleTime = systemCancleTime;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
     }
 }
