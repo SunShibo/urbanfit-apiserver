@@ -61,6 +61,7 @@ public class CourseService {
             return JsonUtils.encapsulationJSON(Constant.INTERFACE_FAIL, "课程不存在", "").toString();
         }
         courseInfo.setCourseTitle(course.getCourseTitle());
+        courseInfo.setCourseName(course.getCourseName());
         courseInfo.setCoursePrice(course.getCoursePrice());
         courseInfo.setCourseDistrict(course.getCourseDistrict());
         courseInfo.setCourseImageUrl(course.getCourseImageUrl());

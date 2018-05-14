@@ -14,7 +14,7 @@
     </select>
     <!-- 修改课程信息 -->
     <update id="updateCourse" parameterType="com.urbanfit.apiserver.entity.Course">
-        update t_course set courseTitle = #{courseTitle}, coursePrice = #{coursePrice},
+        update t_course set courseTitle = #{courseTitle}, coursePrice = #{coursePrice}, courseName = #{courseName},
         courseDistrict = #{courseDistrict}, courseImageUrl = #{courseImageUrl}, introduce = #{introduce}
         where courseId = #{courseId}
     </update>

@@ -24,10 +24,8 @@
                             <tr>
                                 <td class="td1">课程名称：</td>
                                 <td class="td2">
-                                    <c:if test="${course.courseType == 1}">成人课程</c:if>
-                                    <c:if test="${course.courseType == 2}">青少年课程</c:if>
-                                    <c:if test="${course.courseType == 3}">私教课程</c:if>
-                                    <c:if test="${course.courseType == 4}">特色课程</c:if>
+                                    <input type="text" name="courseName" value="${course.courseName}"
+                                           placeholder="请输入课程名称"><em>*必填</em>
                                 </td>
                             </tr>
                             <tr>
@@ -79,7 +77,6 @@
                                         <textarea name="content">${course.introduce}</textarea>
                                         <input name="introduce" type="hidden"/>
                                         <input type="hidden" name="courseId" value="${course.courseId}">
-                                        <input type="hidden" name="courseName" value="${course.courseName}">
                                         <input type="hidden" name="courseType" value="${course.courseType}">
                                     </div>
                                     <em>*必填</em>

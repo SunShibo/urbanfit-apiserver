@@ -25,6 +25,11 @@ $(function (){
 
 // 修改课程信息
 function updateCourse(){
+    var courseName = $("input[name='courseName']").val();
+    if(courseName == ""){
+        alert("课程名称不能为空");
+        return ;
+    }
     var courseTitle = $("input[name='courseTitle']").val();
     if(courseTitle == ""){
         alert("标题不能为空");

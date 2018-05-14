@@ -26,12 +26,7 @@
                                 </tr>
                                 <c:forEach items="${lstCourse}" var="course">
                                     <tr>
-                                        <td>
-                                            <c:if test="${course.courseType == 1}">成人课程</c:if>
-                                            <c:if test="${course.courseType == 2}">青少年课程</c:if>
-                                            <c:if test="${course.courseType == 3}">私教课程</c:if>
-                                            <c:if test="${course.courseType == 4}">特色课程</c:if>
-                                        </td>
+                                        <td>${course.courseName}</td>
                                         <td>
                                             <a href="javascript:void(0);" name="A_update_${course.courseId}"
                                                data-courseid="${course.courseId}">编辑</a>&nbsp;&nbsp;&nbsp;&nbsp;
