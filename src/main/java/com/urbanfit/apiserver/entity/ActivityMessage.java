@@ -10,6 +10,7 @@ import java.util.Date;
 public class ActivityMessage extends BaseModel{
     private Integer messageId;
     private String title;
+    private String introduce;
     private String thumbnails;
     private String detailImage;
     private String content;
@@ -70,5 +71,13 @@ public class ActivityMessage extends BaseModel{
 
     public void setDetailImage(String detailImage) {
         this.detailImage = detailImage;
+    }
+
+    public String getIntroduce() {
+        return introduce;
+    }
+
+    public void setIntroduce(String introduce) {
+        this.introduce = introduce;
     }
 }

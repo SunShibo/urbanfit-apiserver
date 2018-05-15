@@ -30,6 +30,12 @@
                                 </td>
                             </tr>
                             <tr>
+                                <td class="td1">简&nbsp;&nbsp;介：</td>
+                                <td class="td2">
+                                    <textarea name="introduce" rows="5" cols="70">${activityMessage.introduce}</textarea><em>*必填</em>
+                                </td>
+                            </tr>
+                            <tr>
                                 <td>缩略图：</td>
                                 <td>
                                     <div class="suolue">

@@ -40,6 +40,11 @@ function addActivityMessage(){
         alert("标题不能为空");
         return ;
     }
+    var introduce = $("textarea[name='introduce']").val();
+    if(introduce == ""){
+        alert("简介不能为空");
+        return ;
+    }
     if(editor.html() == ""){
         alert("活动资讯内容不能为空");
         return ;

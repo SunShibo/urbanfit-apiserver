@@ -22,7 +22,13 @@
                             <tr>
                                 <td class="td1">标&nbsp;&nbsp;题：</td>
                                 <td class="td2">
-                                    <input type="text" name="title" placeholder="请输入活动资讯标题"><em>*必填</em>
+                                    <input type="text" name="title"><em>*必填</em>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td1">简&nbsp;&nbsp;介：</td>
+                                <td class="td2">
+                                    <textarea name="introduce" rows="5" cols="70"></textarea><em>*必填</em>
                                 </td>
                             </tr>
                             <tr>

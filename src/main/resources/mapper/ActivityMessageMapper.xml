@@ -34,12 +34,12 @@
 
     <insert id="addActivityMessage" parameterType="com.urbanfit.apiserver.entity.ActivityMessage"
             useGeneratedKeys="true" keyProperty="messageId">
-        insert into t_activity_message (title, thumbnails, detailImage, content, userId, createTime) values
-        (#{title}, #{thumbnails}, #{detailImage}, #{content}, #{userId}, now())
+        insert into t_activity_message (title, introduce, thumbnails, detailImage, content, userId, createTime) values
+        (#{title}, #{introduce}, #{thumbnails}, #{detailImage}, #{content}, #{userId}, now())
     </insert>
 
     <update id="updateActivityMessage" parameterType="com.urbanfit.apiserver.entity.ActivityMessage">
-        update t_activity_message set title = #{title}, thumbnails = #{thumbnails}, detailImage = #{detailImage},
-        content = #{content} where messageId = #{messageId}
+        update t_activity_message set title = #{title}, introduce = #{introduce}, thumbnails = #{thumbnails},
+        detailImage = #{detailImage}, content = #{content} where messageId = #{messageId}
     </update>
 </mapper>
