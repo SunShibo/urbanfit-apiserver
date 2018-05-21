@@ -30,7 +30,18 @@ function addSizeName(){
     sizeNameIndex = parseInt(parseInt(sizeNameIndex) + 1);
     sizeNameArr.push('<input type="text" placeholder="请输入规格信息" class="short" id="sizeName_' + aid
         + '_' + sizeNameIndex + '">');
+    sizeNameArr.push('<input type="button" id="B_delete_sizeName_' + aid + '_'+ sizeNameIndex+ '" data-nid="'
+        + sizeNameIndex + '" data-tid=' + aid +'  value="删除" class="course-btn">');
     sizeNameArr.push('<br/>');
     $("input[name='sizeNameIndex_" + aid + "']").val(sizeNameIndex);
     $("#courseSizeDiv_" + aid + "").append(sizeNameArr.join(""));
+    $("input[id='B_delete_sizeName_" + aid + "_" + sizeNameIndex + "']").click(deleteSizeName);
+}
+
+function deleteSizeName(){
+    var sizeNameId = $(this).data("nid");
+    var sizeTypeId = $(this).data("tid");
+    $("#sizeName_" + sizeTypeId +"_" + sizeNameId + "").css("margin-top","0px");
+    $("#sizeName_" + sizeTypeId +"_" + sizeNameId + "").remove();
+    $("#B_delete_sizeName_" + sizeTypeId +"_" + sizeNameId + "").remove();
 }
