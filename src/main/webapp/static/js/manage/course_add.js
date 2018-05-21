@@ -1,11 +1,10 @@
 $(function (){
-    $("input[id^='B_add_sizeName_']").click(addSizeName);
-    $("input[id^='B_add_sizeType_']").click(addSizeType);
+    $("input[id='B_add_sizeName_1']").click(addSizeName);
+    $("input[id='B_add_sizeType']").click(addSizeType);
 })
 
 
 function addSizeType(){
-    var aid = $(this).data("aid");
     var sizeTypeArr = [];
     var sizeTypeIndex = $("input[name='sizeTypeIndex']").val();
     sizeTypeIndex = parseInt(parseInt(sizeTypeIndex) + 1);
@@ -20,7 +19,7 @@ function addSizeType(){
 
     $("input[name='sizeTypeIndex']").val(sizeTypeIndex);
     $("#courseSizeDiv").append(sizeTypeArr.join(""));
-    $("input[id^='B_add_sizeName_']").click(addSizeName);
+    $("input[id='B_add_sizeName_"+ sizeTypeIndex +"']").click(addSizeName);
 }
 
 

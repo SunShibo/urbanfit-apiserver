@@ -53,7 +53,7 @@
                         <td id="courseSizeDiv">
                             <div id="courseSizeDiv_1">
                                 <input type="text" placeholder="请输入规格属性" class="long" id="sizeType_1">
-                                <input type="button" id="B_add_sizeType_1" data-aid="1" value="添加属性" class="course-btn">
+                                <input type="button" id="B_add_sizeType" value="添加属性" class="course-btn">
                                 <br/>
                                 <input type="text" placeholder="请输入规格信息" class="short" id="sizeName_1_1">
                                 <input type="button" id="B_add_sizeName_1" data-aid="1" value="添加信息" class="course-btn">
