@@ -16,6 +16,7 @@
             <div class="indexRight1">
                 <div class="title">课程介绍 > 课程介绍列表</div>
                     <div class="screen clear">
+                        <a href="javascript:void(0);" id="B_add">新建课程</a><br/>
                     </div>
                     <form id="courseForm" action="list" method="post">
                         <div class="tablebox1">

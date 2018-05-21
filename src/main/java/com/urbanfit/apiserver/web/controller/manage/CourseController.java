@@ -31,6 +31,13 @@ public class CourseController extends BaseCotroller {
         return view;
     }
 
+    @RequestMapping("/toAdd")
+    public ModelAndView redirectUpdatePage() {
+        ModelAndView view = new ModelAndView();
+        view.setViewName("/course/course_add");
+        return view;
+    }
+
     @RequestMapping("/toUpdate")
     public ModelAndView redirectUpdatePage(Integer courseId) {
         Course course = courseService.queryCourseById(courseId);

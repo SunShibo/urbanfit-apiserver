@@ -14,6 +14,9 @@ $(function(){
         var courseId = $(this).data("courseid");
         downOrUpCourse(courseId, 0);
     });
+    $("#B_add").click(function (){
+        window.location.href = "/course/toAdd";
+    });
 })
 // 跳转到修改页面
 function redirectUpdatePage(){
