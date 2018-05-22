@@ -8,7 +8,6 @@
     <link type="text/css" href="/static/css/main.css" rel="stylesheet"/>
     <script type="text/javascript" src="/static/js/mainJs/jquery.min.js"></script>
     <script type="text/javascript" src="/static/js/sku/createSkuTable.js"></script>
-    <script type="text/javascript" src="/static/js/sku/customSku.js"></script>
     <style>
         .ke-container{width: 96% !important;}
     </style>
@@ -134,8 +133,9 @@
 
 <script charset="utf-8" src="/static/js/kindeditor/kindeditor-all-min.js"></script>
 <script charset="utf-8" src="/static/js/kindeditor/zh_CN.js"></script>
-<script type="text/javascript" src="/static/js/common/ajaxupload.js"></script>
+<%--<script type="text/javascript" src="/static/js/common/ajaxupload.js"></script>
 <script type="text/javascript" src="/static/js/common/distpicker.js"></script>
-<script type="text/javascript" src="/static/js/manage/course_add.js"></script>
+<script type="text/javascript" src="/static/js/manage/course_add.js"></script>--%>
 <script type="text/javascript" src="/static/js/sku/getSetSkuVals.js"></script>
+<script type="text/javascript" src="/static/js/sku/customSku.js"></script>
 </body>
