@@ -6,14 +6,6 @@
     <title>课程添加</title>
     <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon"/>
     <link type="text/css" href="/static/css/main.css" rel="stylesheet"/>
-    <script type="text/javascript" src="/static/js/mainJs/jquery.min.js"></script>
-    <script type="text/javascript" src="/static/js/sku/createSkuTable.js"></script>
-    <style>
-        .ke-container{width: 96% !important;}
-    </style>
-    <script type="text/javascript">
-        var base_image = '${base_image}';
-    </script>
 </head>
 <body>
 <div class="index clear">
@@ -61,18 +53,7 @@
                             </div>
                             <input type="hidden" name="sizeTypeIndex" value="1">--%>
 
-                            <ul class="SKU_TYPE">
-                                <li is_required='1' propid='1' sku-type-name="存储"><em>*</em>存储：</li>
-                            </ul>
-                            <ul>
-                                <li><label><input type="checkbox" class="sku_value" propvalid='11' value="16G" />16G</label></li>
-                                <li><label><input type="checkbox" class="sku_value" propvalid='12' value="32G" />32G</label></li>
-                                <li><label><input type="checkbox" class="sku_value" propvalid='13' value="64G" />64G</label></li>
-                                <li><label><input type="checkbox" class="sku_value" propvalid='14' value="128G" />128G</label></li>
-                                <li><label><input type="checkbox" class="sku_value" propvalid='15' value="256G" />256G</label></li>
-                            </ul>
-                            <button class="cloneSku">添加自定义sku属性</button>
-
+                            <input type="button" class="cloneSku" value="添加自定义sku属性"/>
                             <!--sku模板,用于克隆,生成自定义sku-->
                             <div id="skuCloneModel" style="display: none;">
                                 <div class="clear"></div>
@@ -87,7 +68,7 @@
                                         <input type="checkbox" class="model_sku_val" propvalid='' value="" />
                                         <input type="text" class="cusSkuValInput" />
                                     </li>
-                                    <button class="cloneSkuVal">添加自定义属性值</button>
+                                    <input type="button" class="cloneSkuVal" value="添加自定义属性值"/>
                                 </ul>
                                 <div class="clear"></div>
                             </div>
@@ -130,12 +111,13 @@
     </div>
 </div>
 </div>
-
+<script type="text/javascript" src="/static/js/sku/jquery.min.js"></script>
+<script type="text/javascript" src="/static/js/sku/createSkuTable.js"></script>
 <script charset="utf-8" src="/static/js/kindeditor/kindeditor-all-min.js"></script>
 <script charset="utf-8" src="/static/js/kindeditor/zh_CN.js"></script>
-<%--<script type="text/javascript" src="/static/js/common/ajaxupload.js"></script>
+<script type="text/javascript" src="/static/js/common/ajaxupload.js"></script>
 <script type="text/javascript" src="/static/js/common/distpicker.js"></script>
-<script type="text/javascript" src="/static/js/manage/course_add.js"></script>--%>
-<script type="text/javascript" src="/static/js/sku/getSetSkuVals.js"></script>
+<script type="text/javascript" src="/static/js/manage/course_add.js"></script>
 <script type="text/javascript" src="/static/js/sku/customSku.js"></script>
+<script type="text/javascript" src="/static/js/sku/getSetSkuVals.js"></script>
 </body>
