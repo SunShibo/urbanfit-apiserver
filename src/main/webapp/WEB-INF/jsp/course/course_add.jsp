@@ -6,6 +6,9 @@
     <title>课程添加</title>
     <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon"/>
     <link type="text/css" href="/static/css/main.css" rel="stylesheet"/>
+    <script type="text/javascript" src="/static/js/mainJs/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/sku/createSkuTable.js"></script>
+    <script type="text/javascript" src="/static/js/sku/customSku.js"></script>
     <style>
         .ke-container{width: 96% !important;}
     </style>
@@ -40,57 +43,77 @@
                                     </select>
                                 </div>
                             </div>
+                            <em>*必填</em>
                         </td>
                     </tr>
                     <tr>
                         <td>关联俱乐部：</td>
                         <td>
-                            <input type="text">
+                            <input type="text"><em>*必填</em>
                         </td>
                     </tr>
                     <tr>
                         <td>规格属性：</td>
                         <td id="courseSizeDiv">
-                            <div id="courseSizeDiv_1">
-                                <input type="text" placeholder="请输入规格属性" class="long" id="sizeType_1">
-                                <input type="button" id="B_add_sizeType" value="添加属性" class="course-btn">
-                                <br/>
-                                <input type="text" placeholder="请输入规格信息" class="short" id="sizeName_1_1">
-                                <input type="button" id="B_add_sizeName_1" data-aid="1" value="添加信息" class="course-btn">
-                                <br/>
+                            <%--<div id="courseSizeDiv_1">
+                                <input type="text" placeholder="请输入规格属性" class="long" id="sizeType_1"><input type="button" id="B_add_sizeType" value="添加属性" class="course-btn"><br/>
+                                <input type="text" placeholder="请输入规格信息" class="short" id="sizeName_1_1"><input type="button" id="B_add_sizeName_1" data-aid="1" value="添加信息" class="course-btn"><br/>
                                 <input type="hidden" name="sizeNameIndex_1" value="1">
                             </div>
-                            <input type="hidden" name="sizeTypeIndex" value="1">
+                            <input type="hidden" name="sizeTypeIndex" value="1">--%>
+
+                            <ul class="SKU_TYPE">
+                                <li is_required='1' propid='1' sku-type-name="存储"><em>*</em>存储：</li>
+                            </ul>
+                            <ul>
+                                <li><label><input type="checkbox" class="sku_value" propvalid='11' value="16G" />16G</label></li>
+                                <li><label><input type="checkbox" class="sku_value" propvalid='12' value="32G" />32G</label></li>
+                                <li><label><input type="checkbox" class="sku_value" propvalid='13' value="64G" />64G</label></li>
+                                <li><label><input type="checkbox" class="sku_value" propvalid='14' value="128G" />128G</label></li>
+                                <li><label><input type="checkbox" class="sku_value" propvalid='15' value="256G" />256G</label></li>
+                            </ul>
+                            <button class="cloneSku">添加自定义sku属性</button>
+
+                            <!--sku模板,用于克隆,生成自定义sku-->
+                            <div id="skuCloneModel" style="display: none;">
+                                <div class="clear"></div>
+                                <ul class="SKU_TYPE">
+                                    <li is_required='0' propid='' sku-type-name="">
+                                        <a href="javascript:void(0);" class="delCusSkuType">移除</a>
+                                        <input type="text" class="cusSkuTypeInput" />：
+                                    </li>
+                                </ul>
+                                <ul>
+                                    <li>
+                                        <input type="checkbox" class="model_sku_val" propvalid='' value="" />
+                                        <input type="text" class="cusSkuValInput" />
+                                    </li>
+                                    <button class="cloneSkuVal">添加自定义属性值</button>
+                                </ul>
+                                <div class="clear"></div>
+                            </div>
+                            <!--单个sku值克隆模板-->
+                            <li style="display: none;" id="onlySkuValCloneModel">
+                                <input type="checkbox" class="model_sku_val" propvalid='' value="" />
+                                <input type="text" class="cusSkuValInput" />
+                                <a href="javascript:void(0);" class="delCusSkuVal">删除</a>
+                            </li>
+                            <div class="clear"></div>
+                            <div id="skuTable"></div>
                         </td>
                     </tr>
                     <tr>
-                        <td>课程图片：</td>
+                        <td>价格：</td>
                         <td>
-                            <div class="suolue">
-                                <div class="uploadimg">
-                                    <c:if test="${course.courseImageUrl == null}">
-                                        <img width="160px;" height="160px;" id="uploadImage" src="../static/img/u37.png"/>
-                                    </c:if>
-                                    <c:if test="${course.courseImageUrl != null}">
-                                        <img width="160px;" height="160px;" id="uploadImage" src="${baseUrl}${course.courseImageUrl}"/>
-                                    </c:if>
-                                    <input type="hidden" name="courseImageUrl" value="${course.courseImageUrl}"><br/>
-                                </div>
-                                <div class="zi">
-                                    <span style="color:#FF0000;">*必填</span>
-                                    <p class="del" id="B_delete_image">删除</p>
-                                </div>
-                            </div>
+                            <div id="coursePriceDiv"></div>
                         </td>
                     </tr>
                     <tr>
                         <td>课程内容：</td>
                         <td>
                             <div class="edit">
-                                <textarea name="content">${course.introduce}</textarea>
+                                <textarea name="content"></textarea>
                                 <input name="introduce" type="hidden"/>
-                                <input type="hidden" name="courseId" value="${course.courseId}">
-                                <input type="hidden" name="courseType" value="${course.courseType}">
                             </div>
                             <em>*必填</em>
                         </td>
@@ -109,10 +132,10 @@
 </div>
 </div>
 
-<script type="text/javascript" src="/static/js/mainJs/jquery.min.js"></script>
 <script charset="utf-8" src="/static/js/kindeditor/kindeditor-all-min.js"></script>
 <script charset="utf-8" src="/static/js/kindeditor/zh_CN.js"></script>
 <script type="text/javascript" src="/static/js/common/ajaxupload.js"></script>
 <script type="text/javascript" src="/static/js/common/distpicker.js"></script>
 <script type="text/javascript" src="/static/js/manage/course_add.js"></script>
+<script type="text/javascript" src="/static/js/sku/getSetSkuVals.js"></script>
 </body>

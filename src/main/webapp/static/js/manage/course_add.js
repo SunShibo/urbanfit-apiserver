@@ -1,6 +1,25 @@
+var editor;
 $(function (){
-    $("input[id='B_add_sizeName_1']").click(addSizeName);
+    // 添加菜单样式
+    $("div[id^='menu_']").removeClass("on");
+    $("div[id='menu_course']").addClass("on");
+
+    /*$("input[id='B_add_sizeName_1']").click(addSizeName);
     $("input[id='B_add_sizeType']").click(addSizeType);
+    $("#sizeName_1_1").blur(showCoursePriceDetail);*/
+
+    KindEditor.ready(function(K) {
+        editor = K.create('textarea[name="content"]', {
+            allowFileManager : true,
+            items : [
+                'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold', 'italic', 'underline',
+                'removeformat', '|', 'justifyleft', 'justifycenter', 'justifyright', 'insertorderedlist',
+                'insertunorderedlist', '|', 'emoticons', 'image', 'link','code','source','fullscreen'],
+            uploadJson : '/static/js/kindeditor/kd_upload_image.jsp',
+            allowFileManager : true,
+            fileManagerJson : '/static/js/kindeditor/kd_upload_file.jsp'
+        });
+    });
 })
 
 
@@ -44,4 +63,27 @@ function deleteSizeName(){
     $("#sizeName_" + sizeTypeId +"_" + sizeNameId + "").css("margin-top","0px");
     $("#sizeName_" + sizeTypeId +"_" + sizeNameId + "").remove();
     $("#B_delete_sizeName_" + sizeTypeId +"_" + sizeNameId + "").remove();
+}
+
+function showCoursePriceDetail(){
+    var sizeName = $(this).val();
+    if(sizeName != ""){
+        /*var sizeTypeIndex = $("input[name='sizeTypeIndex']").val();
+        for(var i = 1; i <= sizeTypeIndex; i++){
+            $("input[id^='sizeName_" + i +"']").each(function(i, n){
+                var sizeName = $(this).val();
+            });
+        }*/
+        var i = 1;
+        // 循环第一层
+        $("input[id^='sizeName_1_']").each(function(i, n){
+            var sizeName = $(this).val();
+            if($("input[id^='sizeName_" + i + "_']").length > 0){
+                $("input[id^='sizeName_" + i + "_']").each(function(i, n){
+                    alert(sizeName + "_" + $(this).val());
+                })
+            }
+        });
+
+    }
 }
