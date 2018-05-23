@@ -7,6 +7,7 @@ $(function (){
     $("input[id='B_add_sizeName_1']").click(addSizeName);
     $("input[id='B_add_sizeType']").click(addSizeType);
     $("#sizeName_1_1").blur(showCoursePriceDetail);
+    $("#B_add_store").click(openChooseStoreLayer);
 
     KindEditor.ready(function(K) {
         editor = K.create('textarea[name="content"]', {
@@ -41,6 +42,7 @@ function addSizeType(){
     $("#courseSizeDiv").append(sizeTypeArr.join(""));
     $("input[id='B_add_sizeName_"+ sizeTypeIndex +"']").click(addSizeName);
     $("#B_delete_sizeType_" + sizeTypeIndex + "").click(deleteSizeType);
+    $("#sizeName_" + sizeTypeIndex + "_1").blur(showCoursePriceDetail);
 }
 
 // 添加规格信息
@@ -59,18 +61,21 @@ function addSizeName(){
     $("input[name='sizeNameIndex_" + aid + "']").val(sizeNameIndex);
     $("#courseSizeDiv_" + aid + "").append(sizeNameArr.join(""));
     $("input[id='B_delete_sizeName_" + aid + "_" + sizeNameIndex + "']").click(deleteSizeName);
+    $("#sizeName_" + aid + "_" + sizeNameIndex + "").blur(showCoursePriceDetail);
 }
 
 // 删除规格信息
 function deleteSizeName(){
     var sizeTypeId = $(this).data("tid");
     $("#sizeNameDiv_" + sizeTypeId + "").remove();
+    showCoursePriceDetail();
 }
 
 // 删除规格属性
 function deleteSizeType(){
     var aid = $(this).data("aid");
     $("#courseSizeDiv_" + aid + "").remove();
+    showCoursePriceDetail();
 }
 
 
@@ -78,7 +83,6 @@ function showCoursePriceDetail(){
     var totalRow = 1;
     var skuTypeArr = [];
     $("input[id^='sizeType_']").each(function(){
-
         var skuTypeObj = {};//sku类型对象
         //SKU属性类型标题
         skuTypeObj.skuTypeTitle =$(this).val();
@@ -110,6 +114,7 @@ function showCoursePriceDetail(){
         skuDetailArr.push('<th>' + skuTypeArr[t].skuTypeTitle + '</th>');
     }
     skuDetailArr.push('<th>价格</th>');
+    skuDetailArr.push('<th>是否可售</th>');
     skuDetailArr.push('</tr>');
 
     //循环处理表体
@@ -126,8 +131,19 @@ function showCoursePriceDetail(){
                 currRowDoms += '<td rowspan=' + anInterBankNum + '>' + skuValues[point].skuValueTitle + '</td>';
             }
         }
-        skuDetailArr.push('<tr>' + currRowDoms + '<td><input type="text" class="setting_sku_price"/></td></tr>') ;
+        skuDetailArr.push('<tr>' + currRowDoms + '<td><input type="text"/></td>');
+        skuDetailArr.push(  '<td><input type="checkbox">不可售</td>');
+        skuDetailArr.push('</tr>');
     }
     skuDetailArr.push('</table>');
     $("#coursePriceDiv").html(skuDetailArr.join(""));
+}
+
+function openChooseStoreLayer(){
+    layer.open({
+        title : '添加到分组',
+        type : 1,
+        area: ['700px', '600px'],
+        content : $("#addGroupForm")
+    });
 }

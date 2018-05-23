@@ -219,8 +219,10 @@ input,button,textarea{ outline:none;}
 
 .tablebox2 table td div > .course-btn{margin-left: 30px;width: 80px;height: 30px;line-height: 30px;text-align: center;}
 
-.tablebox2 table td div  > .long{
-  width: 185px;
+.tablebox2 table td div > .store-btn{margin-top: 10px;width: 100px;height: 40px;line-height: 40px;text-align: center;}
+
+.tablebox2 table td div > .long{
+  width: 285px;
   color: #333;
   font-size: 14px;
   text-indent: 10px;
@@ -230,7 +232,7 @@ input,button,textarea{ outline:none;}
 }
 
 .tablebox2 table td div  > .short{
-  width: 150px;
+  width: 250px;
   color: #333;
   font-size: 14px;
   text-indent: 10px;
@@ -240,7 +242,7 @@ input,button,textarea{ outline:none;}
   margin-left: 35px;
 }
 
-/*#coursePriceDiv th {
+#coursePriceDiv th {
   border-width: 1px;
   padding: 10px 10px;
   border-style: solid;
@@ -260,7 +262,7 @@ input,button,textarea{ outline:none;}
   border-color: #ddd;
   display: table-cell;
   vertical-align: inherit;
-}*/
+}
 
 
 
