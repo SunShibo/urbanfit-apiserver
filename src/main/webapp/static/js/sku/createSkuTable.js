@@ -4,7 +4,6 @@
  * version:1.0
  * email:uf_zhangxiaowu@163.com
  */
-
 var alreadySetSkuVals = {};//已经设置的SKU值数据
 
 $(function(){

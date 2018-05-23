@@ -100,7 +100,7 @@ $(function(){
 		//赋值类型属性
 		$(this).prev().val(cusSkuVal);
 		//触发change事件
-		$(".model_sku_val").trigger("change");
+		/*$(".model_sku_val").trigger("change");*/
 	});
 	
 	//未设置sku值和属性的sku选择框改变事件

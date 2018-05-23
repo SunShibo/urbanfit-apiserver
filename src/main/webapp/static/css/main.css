@@ -240,7 +240,27 @@ input,button,textarea{ outline:none;}
   margin-left: 35px;
 }
 
+/*#coursePriceDiv th {
+  border-width: 1px;
+  padding: 10px 10px;
+  border-style: solid;
+  border-color: #ddd;
+  color: #666;
+  background-color: #ededed;
+}
 
+#coursePriceDiv th {
+  font-weight: bold;
+  text-align: center;
+}
+
+#coursePriceDiv td, th {
+  border-width: 1px;
+  border-style: solid;
+  border-color: #ddd;
+  display: table-cell;
+  vertical-align: inherit;
+}*/
 
 
 

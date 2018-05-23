@@ -6,6 +6,9 @@
     <title>课程添加</title>
     <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon"/>
     <link type="text/css" href="/static/css/main.css" rel="stylesheet"/>
+    <style>
+        .ke-container{width: 96% !important;}
+    </style>
 </head>
 <body>
 <div class="index clear">
@@ -46,46 +49,18 @@
                     <tr>
                         <td>规格属性：</td>
                         <td id="courseSizeDiv">
-                            <%--<div id="courseSizeDiv_1">
-                                <input type="text" placeholder="请输入规格属性" class="long" id="sizeType_1"><input type="button" id="B_add_sizeType" value="添加属性" class="course-btn"><br/>
-                                <input type="text" placeholder="请输入规格信息" class="short" id="sizeName_1_1"><input type="button" id="B_add_sizeName_1" data-aid="1" value="添加信息" class="course-btn"><br/>
+                            <div id="courseSizeDiv_1">
+                                <input type="text" placeholder="请输入规格属性" class="long" data-tid="1" id="sizeType_1"><input type="button" id="B_add_sizeType" value="添加属性" class="course-btn"><br/>
+                                <input type="text" placeholder="请输入规格信息" class="short" data-nid="1" id="sizeName_1_1"><input type="button" id="B_add_sizeName_1" data-aid="1" value="添加信息" class="course-btn"><br/>
                                 <input type="hidden" name="sizeNameIndex_1" value="1">
                             </div>
-                            <input type="hidden" name="sizeTypeIndex" value="1">--%>
-
-                            <input type="button" class="cloneSku" value="添加自定义sku属性"/>
-                            <!--sku模板,用于克隆,生成自定义sku-->
-                            <div id="skuCloneModel" style="display: none;">
-                                <div class="clear"></div>
-                                <ul class="SKU_TYPE">
-                                    <li is_required='0' propid='' sku-type-name="">
-                                        <a href="javascript:void(0);" class="delCusSkuType">移除</a>
-                                        <input type="text" class="cusSkuTypeInput" />：
-                                    </li>
-                                </ul>
-                                <ul>
-                                    <li>
-                                        <input type="checkbox" class="model_sku_val" propvalid='' value="" />
-                                        <input type="text" class="cusSkuValInput" />
-                                    </li>
-                                    <input type="button" class="cloneSkuVal" value="添加自定义属性值"/>
-                                </ul>
-                                <div class="clear"></div>
-                            </div>
-                            <!--单个sku值克隆模板-->
-                            <li style="display: none;" id="onlySkuValCloneModel">
-                                <input type="checkbox" class="model_sku_val" propvalid='' value="" />
-                                <input type="text" class="cusSkuValInput" />
-                                <a href="javascript:void(0);" class="delCusSkuVal">删除</a>
-                            </li>
-                            <div class="clear"></div>
-                            <div id="skuTable"></div>
+                            <input type="hidden" name="sizeTypeIndex" value="1">
                         </td>
                     </tr>
                     <tr>
                         <td>价格：</td>
                         <td>
-                            <div id="coursePriceDiv"></div>
+                            <div id="coursePriceDiv" class="tablebox2"></div>
                         </td>
                     </tr>
                     <tr>
@@ -112,12 +87,12 @@
 </div>
 </div>
 <script type="text/javascript" src="/static/js/sku/jquery.min.js"></script>
-<script type="text/javascript" src="/static/js/sku/createSkuTable.js"></script>
 <script charset="utf-8" src="/static/js/kindeditor/kindeditor-all-min.js"></script>
 <script charset="utf-8" src="/static/js/kindeditor/zh_CN.js"></script>
 <script type="text/javascript" src="/static/js/common/ajaxupload.js"></script>
 <script type="text/javascript" src="/static/js/common/distpicker.js"></script>
 <script type="text/javascript" src="/static/js/manage/course_add.js"></script>
+<%--<script type="text/javascript" src="/static/js/sku/createSkuTable.js"></script>
 <script type="text/javascript" src="/static/js/sku/customSku.js"></script>
-<script type="text/javascript" src="/static/js/sku/getSetSkuVals.js"></script>
+<script type="text/javascript" src="/static/js/sku/getSetSkuVals.js"></script>--%>
 </body>

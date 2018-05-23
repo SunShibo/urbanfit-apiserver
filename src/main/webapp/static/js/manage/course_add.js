@@ -4,9 +4,9 @@ $(function (){
     $("div[id^='menu_']").removeClass("on");
     $("div[id='menu_course']").addClass("on");
 
-    /*$("input[id='B_add_sizeName_1']").click(addSizeName);
+    $("input[id='B_add_sizeName_1']").click(addSizeName);
     $("input[id='B_add_sizeType']").click(addSizeType);
-    $("#sizeName_1_1").blur(showCoursePriceDetail);*/
+    $("#sizeName_1_1").blur(showCoursePriceDetail);
 
     KindEditor.ready(function(K) {
         editor = K.create('textarea[name="content"]', {
@@ -22,13 +22,14 @@ $(function (){
     });
 })
 
-
+// 添加规格属性
 function addSizeType(){
     var sizeTypeArr = [];
     var sizeTypeIndex = $("input[name='sizeTypeIndex']").val();
     sizeTypeIndex = parseInt(parseInt(sizeTypeIndex) + 1);
     sizeTypeArr.push('<div id="courseSizeDiv_'+ sizeTypeIndex + '">');
-        sizeTypeArr.push('<input type="text" placeholder="请输入规格属性" class="long" id="sizeType_' + sizeTypeIndex + '">');
+        sizeTypeArr.push('<input type="text" placeholder="请输入规格属性" class="long" data-tid="' + sizeTypeIndex + '" id="sizeType_' + sizeTypeIndex + '">');
+        sizeTypeArr.push('<input type="button" id="B_delete_sizeType_'+ sizeTypeIndex + '" data-aid="'+ sizeTypeIndex + '" value="删除属性" class="course-btn">');
         sizeTypeArr.push('<br/>');
         sizeTypeArr.push('<input type="text" placeholder="请输入规格信息" class="short" id="sizeName_' + sizeTypeIndex + '_1">');
         sizeTypeArr.push('<input type="button" id="B_add_sizeName_'+ sizeTypeIndex+ '" data-aid="'+ sizeTypeIndex + '" value="添加信息" class="course-btn">');
@@ -39,51 +40,94 @@ function addSizeType(){
     $("input[name='sizeTypeIndex']").val(sizeTypeIndex);
     $("#courseSizeDiv").append(sizeTypeArr.join(""));
     $("input[id='B_add_sizeName_"+ sizeTypeIndex +"']").click(addSizeName);
+    $("#B_delete_sizeType_" + sizeTypeIndex + "").click(deleteSizeType);
 }
 
-
+// 添加规格信息
 function addSizeName(){
     var aid = $(this).data("aid");
     var sizeNameArr = [];
     var sizeNameIndex = $("input[name='sizeNameIndex_" + aid + "']").val();
     sizeNameIndex = parseInt(parseInt(sizeNameIndex) + 1);
-    sizeNameArr.push('<input type="text" placeholder="请输入规格信息" class="short" id="sizeName_' + aid
-        + '_' + sizeNameIndex + '">');
-    sizeNameArr.push('<input type="button" id="B_delete_sizeName_' + aid + '_'+ sizeNameIndex+ '" data-nid="'
-        + sizeNameIndex + '" data-tid=' + aid +'  value="删除" class="course-btn">');
-    sizeNameArr.push('<br/>');
+    sizeNameArr.push('<div id="sizeNameDiv_' + aid + '">');
+        sizeNameArr.push('<input type="text" placeholder="请输入规格信息" class="short" data-nid="'
+            + sizeNameIndex + '" id="sizeName_' + aid + '_' + sizeNameIndex + '">');
+        sizeNameArr.push('<input type="button" id="B_delete_sizeName_' + aid + '_'+ sizeNameIndex+ '" data-nid="'
+            + sizeNameIndex + '" data-tid=' + aid +'  value="删除" class="course-btn">');
+        sizeNameArr.push('<br/>');
+    sizeNameArr.push('</div>')
     $("input[name='sizeNameIndex_" + aid + "']").val(sizeNameIndex);
     $("#courseSizeDiv_" + aid + "").append(sizeNameArr.join(""));
     $("input[id='B_delete_sizeName_" + aid + "_" + sizeNameIndex + "']").click(deleteSizeName);
 }
 
+// 删除规格信息
 function deleteSizeName(){
-    var sizeNameId = $(this).data("nid");
     var sizeTypeId = $(this).data("tid");
-    $("#sizeName_" + sizeTypeId +"_" + sizeNameId + "").css("margin-top","0px");
-    $("#sizeName_" + sizeTypeId +"_" + sizeNameId + "").remove();
-    $("#B_delete_sizeName_" + sizeTypeId +"_" + sizeNameId + "").remove();
+    $("#sizeNameDiv_" + sizeTypeId + "").remove();
 }
 
+// 删除规格属性
+function deleteSizeType(){
+    var aid = $(this).data("aid");
+    $("#courseSizeDiv_" + aid + "").remove();
+}
+
+
 function showCoursePriceDetail(){
-    var sizeName = $(this).val();
-    if(sizeName != ""){
-        /*var sizeTypeIndex = $("input[name='sizeTypeIndex']").val();
-        for(var i = 1; i <= sizeTypeIndex; i++){
-            $("input[id^='sizeName_" + i +"']").each(function(i, n){
-                var sizeName = $(this).val();
-            });
-        }*/
-        var i = 1;
-        // 循环第一层
-        $("input[id^='sizeName_1_']").each(function(i, n){
-            var sizeName = $(this).val();
-            if($("input[id^='sizeName_" + i + "_']").length > 0){
-                $("input[id^='sizeName_" + i + "_']").each(function(i, n){
-                    alert(sizeName + "_" + $(this).val());
-                })
+    var totalRow = 1;
+    var skuTypeArr = [];
+    $("input[id^='sizeType_']").each(function(){
+
+        var skuTypeObj = {};//sku类型对象
+        //SKU属性类型标题
+        skuTypeObj.skuTypeTitle =$(this).val();
+        skuTypeObj.skuTypeKey = $(this).data("tid");
+        var skuValueArr = [];//存放SKU值得数组
+        var tid = $(this).data("tid");
+        var sizeNameLength = 0;
+
+        $("input[id^='sizeName_" + tid + "_']").each(function(){
+            if($(this).val() != ""){
+                sizeNameLength += 1;
+
+                var skuValObj = {};                             //SKU值对象
+                skuValObj.skuValueTitle = $(this).val();      //SKU值名称
+                skuValObj.skuValueId = $(this).data("nid");   //SKU值主键
+                skuValueArr.push(skuValObj);
             }
         });
+        totalRow = totalRow * sizeNameLength;
+        skuTypeObj.skuValues = skuValueArr;               //sku值数组
+        skuTypeObj.skuValueLen = skuValueArr.length;     //sku值长度
+        skuTypeArr.push(skuTypeObj);                       //保存进数组中
+    })
 
+    var skuDetailArr = [];
+    skuDetailArr.push('<table class="skuTable"><tr>');
+    //创建表头
+    for(var t = 0; t < skuTypeArr.length; t ++){
+        skuDetailArr.push('<th>' + skuTypeArr[t].skuTypeTitle + '</th>');
     }
+    skuDetailArr.push('<th>价格</th>');
+    skuDetailArr.push('</tr>');
+
+    //循环处理表体
+    for(var i = 0 ; i < totalRow ; i ++){
+        var currRowDoms = "";
+        var rowCount = 1;                                       //记录行数
+        for(var j = 0; j < skuTypeArr.length; j ++) {        //sku列
+            var skuValues = skuTypeArr[j].skuValues;           //SKU值数组
+            var skuValueLen = skuValues.length;                //sku值长度
+            rowCount = (rowCount * skuValueLen);                //目前的生成的总行数
+            var anInterBankNum = (totalRow / rowCount);         //跨行数
+            var point = ((i / anInterBankNum) % skuValueLen);
+            if (0 == (i % anInterBankNum)) {                    //需要创建td
+                currRowDoms += '<td rowspan=' + anInterBankNum + '>' + skuValues[point].skuValueTitle + '</td>';
+            }
+        }
+        skuDetailArr.push('<tr>' + currRowDoms + '<td><input type="text" class="setting_sku_price"/></td></tr>') ;
+    }
+    skuDetailArr.push('</table>');
+    $("#coursePriceDiv").html(skuDetailArr.join(""));
 }
