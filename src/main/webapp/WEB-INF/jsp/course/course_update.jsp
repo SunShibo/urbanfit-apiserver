@@ -49,36 +49,18 @@
                                 <td>
                                     <div id="courseStoreDiv"></div><em>*必填</em>
                                     <div><input type="button" id="B_add_store" value="添加俱乐部" class="store-btn"></div>
-                                    <input type="hidden" name="storeIds">
+                                    <input type="hidden" name="storeIds" value="${course.storeId}">
                                 </td>
                             </tr>
                             <tr>
-                                <td>所属区域：</td>
-                                <td>
-                                    <div id="courseDistrictDiv" class="select"></div>
-                                    <input type="hidden" name="districtIndex" value="1">
-                                    <input type="hidden" name="courseDistrict" value="${course.courseDistrict}">
+                                <td>规&nbsp;&nbsp;&nbsp;&nbsp;格：</td>
+                                <td id="courseSizeDiv">
+                                    <input type="hidden" name="sizeTypeIndex">
                                 </td>
                             </tr>
                             <tr>
-                                <td>课程图片：</td>
-                                <td>
-                                    <div class="suolue">
-                                        <div class="uploadimg">
-                                            <c:if test="${course.courseImageUrl == null}">
-                                                <img width="160px;" height="160px;" id="uploadImage" src="../static/img/u37.png"/>
-                                            </c:if>
-                                            <c:if test="${course.courseImageUrl != null}">
-                                                <img width="160px;" height="160px;" id="uploadImage" src="${baseUrl}${course.courseImageUrl}"/>
-                                            </c:if>
-                                            <input type="hidden" name="courseImageUrl" value="${course.courseImageUrl}"><br/>
-                                        </div>
-                                        <div class="zi">
-                                            <span style="color:#FF0000;">*必填</span>
-                                            <p class="del" id="B_delete_image">删除</p>
-                                        </div>
-                                    </div>
-                                </td>
+                                <td>价&nbsp;&nbsp;&nbsp;&nbsp;格：</td>
+                                <td></td>
                             </tr>
                             <tr>
                                 <td>课程内容：</td>
@@ -111,10 +93,12 @@
     <script type="text/javascript" src="/static/js/common/ajaxupload.js"></script>
     <script type="text/javascript" src="/static/js/common/distpicker.js"></script>
     <script type="text/javascript" src="/static/js/manage/course_update.js"></script>
+    <script type="text/javascript" src="/static/js/mainJs/layer/layer.js"></script>
     <script type="text/javascript">
         var course = {
-            courseType : ${course.courseType},
-            storeId : ${course.storeId}
+            courseId : '${course.courseId}',
+            courseType : '${course.courseType}',
+            storeId : '${course.storeId}'
         };
     </script>
 </body>

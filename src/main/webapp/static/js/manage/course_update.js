@@ -16,27 +16,113 @@ $(function (){
             fileManagerJson : '/static/js/kindeditor/kd_upload_file.jsp'
         });
     });
-
     $("#B_submit").click(updateCourse);
-    $("#B_delete_image").click(deleteImageUrl);
-    uploadCourseImageUrl();
-    initCityInfo();
-
     // 初始化课程类型
     initCourseType();
     // 初始化课程选择俱乐部
     initCourseChooseStore();
+    // 初始化课程规格、价格信息
+    initCourseSizeInfo();
+    // 添加俱乐部
+    $("#B_add_store").click(openChooseStoreLayer);
 })
+
+function initCourseSizeInfo(){
+    $.ajax({
+        type : "post",
+        url : "/course/courseSize",
+        data : {"courseId" : course.courseId},
+        dataType : "json",
+        async : false,
+        success : function (data) {
+            if(data.code == 1){
+                var courseSizeArr = [];
+                $.each(data.data, function (i, n){
+
+                })
+            }
+        }
+    });
+}
 
 function initCourseChooseStore(){
     $.ajax({
         type : "post",
-        url : "/store/",
+        url : "/store/courseChooseStore",
         data : {"storeIds" : course.storeId},
         dataType : "json",
         async : false,
         success : function (data) {
+            if(data.code == 1){
+                $.each(data.data, function (i, n){
+                    var courseStoreArr = [];
+                    courseStoreArr.push('<div id="courseStoreDiv_' + n.storeId + '">')
+                    courseStoreArr.push('<input type="text" class="long" value="' + n.storeName + '" ' +
+                        'data-store="' + n.storeId + '">');
+                    courseStoreArr.push('<input type="button" value="删除俱乐部" data-storeid="' + n.storeId
+                        + '" id="B_delete_store_' + n.storeId +'" class="course-btn">');
+                    courseStoreArr.push('</div>');
+                    $("#courseStoreDiv").append(courseStoreArr.join(""));
+                    $("#B_delete_store_" + n.storeId +"").click(deleteChooseStore);
+                })
+            }
+        }
+    });
+}
 
+function updateChooseStoreId(storeId){
+    var storeIds = $("input[name='storeIds']").val();
+    if(storeIds == ""){
+        $("input[name='storeIds']").val(storeId);
+    }else{
+        $("input[name='storeIds']").val(storeIds + "," + storeId);
+    }
+}
+
+function deleteChooseStore(){
+    var storeId = $(this).data("storeid");
+    var storeIds = $("input[name='storeIds']").val();
+    if(storeIds != ""){
+        var storeIdArr = [];
+        $.each(storeIds.split(","), function(i, n){
+            if(storeId != n){
+                storeIdArr.push(n);
+            }
+        })
+        if(storeIdArr == ""){
+            $("input[name='storeIds']").val("");
+        }else{
+            $("input[name='storeIds']").val(storeIdArr.join(","));
+        }
+        $("#courseStoreDiv_" + storeId + "").remove();
+    }
+}
+
+function openChooseStoreLayer(){
+    var storeIds = $("input[name='storeIds']").val();
+    layer.open({
+        title : '选择俱乐部',
+        type: 2,
+        content : "/store/courseStoreList?storeIds=" + storeIds,
+        area: ['80%', '85%'],
+        full: true,
+        end : function (){
+            var chooseStatus = $("body").data("COURSE_CHOOSE_STORE");
+            if(chooseStatus == "success"){
+                var storeId = $("body").data("STORE_ID");
+                var storeName = $("body").data("STORE_NAME");
+                var courseStoreArr = [];
+                courseStoreArr.push('<div id="courseStoreDiv_' + storeId + '">')
+                courseStoreArr.push('<input type="text" class="long" value="' + storeName + '" ' +
+                    'data-store="' + storeId + '">');
+                courseStoreArr.push('<input type="button" value="删除俱乐部" data-storeid="' + storeId
+                    + '" id="B_delete_store_' + storeId +'" class="course-btn">');
+                courseStoreArr.push('</div>');
+                $("#courseStoreDiv").append(courseStoreArr.join(""));
+                // 更新俱乐部id
+                updateChooseStoreId(storeId);
+                $("#B_delete_store_" + storeId +"").click(deleteChooseStore);
+            }
         }
     });
 }

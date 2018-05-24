@@ -3,7 +3,9 @@ package com.urbanfit.apiserver.service;
 import com.urbanfit.apiserver.cfg.pop.Constant;
 import com.urbanfit.apiserver.cfg.pop.SystemConfig;
 import com.urbanfit.apiserver.dao.CourseDao;
+import com.urbanfit.apiserver.dao.CourseSizeDao;
 import com.urbanfit.apiserver.entity.Course;
+import com.urbanfit.apiserver.entity.CourseSize;
 import com.urbanfit.apiserver.entity.dto.ResultDTOBuilder;
 import com.urbanfit.apiserver.util.*;
 import net.sf.json.JSONObject;
@@ -15,10 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.annotation.Resource;
 import java.io.File;
 import java.text.MessageFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Administrator on 2018/3/2.
@@ -28,6 +27,8 @@ import java.util.Map;
 public class CourseService {
     @Resource
     private CourseDao courseDao;
+    @Resource
+    private CourseSizeDao courseSizeDao;
 
     /**
      * 添加课程数据
@@ -159,5 +160,17 @@ public class CourseService {
         jo.put("baseUrl", SystemConfig.getString("image_base_url"));
         jo.put("course", JsonUtils.getJsonObject4JavaPOJO(course, DateUtils.LONG_DATE_PATTERN));
         return JsonUtils.encapsulationJSON(Constant.INTERFACE_SUCC, "查询成功", jo.toString()).toString();
+    }
+
+    public String queryCourseSize(Integer courseId){
+        if(courseId == null){
+            return JsonUtils.encapsulationJSON(Constant.INTERFACE_PARAM_ERROR, "参数有误", "").toString();
+        }
+        List<CourseSize> lstSize = courseSizeDao.queryCourseSize(courseId);
+        if(CollectionUtils.isEmpty(lstSize)){
+            return JsonUtils.encapsulationJSON(Constant.INTERFACE_FAIL, "没有规格信息", "").toString();
+        }
+        return JsonUtils.encapsulationJSON(Constant.INTERFACE_SUCC, "查询成功", JsonUtils.
+                getJsonString4JavaListDate(lstSize, DateUtils.LONG_DATE_PATTERN)).toString();
     }
 }

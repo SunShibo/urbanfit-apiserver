@@ -3,6 +3,7 @@ package com.urbanfit.apiserver.web.controller.manage;
 import com.urbanfit.apiserver.cfg.pop.SystemConfig;
 import com.urbanfit.apiserver.entity.Course;
 import com.urbanfit.apiserver.service.CourseService;
+import com.urbanfit.apiserver.util.StringUtils;
 import com.urbanfit.apiserver.web.controller.base.BaseCotroller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,6 +44,9 @@ public class CourseController extends BaseCotroller {
         Course course = courseService.queryCourseById(courseId);
         ModelAndView view = new ModelAndView();
         view.setViewName("/course/course_update");
+        if(!StringUtils.isEmpty(course.getStoreId())){
+            course.setStoreId(course.getStoreId().substring(1, course.getStoreId().length() - 1));
+        }
         view.addObject("course", course);
         view.addObject("baseUrl", SystemConfig.getString("image_base_url"));
         sput("base_image", SystemConfig.getString("image_base_url"));
@@ -65,5 +69,11 @@ public class CourseController extends BaseCotroller {
     public void updateCourseStatus(HttpServletResponse response, Integer courseId, Integer status){
         String result = courseService.updateCourseStatus(courseId, status);
         safeJsonPrint(response, result);
+    }
+
+    @RequestMapping("/courseSize")
+    public void queryCourseSize(Integer courseId, HttpServletResponse response){
+        String result = courseService.queryCourseSize(courseId);
+        safeTextPrint(response, result);
     }
 }
