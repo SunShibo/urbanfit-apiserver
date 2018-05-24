@@ -43,8 +43,9 @@
                     <tr>
                         <td>关联俱乐部：</td>
                         <td>
-                            <input type="text" class="long"><em>*必填</em>
+                            <div id="courseStoreDiv"></div><em>*必填</em>
                             <div><input type="button" id="B_add_store" value="添加俱乐部" class="store-btn"></div>
+                            <input type="hidden" name="storeIds">
                         </td>
                     </tr>
                     <tr>
@@ -87,19 +88,7 @@
     </div>
 </div>
 </div>
-
-<div id="addGroupForm" style="display:none;">
-    <div class="tccon">
-        <ul>
-            <li class="fenzu">新建分组并添加：<input type="text" name="groupName" class="fzname"></li>
-            <li class="anniu">
-                <input type="button" id="B_add_client_group" value="保存分组" class="an-tc an-red">
-            </li>
-        </ul>
-    </div>
-</div>
-
-<script type="text/javascript" src="/static/js/sku/jquery.min.js"></script>
+<script type="text/javascript" src="/static/js/mainJs/jquery.min.js"></script>
 <script charset="utf-8" src="/static/js/kindeditor/kindeditor-all-min.js"></script>
 <script charset="utf-8" src="/static/js/kindeditor/zh_CN.js"></script>
 <script type="text/javascript" src="/static/js/common/ajaxupload.js"></script>

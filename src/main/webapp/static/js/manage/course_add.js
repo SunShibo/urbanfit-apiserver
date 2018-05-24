@@ -108,7 +108,7 @@ function showCoursePriceDetail(){
     })
 
     var skuDetailArr = [];
-    skuDetailArr.push('<table class="skuTable"><tr>');
+    skuDetailArr.push('<table class="skuTable" cellpadding="0" cellspacing="0"><tr>');
     //创建表头
     for(var t = 0; t < skuTypeArr.length; t ++){
         skuDetailArr.push('<th>' + skuTypeArr[t].skuTypeTitle + '</th>');
@@ -140,10 +140,58 @@ function showCoursePriceDetail(){
 }
 
 function openChooseStoreLayer(){
+    var storeIds = $("input[name='storeIds']").val();
     layer.open({
-        title : '添加到分组',
-        type : 1,
-        area: ['700px', '600px'],
-        content : $("#addGroupForm")
+        title : '选择俱乐部',
+        type: 2,
+        content : "/store/courseStoreList?storeIds=" + storeIds,
+        area: ['80%', '85%'],
+        full: true,
+        end : function (){
+            var chooseStatus = $("body").data("COURSE_CHOOSE_STORE");
+            if(chooseStatus == "success"){
+                var storeId = $("body").data("STORE_ID");
+                var storeName = $("body").data("STORE_NAME");
+                var courseStoreArr = [];
+                courseStoreArr.push('<div id="courseStoreDiv_' + storeId + '">')
+                courseStoreArr.push('<input type="text" class="long" value="' + storeName + '" ' +
+                    'data-store="' + storeId + '">');
+                courseStoreArr.push('<input type="button" value="删除俱乐部" data-storeid="' + storeId
+                    + '" id="B_delete_store_' + storeId +'" class="course-btn">');
+                courseStoreArr.push('</div>');
+                $("#courseStoreDiv").append(courseStoreArr.join(""));
+                // 更新俱乐部id
+                updateChooseStoreId(storeId);
+                $("#B_delete_store_" + storeId +"").click(deleteChooseStore);
+            }
+        }
     });
+}
+
+function updateChooseStoreId(storeId){
+    var storeIds = $("input[name='storeIds']").val();
+    if(storeIds == ""){
+        $("input[name='storeIds']").val(storeId);
+    }else{
+        $("input[name='storeIds']").val(storeIds + "," + storeId);
+    }
+}
+
+function deleteChooseStore(){
+    var storeId = $(this).data("storeid");
+    var storeIds = $("input[name='storeIds']").val();
+    if(storeIds != ""){
+        var storeIdArr = [];
+        $.each(storeIds.split(","), function(i, n){
+            if(storeId != n){
+                storeIdArr.push(n);
+            }
+        })
+        if(storeIdArr == ""){
+            $("input[name='storeIds']").val("");
+        }else{
+            $("input[name='storeIds']").val(storeIdArr.join(","));
+        }
+        $("#courseStoreDiv_" + storeId + "").remove();
+    }
 }

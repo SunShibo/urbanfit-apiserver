@@ -22,7 +22,7 @@ public class Course extends BaseModel {
     private String courseDistrict;
     private String courseImageUrl;
     private int status;
-
+    private String storeId;
 
     public Integer getCourseId() {
         return courseId;
@@ -110,5 +110,13 @@ public class Course extends BaseModel {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public String getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(String storeId) {
+        this.storeId = storeId;
     }
 }

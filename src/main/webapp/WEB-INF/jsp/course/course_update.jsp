@@ -29,17 +29,27 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td>标题：</td>
+                                <td>课程类型：</td>
                                 <td>
-                                    <input type="text" name="courseTitle" value="${course.courseTitle}"
-                                           placeholder="请输入课程标题"><em>*必填</em>
+                                    <div class="select">
+                                        <div>
+                                            <select name="courseType">
+                                                <option value="1">成人课程</option>
+                                                <option value="2">青少年课程</option>
+                                                <option value="3">私教课程</option>
+                                                <option value="4">特色课程</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <em>*必填</em>
                                 </td>
                             </tr>
                             <tr>
-                                <td>价格：</td>
+                                <td>关联俱乐部：</td>
                                 <td>
-                                    <input type="text" name="coursePrice" value="${course.coursePrice}"
-                                           placeholder="请输入课程价格"><em>*必填</em>
+                                    <div id="courseStoreDiv"></div><em>*必填</em>
+                                    <div><input type="button" id="B_add_store" value="添加俱乐部" class="store-btn"></div>
+                                    <input type="hidden" name="storeIds">
                                 </td>
                             </tr>
                             <tr>
@@ -101,4 +111,10 @@
     <script type="text/javascript" src="/static/js/common/ajaxupload.js"></script>
     <script type="text/javascript" src="/static/js/common/distpicker.js"></script>
     <script type="text/javascript" src="/static/js/manage/course_update.js"></script>
+    <script type="text/javascript">
+        var course = {
+            courseType : ${course.courseType},
+            storeId : ${course.storeId}
+        };
+    </script>
 </body>

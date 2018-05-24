@@ -168,7 +168,8 @@ input,button,textarea{ outline:none;}
 .tablebox1 table tr td a{color: #0000FF;font-size: 14px; padding: 0 10px;}
 
 .tablebox2{ width:100%; white-space:nowrap; margin-top: 20px;}
-.tablebox2 table{width: 100%;}
+.tablebox2 form > table{width: 100%;}
+.tablebox2 .skuTable{width:85%;border:1px solid #ddd;border-right:none;border-bottom:none;}
 .tablebox2 table td{font-size: 14px;position: relative;padding-bottom: 15px;}
 .tablebox2 table tr .td1{width: 20%;}
 .tablebox2 table tr .td2{width: 80%;}
@@ -178,8 +179,8 @@ input,button,textarea{ outline:none;}
 .tablebox2 table td em{width:10%;color: #FF0000;font-style: normal;position:absolute;right:0px;top:10px;}
 .tablebox2 table td a{display: block; width: 100px;border:1px solid #ddd;background: #3187c2;color: #fff;
   height: 40px;font-size: 14px;text-align: center;line-height: 40px;margin: 20px auto;}
-.tablebox2 table td > input[type='text']{width:85%;color: #333;font-size: 14px;text-indent: 10px;height: 40px;border:1px solid #ddd;margin-}
-.tablebox2 table td > input[type='checkbox']{float: left;margin-left: 15px;}
+.tablebox2 table td > input[type='text']{width:85%;color: #333;font-size: 14px;text-indent: 10px;height: 40px;border:1px solid #ddd;margin-top: 13px;}
+.tablebox2 table td > input[type='checkbox']{display: inline-block;margin-right: 5px;}
 .select div select{ background:#fff;min-width: 120px; height: 40px;border:1px solid #ddd;font-size: 14px;}
 
 
@@ -243,10 +244,9 @@ input,button,textarea{ outline:none;}
 }
 
 #coursePriceDiv th {
-  border-width: 1px;
+  border-right: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
   padding: 10px 10px;
-  border-style: solid;
-  border-color: #ddd;
   color: #666;
   background-color: #ededed;
 }
@@ -257,9 +257,8 @@ input,button,textarea{ outline:none;}
 }
 
 #coursePriceDiv td, th {
-  border-width: 1px;
-  border-style: solid;
-  border-color: #ddd;
+  border-right: 1px solid #ddd;
+  border-bottom: 1px solid #ddd;
   display: table-cell;
   vertical-align: inherit;
   text-align: center;

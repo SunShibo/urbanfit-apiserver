@@ -9,12 +9,12 @@
   <link type="text/css" href="/static/css/main.css" rel="stylesheet"/>
   <script type="text/javascript" src="/static/js/mainJs/jquery.min.js"></script>
   <script type="text/javascript" src="/static/js/manage/course_choose_store.js"></script>
+  <script type="text/javascript" src="/static/js/mainJs/layer/layer.js"></script>
 </head>
 <body>
     <div class="index clear">
-        <div class="indexRight1">
-            <div class="title">俱乐部选择</div>
-            <form id="storeForm" action="list" method="post">
+        <div class="indexRight1" style="width: 95%">
+            <form id="storeForm" action="courseStoreList" method="post">
                 <div class="screen clear">
                     <div class="form">
                         <input type="text" placeholder="请输入门店名称" name="storeName" value="${storeName}">
@@ -27,13 +27,19 @@
                             <td>门店名称</td>
                             <td>联系电话</td>
                             <td>联系人</td>
+                            <td>地址</td>
                             <td>创建时间</td>
                         </tr>
                         <c:forEach items="${lstStore}" var="store">
                             <tr>
-                                <td>${store.storeName}</td>
+                                <td>
+                                    <a href="javascript:void(0);" id="A_choose_store_${store.storeId}"
+                                       data-storeid="${store.storeId}" data-storename="${store.storeName}">
+                                       ${store.storeName}</a>
+                                </td>
                                 <td>${store.mobile}</td>
                                 <td>${store.contactName}</td>
+                                <td>${store.storeDistrict}${store.storeAddress}</td>
                                 <td>
                                   <fmt:formatDate value="${store.createTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
                                 </td>
@@ -45,7 +51,7 @@
                     <div class="pages">
                         <jsp:include page="../common/pager.jsp">
                           <jsp:param value="${pager.totalRecord}" name="totalRecord"/>
-                          <jsp:param value="list" name="url"/>
+                          <jsp:param value="courseStoreList" name="url"/>
                         </jsp:include>
                     </div>
                 </div>

@@ -21,7 +21,29 @@ $(function (){
     $("#B_delete_image").click(deleteImageUrl);
     uploadCourseImageUrl();
     initCityInfo();
+
+    // 初始化课程类型
+    initCourseType();
+    // 初始化课程选择俱乐部
+    initCourseChooseStore();
 })
+
+function initCourseChooseStore(){
+    $.ajax({
+        type : "post",
+        url : "/store/",
+        data : {"storeIds" : course.storeId},
+        dataType : "json",
+        async : false,
+        success : function (data) {
+
+        }
+    });
+}
+
+function initCourseType(){
+    $("select[name='courseType']").val(course.courseType);
+}
 
 // 修改课程信息
 function updateCourse(){

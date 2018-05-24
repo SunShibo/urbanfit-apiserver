@@ -31,7 +31,7 @@ public class StoreController extends BaseCotroller{
 
     @RequestMapping("/list")
     public ModelAndView queryStoreList(Integer pageNo, Integer pageSize, String storeName){
-        pager = storeService.queryStoreList(storeName, getQueryInfo(pageNo, pageSize));
+        pager = storeService.queryStoreList(storeName, getQueryInfo(pageNo, pageSize), null);
         ModelAndView view = new ModelAndView();
 
         view.setViewName("/store/store_list");
@@ -67,5 +67,24 @@ public class StoreController extends BaseCotroller{
     public void deleteStore(HttpServletResponse response, Integer storeId){
         String result = storeService.deleteStore(storeId);
         safeJsonPrint(response, result);
+    }
+
+    @RequestMapping("/courseStoreList")
+    public ModelAndView queryCourseChooseStore(String storeName, String storeIds, Integer pageNo, Integer pageSize){
+        pager = storeService.queryStoreList(storeName, getQueryInfo(pageNo, pageSize), storeIds);
+        ModelAndView view = new ModelAndView();
+        view.setViewName("/store/course_choose_store");
+        view.addObject("lstStore", pager.getDatas());
+        view.addObject("pager", pager);
+        view.addObject("pageNo", pageNo);
+        view.addObject("storeName", storeName);
+        view.addObject("storeIds", storeIds);
+        return view;
+    }
+
+    @RequestMapping("/courseChooseStore")
+    public void queryCourseChoosedStore(String storeIds, HttpServletResponse response){
+        String result = storeService.queryCourseChoosedStore(storeIds);
+        safeTextPrint(response, result);
     }
 }

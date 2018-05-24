@@ -34,6 +34,12 @@
             <if test="storeName != null">
                 and storeName like CONCAT("%", #{storeName}, "%")
             </if>
+            <if test="storeIds != null">
+                and storeId not in
+                <foreach collection="storeIds" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
         ) m
     </select>
 
@@ -41,6 +47,12 @@
         select * from t_store where status = 0
         <if test="storeName != null">
             and storeName like CONCAT("%", #{storeName}, "%")
+        </if>
+        <if test="storeIds != null">
+            and storeId not in
+            <foreach collection="storeIds" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
         </if>
         order by createTime desc
         <include refid="limit"/>
@@ -80,5 +92,15 @@
         </if>
         order by createTime desc
         <include refid="limit"/>
+    </select>
+
+    <select id="queryCourseChooseStoreList" parameterType="map" resultType="com.urbanfit.apiserver.entity.Store">
+        select * from t_store where status = 0
+        <if test="storeIds != null">
+            and storeId in
+            <foreach collection="storeIds" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
     </select>
 </mapper>

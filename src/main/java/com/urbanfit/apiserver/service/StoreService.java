@@ -13,6 +13,8 @@ import com.urbanfit.apiserver.util.StringUtils;
 import net.sf.json.JSONObject;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
+
 import javax.annotation.Resource;
 import java.util.HashMap;
 import java.util.List;
@@ -64,10 +66,13 @@ public class StoreService {
         return storeDao.queryStoreById(storeId);
     }
 
-    public PageObject<Store> queryStoreList(String storeName, QueryInfo queryInfo){
+    public PageObject<Store> queryStoreList(String storeName, QueryInfo queryInfo, String storeIds){
         Map<String, Object> map = new HashMap<String, Object>();
         if(!StringUtils.isEmpty(storeName)){
             map.put("storeName", storeName);
+        }
+        if(!StringUtils.isEmpty(storeIds)){
+            map.put("storeIds", storeIds.split(","));
         }
         if(queryInfo != null){
             map.put("pageOffset", queryInfo.getPageOffset());
@@ -114,5 +119,21 @@ public class StoreService {
         jo.put("lstStore", JsonUtils.getJsonString4JavaListDate(pager.getDatas(), DateUtils.LONG_DATE_PATTERN));
         jo.put("totalRecord", pager.getTotalRecord());
         return JsonUtils.encapsulationJSON(Constant.INTERFACE_SUCC, "查询成功", jo.toString()).toString();
+    }
+
+    public String queryCourseChoosedStore(String storeIds){
+        if(StringUtils.isEmpty(storeIds)){
+            return JsonUtils.encapsulationJSON(Constant.INTERFACE_PARAM_ERROR, "参数有误", "").toString();
+        }
+        Map<String, Object> map = new HashMap<String, Object>();
+        if(!StringUtils.isEmpty(storeIds)){
+            map.put("storeIds", storeIds.split(","));
+        }
+        List<Store> lstStore = storeDao.queryCourseChooseStoreList(map);
+        if(CollectionUtils.isEmpty(lstStore)){
+            return JsonUtils.encapsulationJSON(Constant.INTERFACE_FAIL, "没有俱乐部信息", "").toString();
+        }
+        return JsonUtils.encapsulationJSON(Constant.INTERFACE_SUCC, "查询成功", JsonUtils.
+                getJsonString4JavaListDate(lstStore, DateUtils.LONG_DATE_PATTERN)).toString();
     }
 }

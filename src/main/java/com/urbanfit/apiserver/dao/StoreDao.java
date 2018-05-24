@@ -39,4 +39,6 @@ public interface StoreDao {
     public int queryClientStoreCount(Map<String, Object> map);
 
     public List<Store> queryClientStoreList(Map<String, Object> map);
+
+    public List<Store> queryCourseChooseStoreList(Map<String, Object> map);
 }
