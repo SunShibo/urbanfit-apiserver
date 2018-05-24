@@ -178,9 +178,9 @@ input,button,textarea{ outline:none;}
 .tablebox2 table td em{width:10%;color: #FF0000;font-style: normal;position:absolute;right:0px;top:10px;}
 .tablebox2 table td a{display: block; width: 100px;border:1px solid #ddd;background: #3187c2;color: #fff;
   height: 40px;font-size: 14px;text-align: center;line-height: 40px;margin: 20px auto;}
-.tablebox2 table td > input{width:85%;color: #333;font-size: 14px;text-indent: 10px;height: 40px;border:1px solid #ddd;}
+.tablebox2 table td > input[type='text']{width:85%;color: #333;font-size: 14px;text-indent: 10px;height: 40px;border:1px solid #ddd;margin-}
+.tablebox2 table td > input[type='checkbox']{float: left;margin-left: 15px;}
 .select div select{ background:#fff;min-width: 120px; height: 40px;border:1px solid #ddd;font-size: 14px;}
-
 
 
 .login{ width:805px; height:436px; margin:0 auto; position:relative;}
@@ -262,6 +262,7 @@ input,button,textarea{ outline:none;}
   border-color: #ddd;
   display: table-cell;
   vertical-align: inherit;
+  text-align: center;
 }
 
 
