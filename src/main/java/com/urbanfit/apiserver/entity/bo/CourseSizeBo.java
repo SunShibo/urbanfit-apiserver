@@ -11,7 +11,7 @@ public class CourseSizeBo {
     private JSONArray sizeNameInfo;
     private Integer sizeNameId;
     private String sizeName;
-    private JSONArray courseSize;
+    private String courseSize;
     private Double sizePrice;
     private int isSale;
 
@@ -71,11 +71,11 @@ public class CourseSizeBo {
         this.isSale = isSale;
     }
 
-    public JSONArray getCourseSize() {
+    public String getCourseSize() {
         return courseSize;
     }
 
-    public void setCourseSize(JSONArray courseSize) {
+    public void setCourseSize(String courseSize) {
         this.courseSize = courseSize;
     }
 }

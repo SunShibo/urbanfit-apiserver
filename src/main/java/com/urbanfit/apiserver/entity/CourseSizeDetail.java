@@ -11,6 +11,7 @@ public class CourseSizeDetail {
     private Double sizePrice;
     private int isSale;
     private Date createTime;
+    private Integer courseId;
 
     public Integer getDetailId() {
         return detailId;
@@ -50,5 +51,22 @@ public class CourseSizeDetail {
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public Integer getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(Integer courseId) {
+        this.courseId = courseId;
+    }
+
+    public CourseSizeDetail(){}
+
+    public CourseSizeDetail(String sizeDetail, Double sizePrice, int isSale, Integer courseId) {
+        this.sizeDetail = sizeDetail;
+        this.sizePrice = sizePrice;
+        this.isSale = isSale;
+        this.courseId  = courseId;
     }
 }

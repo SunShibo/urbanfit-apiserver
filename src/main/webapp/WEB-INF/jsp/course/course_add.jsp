@@ -54,8 +54,8 @@
                             <div id="courseSizeDiv_1">
                                 <input type="text" placeholder="请输入规格属性" class="long" data-tid="1" id="sizeType_1"><input type="button" id="B_add_sizeType" value="添加属性" class="course-btn"><br/>
                                 <input type="text" placeholder="请输入规格信息" class="short" data-nid="1" id="sizeName_1_1"><input type="button" id="B_add_sizeName_1" data-aid="1" value="添加信息" class="course-btn"><br/>
-                                <input type="hidden" name="sizeNameIndex_1" value="1">
                             </div>
+                            <input type="hidden" name="sizeNameIndex" value="1">
                             <input type="hidden" name="sizeTypeIndex" value="1">
                             <input type="hidden" name="courseSizeInfo">
                         </td>
@@ -80,7 +80,6 @@
                     <tr>
                         <td></td>
                         <td>
-                            <input type="hidden" name="courseDistrict" value="${course.courseDistrict}">
                             <a href="javascript:void(0);" id="B_submit">发布</a>
                         </td>
                     </tr>

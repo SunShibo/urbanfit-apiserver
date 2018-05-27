@@ -2,9 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.urbanfit.apiserver.dao.CourseSizeDao">
-    <select id="queryCourseSize" parameterType="int" resultType="com.urbanfit.apiserver.entity.CourseSize">
-        select * from t_course_size where courseId = #{courseId}
+    <select id="queryCourseSizeType" parameterType="int" resultType="com.urbanfit.apiserver.entity.CourseSize">
+        select * from t_course_size where courseId = #{courseId} and parentId is null
     </select>
+
+    <select id="queryCourseSizeName" parameterType="int" resultType="com.urbanfit.apiserver.entity.CourseSize">
+        select * from t_course_size where courseId = #{courseId} and parentId is not null
+    </select>
+
     <insert id="addCourseSize" parameterType="com.urbanfit.apiserver.entity.CourseSize"
             useGeneratedKeys="true" keyProperty="sizeId">
         insert into t_course_size (sizeName, parentId, courseId, createTime) values (#{sizeName}, #{parentId},

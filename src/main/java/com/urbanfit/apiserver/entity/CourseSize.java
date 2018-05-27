@@ -50,6 +50,8 @@ public class CourseSize extends BaseModel{
         this.createTime = createTime;
     }
 
+    public CourseSize(){}
+
     public CourseSize( String sizeName, Integer parentId, Integer courseId) {
         this.sizeName = sizeName;
         this.parentId = parentId;

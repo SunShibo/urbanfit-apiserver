@@ -55,12 +55,17 @@
                             <tr>
                                 <td>规&nbsp;&nbsp;&nbsp;&nbsp;格：</td>
                                 <td id="courseSizeDiv">
-                                    <input type="hidden" name="sizeTypeIndex">
+                                    <input type="hidden" name="sizeNameIndex" value="1">
+                                    <input type="hidden" name="sizeTypeIndex" value="1">
+                                    <input type="hidden" name="courseSizeInfo">
                                 </td>
                             </tr>
                             <tr>
                                 <td>价&nbsp;&nbsp;&nbsp;&nbsp;格：</td>
-                                <td></td>
+                                <td>
+                                    <div id="coursePriceDiv"></div>
+                                    <input type="hidden" name="sizePriceInfo">
+                                </td>
                             </tr>
                             <tr>
                                 <td>课程内容：</td>

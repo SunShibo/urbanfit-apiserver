@@ -4,7 +4,21 @@
 <mapper namespace="com.urbanfit.apiserver.dao.CourseSizeDetailDao">
     <insert id="addCourseSizeDetail" parameterType="com.urbanfit.apiserver.entity.CourseSizeDetail"
             useGeneratedKeys="true" keyProperty="detailId">
-        insert into t_course_size_detail (sizeDetail, sizePrice, isSale, createTime) values (#{sizeDetail},
-        #{sizePrice}, #{isSale}, now());
+        insert into t_course_size_detail (sizeDetail, sizePrice, isSale, courseId, createTime) values (#{sizeDetail},
+        #{sizePrice}, #{isSale}, #{courseId}, now());
     </insert>
+
+    <insert id="batchAddCourseSizeDetail">
+        <selectKey resultType="Integer" keyProperty="detailId" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_course_size_detail (sizeDetail, sizePrice, isSale, courseId, createTime) values
+        <foreach collection="list" item="size" index="index" separator=",">
+            (#{size.sizeDetail}, #{size.sizePrice}, #{size.isSale}, #{size.courseId}, now())
+        </foreach>
+    </insert>
+
+    <select id="queryCourseSizeDetail" parameterType="int" resultType="com.urbanfit.apiserver.entity.CourseSizeDetail">
+        select * from t_course_size_detail where courseId = #{courseId}
+    </select>
 </mapper>

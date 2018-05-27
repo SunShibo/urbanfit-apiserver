@@ -79,8 +79,8 @@ function dealCourseSizePrice(){
     $("input[name^='sizePrice_']").each(function(i, n){
         var pid = $(this).data("pid");
         var price = $(this).val();
-        var sizePriceInfo = JSON.parse($("input[name='sizePriceInfo_" + pid + "']").val());
-        var isSale = $("input[name='sizeIsSale_" + pid +"]").is(":checked") ? 1 : 0;
+        var sizePriceInfo = $("input[name='sizePriceInfo_" + pid + "']").val();
+        var isSale = $("#sizeIsSale_" + pid +"").is(":checked") ? 1 : 0;
         var sizePriceDetail = {"courseSize" : sizePriceInfo, "sizePrice" : price, "isSale" : isSale};
         sizePriceInfoArr.push(sizePriceDetail);
     });
@@ -102,19 +102,21 @@ function sizePriceIsWrite(){
 // 添加规格属性
 function addSizeType(){
     var sizeTypeArr = [];
+    var sizeNameIndex = $("input[name='sizeNameIndex']").val();
+    sizeNameIndex = parseInt(parseInt(sizeNameIndex) + 1);
     var sizeTypeIndex = $("input[name='sizeTypeIndex']").val();
     sizeTypeIndex = parseInt(parseInt(sizeTypeIndex) + 1);
     sizeTypeArr.push('<div id="courseSizeDiv_'+ sizeTypeIndex + '">');
         sizeTypeArr.push('<input type="text" placeholder="请输入规格属性" class="long" data-tid="' + sizeTypeIndex + '" id="sizeType_' + sizeTypeIndex + '">');
         sizeTypeArr.push('<input type="button" id="B_delete_sizeType_'+ sizeTypeIndex + '" data-aid="'+ sizeTypeIndex + '" value="删除属性" class="course-btn">');
         sizeTypeArr.push('<br/>');
-        sizeTypeArr.push('<input type="text" placeholder="请输入规格信息" class="short" data-nid="1" id="sizeName_' + sizeTypeIndex + '_1">');
+        sizeTypeArr.push('<input type="text" placeholder="请输入规格信息" class="short" data-nid="' + sizeNameIndex + '" id="sizeName_' + sizeTypeIndex + '_' + sizeNameIndex + '">');
         sizeTypeArr.push('<input type="button" id="B_add_sizeName_'+ sizeTypeIndex+ '" data-aid="'+ sizeTypeIndex + '" value="添加信息" class="course-btn">');
         sizeTypeArr.push('<br/>');
-        sizeTypeArr.push('<input type="hidden" name="sizeNameIndex_' + sizeTypeIndex + '" value="1">');
     sizeTypeArr.push('</div>');
 
     $("input[name='sizeTypeIndex']").val(sizeTypeIndex);
+    $("input[name='sizeNameIndex']").val(sizeNameIndex);
     $("#courseSizeDiv").append(sizeTypeArr.join(""));
     $("input[id='B_add_sizeName_"+ sizeTypeIndex +"']").click(addSizeName);
     $("#B_delete_sizeType_" + sizeTypeIndex + "").click(deleteSizeType);
@@ -125,16 +127,16 @@ function addSizeType(){
 function addSizeName(){
     var aid = $(this).data("aid");
     var sizeNameArr = [];
-    var sizeNameIndex = $("input[name='sizeNameIndex_" + aid + "']").val();
+    var sizeNameIndex = $("input[name='sizeNameIndex']").val();
     sizeNameIndex = parseInt(parseInt(sizeNameIndex) + 1);
     sizeNameArr.push('<div id="sizeNameDiv_' + aid + '">');
         sizeNameArr.push('<input type="text" placeholder="请输入规格信息" class="short" data-nid="'
             + sizeNameIndex + '" id="sizeName_' + aid + '_' + sizeNameIndex + '">');
-        sizeNameArr.push('<input type="button" id="B_delete_sizeName_' + aid + '_'+ sizeNameIndex+ '" data-nid="'
+        sizeNameArr.push('<input type="button" id="B_delete_sizeName_' + aid + '_'+ sizeNameIndex + '" data-nid="'
             + sizeNameIndex + '" data-tid=' + aid +'  value="删除" class="course-btn">');
         sizeNameArr.push('<br/>');
     sizeNameArr.push('</div>')
-    $("input[name='sizeNameIndex_" + aid + "']").val(sizeNameIndex);
+    $("input[name='sizeNameIndex']").val(sizeNameIndex);
     $("#courseSizeDiv_" + aid + "").append(sizeNameArr.join(""));
     $("input[id='B_delete_sizeName_" + aid + "_" + sizeNameIndex + "']").click(deleteSizeName);
     $("#sizeName_" + aid + "_" + sizeNameIndex + "").blur(showCoursePriceDetail);
@@ -203,7 +205,7 @@ function showCoursePriceDetail(){
 
     //循环处理表体
     for(var i = 0 ; i < totalRow ; i ++){
-        var sizePriceDetailArr = []
+        var sizeNameIdArr = []
         var currRowDoms = "";
         var rowCount = 1;                                       //记录行数
         for(var j = 0; j < skuTypeArr.length; j ++) {          //sku列
@@ -214,16 +216,14 @@ function showCoursePriceDetail(){
             var point = ((i / anInterBankNum) % skuValueLen);
             if (0 == (i % anInterBankNum)) {                    //需要创建td
                 currRowDoms += '<td rowspan=' + anInterBankNum + '>' + skuValues[point].skuValueTitle + '</td>';
-                var sizePriceInfo = {"sizeTypeId" : skuTypeArr[j].skuTypeKey, "sizeNameId" : skuValues[point].skuValueId};
-                sizePriceDetailArr.push(sizePriceInfo);
+                sizeNameIdArr.push(skuValues[point].skuValueId);
             }else{
-                var sizePriceInfo = {"sizeTypeId" : skuTypeArr[j].skuTypeKey, "sizeNameId" : skuValues[parseInt(point)].skuValueId};
-                sizePriceDetailArr.push(sizePriceInfo);
+                sizeNameIdArr.push(skuValues[parseInt(point)].skuValueId);
             }
         }
         skuDetailArr.push('<tr>' + currRowDoms + '<td><input type="text" data-pid="' + i + '" name="sizePrice_' + i +'"/></td>');
-        skuDetailArr.push(  '<td><input type="checkbox" value="1" name="sizeIsSale_' + i + '">不可售<input type="hidden" name=""></td>');
-        skuDetailArr.push(  '<input type="hidden" value=' + JSON.stringify(sizePriceDetailArr) + ' name="sizePriceInfo_' + i +'">');
+        skuDetailArr.push(  '<td><input type="checkbox" value="1" id="sizeIsSale_' + i + '">不可售<input type="hidden" name=""></td>');
+        skuDetailArr.push(  '<input type="hidden" value=' + sizeNameIdArr.join(",") + ' name="sizePriceInfo_' + i +'">');
         skuDetailArr.push('</tr>');
     }
     skuDetailArr.push('</table>');

@@ -4,12 +4,17 @@ import com.urbanfit.apiserver.cfg.pop.Constant;
 import com.urbanfit.apiserver.cfg.pop.SystemConfig;
 import com.urbanfit.apiserver.dao.CourseDao;
 import com.urbanfit.apiserver.dao.CourseSizeDao;
+import com.urbanfit.apiserver.dao.CourseSizeDetailDao;
 import com.urbanfit.apiserver.entity.Course;
 import com.urbanfit.apiserver.entity.CourseSize;
+import com.urbanfit.apiserver.entity.CourseSizeDetail;
 import com.urbanfit.apiserver.entity.bo.CourseSizeBo;
 import com.urbanfit.apiserver.entity.dto.ResultDTOBuilder;
 import com.urbanfit.apiserver.util.*;
+import com.urbanfit.apiserver.util.StringUtils;
 import net.sf.json.JSONObject;
+import org.apache.commons.lang.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -30,6 +35,8 @@ public class CourseService {
     private CourseDao courseDao;
     @Resource
     private CourseSizeDao courseSizeDao;
+    @Autowired
+    private CourseSizeDetailDao courseSizeDetailDao;
 
     /**
      * 添加课程数据
@@ -48,6 +55,7 @@ public class CourseService {
         course.setCreateTime(new Date());
         // 添加课程信息
         courseDao.addCourse(course);
+        Map<Integer, Integer> courseSizeMap = new HashMap<Integer, Integer>();
         // 添加课程规格
         List<CourseSizeBo> lstSize = JsonUtils.getList4Json(courseSizeInfo, CourseSizeBo.class);
         if(CollectionUtils.isEmpty(lstSize)){
@@ -62,27 +70,26 @@ public class CourseService {
                 CourseSize courseSizeName = new CourseSize(sizeName.getSizeName(), courseSize.getSizeId(),
                         course.getCourseId());
                 courseSizeDao.addCourseSize(courseSizeName);        // 添加数据
+                courseSizeMap.put(sizeName.getSizeNameId(), courseSizeName.getSizeId());
             }
         }
         // 添加课程规格价格
-        /**
-         * [{"sizeTypeId":1,"sizeTypeName":"颜色","sizeNameInfo":[{"sizeNameId":1,"sizeName":"黑色"},{"sizeNameId":2,"sizeName":"白色"}]}]
-         */
-        /**
-         * [{"courseSize":[{"sizeTypeId":1,"sizeNameId":1}],"sizePrice":"120","isSale":0},
-         * {"courseSize":[{"sizeTypeId":1,"sizeNameId":1}],"sizePrice":"130","isSale":0}]
-         */
-        /*
-            List<CourseSizeBo> lstSizePrice = JsonUtils.getList4Json(sizePriceInfo, CourseSizeBo.class);
-            for (CourseSizeBo sizePrice : lstSizePrice){
-            List<CourseSizeBo> lstSizePriceDetail = JsonUtils.getList4JsonArray(sizePrice.getCourseSize(),
-                    CourseSizeBo.class);
-            for (CourseSizeBo sizePriceDetail : lstSizePriceDetail){
-
+        List<CourseSizeBo> lstSizePrice = JsonUtils.getList4Json(sizePriceInfo, CourseSizeBo.class);
+        List<CourseSizeDetail> lstSizeDetail = new ArrayList<CourseSizeDetail>();
+        for (CourseSizeBo sizePrice : lstSizePrice){
+            String[] sizeIds = sizePrice.getCourseSize().split(",");
+            List<Integer> lstSizeId = new ArrayList<Integer>();
+            for (String sizeId : sizeIds){
+                if(courseSizeMap.containsKey(Integer.parseInt(sizeId))){
+                    lstSizeId.add(courseSizeMap.get(Integer.parseInt(sizeId)));
+                }
             }
-        }*/
-        return "";
-       /* return JsonUtils.encapsulationJSON(Constant.INTERFACE_SUCC, "添加成功", "").toString();*/
+            CourseSizeDetail sizeDetail = new CourseSizeDetail(listToString(lstSizeId, ","), sizePrice.getSizePrice(),
+                    sizePrice.getIsSale(), course.getCourseId());
+            lstSizeDetail.add(sizeDetail);
+        }
+        courseSizeDetailDao.batchAddCourseSizeDetail(lstSizeDetail);
+        return JsonUtils.encapsulationJSON(Constant.INTERFACE_SUCC, "添加成功", "").toString();
     }
 
     /**
@@ -202,11 +209,28 @@ public class CourseService {
         if(courseId == null){
             return JsonUtils.encapsulationJSON(Constant.INTERFACE_PARAM_ERROR, "参数有误", "").toString();
         }
-        List<CourseSize> lstSize = courseSizeDao.queryCourseSize(courseId);
-        if(CollectionUtils.isEmpty(lstSize)){
+        List<CourseSize> lstSizeType = courseSizeDao.queryCourseSizeType(courseId);
+        List<CourseSize> lstSizeName = courseSizeDao.queryCourseSizeName(courseId);
+        List<CourseSizeDetail> lstSizeDetail = courseSizeDetailDao.queryCourseSizeDetail(courseId);
+        if(CollectionUtils.isEmpty(lstSizeType) || CollectionUtils.isEmpty(lstSizeName) || CollectionUtils.
+                isEmpty(lstSizeDetail)){
             return JsonUtils.encapsulationJSON(Constant.INTERFACE_FAIL, "没有规格信息", "").toString();
         }
-        return JsonUtils.encapsulationJSON(Constant.INTERFACE_SUCC, "查询成功", JsonUtils.
-                getJsonString4JavaListDate(lstSize, DateUtils.LONG_DATE_PATTERN)).toString();
+        JSONObject jo = new JSONObject();
+        jo.put("lstSizeType", JsonUtils.getJsonString4JavaListDate(lstSizeType, DateUtils.LONG_DATE_PATTERN));
+        jo.put("lstSizeName", JsonUtils.getJsonString4JavaListDate(lstSizeName, DateUtils.LONG_DATE_PATTERN));
+        jo.put("lstSizeDetail", JsonUtils.getJsonString4JavaListDate(lstSizeDetail, DateUtils.LONG_DATE_PATTERN));
+        return JsonUtils.encapsulationJSON(Constant.INTERFACE_SUCC, "查询成功", jo.toString()).toString();
+    }
+
+    private String listToString(List list, String separator) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < list.size(); i++) {
+            sb.append(list.get(i));
+            if (i < list.size() - 1) {
+                sb.append(separator);
+            }
+        }
+        return sb.toString();
     }
 }
