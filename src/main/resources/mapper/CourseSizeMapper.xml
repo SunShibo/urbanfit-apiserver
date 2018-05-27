@@ -5,4 +5,9 @@
     <select id="queryCourseSize" parameterType="int" resultType="com.urbanfit.apiserver.entity.CourseSize">
         select * from t_course_size where courseId = #{courseId}
     </select>
+    <insert id="addCourseSize" parameterType="com.urbanfit.apiserver.entity.CourseSize"
+            useGeneratedKeys="true" keyProperty="sizeId">
+        insert into t_course_size (sizeName, parentId, courseId, createTime) values (#{sizeName}, #{parentId},
+        #{courseId}, now());
+    </insert>
 </mapper>

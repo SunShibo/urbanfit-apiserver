@@ -49,4 +49,17 @@ public class CourseSize extends BaseModel{
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
     }
+
+    public CourseSize( String sizeName, Integer parentId, Integer courseId) {
+        this.sizeName = sizeName;
+        this.parentId = parentId;
+        this.courseId = courseId;
+    }
+
+    public CourseSize(Integer sizeId, String sizeName, Integer parentId, Integer courseId) {
+        this.sizeId = sizeId;
+        this.sizeName = sizeName;
+        this.parentId = parentId;
+        this.courseId = courseId;
+    }
 }

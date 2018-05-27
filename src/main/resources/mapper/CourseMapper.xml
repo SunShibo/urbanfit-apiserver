@@ -5,8 +5,8 @@
     <!-- 添加课程信息 -->
     <insert id="addCourse" parameterType="com.urbanfit.apiserver.entity.Course"
             useGeneratedKeys="true" keyProperty="courseId">
-        insert into t_course (courseType, introduce, userId, createTime) values (#{courseType}, #{introduce},
-        #{userId}, now())
+        insert into t_course (courseName, courseType, introduce, userId, storeId, createTime) values (#{courseName},
+        #{courseType}, #{introduce}, #{userId}, #{storeId}, now())
     </insert>
     <!-- 根据课程类型查询数据 -->
     <select id="queryCourseByType" parameterType="int" resultType="com.urbanfit.apiserver.entity.Course">

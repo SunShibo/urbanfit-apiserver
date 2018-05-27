@@ -76,4 +76,12 @@ public class CourseController extends BaseCotroller {
         String result = courseService.queryCourseSize(courseId);
         safeTextPrint(response, result);
     }
+
+    @RequestMapping("/addCourse")
+    public void addCourse(String courseName, String storeIds, String courseSizeInfo, String sizePriceInfo,
+                          String introduce, Integer courseType, HttpServletResponse response){
+        String result = courseService.addCourse(courseName, storeIds, courseSizeInfo, sizePriceInfo, introduce,
+                courseType);
+        safeTextPrint(response, result);
+    }
 }

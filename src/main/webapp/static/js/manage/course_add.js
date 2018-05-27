@@ -8,6 +8,8 @@ $(function (){
     $("input[id='B_add_sizeType']").click(addSizeType);
     $("#sizeName_1_1").blur(showCoursePriceDetail);
     $("#B_add_store").click(openChooseStoreLayer);
+    // 添加课程
+    $("#B_submit").click(addCourse);
 
     KindEditor.ready(function(K) {
         editor = K.create('textarea[name="content"]', {
@@ -23,6 +25,80 @@ $(function (){
     });
 })
 
+function addCourse(){
+    var courseName = $("input[name='courseName']").val();
+    if(courseName == ""){
+        alert("课程名称不能为空");
+        return;
+    }
+    var storeIds = $("input[name='storeIds']").val();
+    if(storeIds == ""){
+        alert("请关联俱乐部");
+        return;
+    }
+    var courseSizeInfo = $("input[name='courseSizeInfo']").val();
+    if(courseSizeInfo == ""){
+        alert("请填写规格属性信息");
+        return;
+    }
+    // 判断价格是否填写
+    if(sizePriceIsWrite() == false){
+        alert("请填写规格价格信息");
+        return;
+    }
+    var introduce = editor.html();
+    if(introduce == ""){
+        alert("课程内容不能为空");
+        return ;
+    }
+    // 处理课程规格价格信息
+    dealCourseSizePrice();
+    // 添加课程
+    var courseType = $("select[name='courseType']").val();
+    var sizePriceInfo = $("input[name='sizePriceInfo']").val();
+    $.ajax({
+        type : "post",
+        url : "/course/addCourse",
+        data : {"courseName" : courseName, "storeIds" : storeIds, "courseSizeInfo" : courseSizeInfo,
+            "sizePriceInfo" : sizePriceInfo, "introduce" : introduce, "courseType" : courseType},
+        dataType : "json",
+        success : function (data){
+            if(data.code == 1){
+                alert("添加课程成功");
+                window.location.href = "/course/list";
+            }else{
+                alert(data.msg);
+                return ;
+            }
+        }
+    });
+}
+
+function dealCourseSizePrice(){
+    var sizePriceInfoArr = [];
+    $("input[name^='sizePrice_']").each(function(i, n){
+        var pid = $(this).data("pid");
+        var price = $(this).val();
+        var sizePriceInfo = JSON.parse($("input[name='sizePriceInfo_" + pid + "']").val());
+        var isSale = $("input[name='sizeIsSale_" + pid +"]").is(":checked") ? 1 : 0;
+        var sizePriceDetail = {"courseSize" : sizePriceInfo, "sizePrice" : price, "isSale" : isSale};
+        sizePriceInfoArr.push(sizePriceDetail);
+    });
+    $("input[name='sizePriceInfo']").val(JSON.stringify(sizePriceInfoArr));
+}
+
+function sizePriceIsWrite(){
+    var isWrite = true;
+    // 判断价格是否填写
+    $("input[name^='sizePrice_']").each(function(i, n){
+        if($(this).val() == ""){
+            isWrite = false;
+            return ;
+        }
+    });
+    return isWrite;
+}
+
 // 添加规格属性
 function addSizeType(){
     var sizeTypeArr = [];
@@ -32,7 +108,7 @@ function addSizeType(){
         sizeTypeArr.push('<input type="text" placeholder="请输入规格属性" class="long" data-tid="' + sizeTypeIndex + '" id="sizeType_' + sizeTypeIndex + '">');
         sizeTypeArr.push('<input type="button" id="B_delete_sizeType_'+ sizeTypeIndex + '" data-aid="'+ sizeTypeIndex + '" value="删除属性" class="course-btn">');
         sizeTypeArr.push('<br/>');
-        sizeTypeArr.push('<input type="text" placeholder="请输入规格信息" class="short" id="sizeName_' + sizeTypeIndex + '_1">');
+        sizeTypeArr.push('<input type="text" placeholder="请输入规格信息" class="short" data-nid="1" id="sizeName_' + sizeTypeIndex + '_1">');
         sizeTypeArr.push('<input type="button" id="B_add_sizeName_'+ sizeTypeIndex+ '" data-aid="'+ sizeTypeIndex + '" value="添加信息" class="course-btn">');
         sizeTypeArr.push('<br/>');
         sizeTypeArr.push('<input type="hidden" name="sizeNameIndex_' + sizeTypeIndex + '" value="1">');
@@ -80,32 +156,40 @@ function deleteSizeType(){
 
 
 function showCoursePriceDetail(){
+    var courseSizeInfoArr = [];
     var totalRow = 1;
     var skuTypeArr = [];
     $("input[id^='sizeType_']").each(function(){
-        var skuTypeObj = {};//sku类型对象
+        var skuTypeObj = {};        //sku类型对象
         //SKU属性类型标题
-        skuTypeObj.skuTypeTitle =$(this).val();
+        skuTypeObj.skuTypeTitle = $(this).val();
         skuTypeObj.skuTypeKey = $(this).data("tid");
-        var skuValueArr = [];//存放SKU值得数组
+        var skuValueArr = [];       //存放SKU值得数组
         var tid = $(this).data("tid");
+        var tname = $(this).val();
         var sizeNameLength = 0;
-
+        var sizeNameArr = [];       // 存放规格信息
         $("input[id^='sizeName_" + tid + "_']").each(function(){
             if($(this).val() != ""){
                 sizeNameLength += 1;
-
                 var skuValObj = {};                             //SKU值对象
                 skuValObj.skuValueTitle = $(this).val();      //SKU值名称
                 skuValObj.skuValueId = $(this).data("nid");   //SKU值主键
                 skuValueArr.push(skuValObj);
+                var sizeNameInfo = {"sizeNameId" : $(this).data("nid"), "sizeName" : $(this).val()};
+                sizeNameArr.push(sizeNameInfo);
             }
         });
         totalRow = totalRow * sizeNameLength;
         skuTypeObj.skuValues = skuValueArr;               //sku值数组
         skuTypeObj.skuValueLen = skuValueArr.length;     //sku值长度
         skuTypeArr.push(skuTypeObj);                       //保存进数组中
+
+        // 处理课程规格数据信息
+        var courseSizeInfo = {"sizeTypeId" : tid, "sizeTypeName" : tname, "sizeNameInfo" : sizeNameArr};
+        courseSizeInfoArr.push(courseSizeInfo);
     })
+    $("input[name='courseSizeInfo']").val(JSON.stringify(courseSizeInfoArr));
 
     var skuDetailArr = [];
     skuDetailArr.push('<table class="skuTable" cellpadding="0" cellspacing="0"><tr>');
@@ -119,9 +203,10 @@ function showCoursePriceDetail(){
 
     //循环处理表体
     for(var i = 0 ; i < totalRow ; i ++){
+        var sizePriceDetailArr = []
         var currRowDoms = "";
         var rowCount = 1;                                       //记录行数
-        for(var j = 0; j < skuTypeArr.length; j ++) {        //sku列
+        for(var j = 0; j < skuTypeArr.length; j ++) {          //sku列
             var skuValues = skuTypeArr[j].skuValues;           //SKU值数组
             var skuValueLen = skuValues.length;                //sku值长度
             rowCount = (rowCount * skuValueLen);                //目前的生成的总行数
@@ -129,10 +214,16 @@ function showCoursePriceDetail(){
             var point = ((i / anInterBankNum) % skuValueLen);
             if (0 == (i % anInterBankNum)) {                    //需要创建td
                 currRowDoms += '<td rowspan=' + anInterBankNum + '>' + skuValues[point].skuValueTitle + '</td>';
+                var sizePriceInfo = {"sizeTypeId" : skuTypeArr[j].skuTypeKey, "sizeNameId" : skuValues[point].skuValueId};
+                sizePriceDetailArr.push(sizePriceInfo);
+            }else{
+                var sizePriceInfo = {"sizeTypeId" : skuTypeArr[j].skuTypeKey, "sizeNameId" : skuValues[parseInt(point)].skuValueId};
+                sizePriceDetailArr.push(sizePriceInfo);
             }
         }
-        skuDetailArr.push('<tr>' + currRowDoms + '<td><input type="text"/></td>');
-        skuDetailArr.push(  '<td><input type="checkbox">不可售</td>');
+        skuDetailArr.push('<tr>' + currRowDoms + '<td><input type="text" data-pid="' + i + '" name="sizePrice_' + i +'"/></td>');
+        skuDetailArr.push(  '<td><input type="checkbox" value="1" name="sizeIsSale_' + i + '">不可售<input type="hidden" name=""></td>');
+        skuDetailArr.push(  '<input type="hidden" value=' + JSON.stringify(sizePriceDetailArr) + ' name="sizePriceInfo_' + i +'">');
         skuDetailArr.push('</tr>');
     }
     skuDetailArr.push('</table>');

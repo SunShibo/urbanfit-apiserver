@@ -6,6 +6,7 @@ import com.urbanfit.apiserver.dao.CourseDao;
 import com.urbanfit.apiserver.dao.CourseSizeDao;
 import com.urbanfit.apiserver.entity.Course;
 import com.urbanfit.apiserver.entity.CourseSize;
+import com.urbanfit.apiserver.entity.bo.CourseSizeBo;
 import com.urbanfit.apiserver.entity.dto.ResultDTOBuilder;
 import com.urbanfit.apiserver.util.*;
 import net.sf.json.JSONObject;
@@ -33,20 +34,55 @@ public class CourseService {
     /**
      * 添加课程数据
      */
-    public String addCourse(Integer courseType, String introduce){
-        if(courseType == null || StringUtils.isEmpty(introduce)){
-            return JsonUtils.getJsonString4JavaPOJO(ResultDTOBuilder.failure("0000001", "参数有误")) ;
+    public String addCourse(String courseName, String storeIds, String courseSizeInfo, String sizePriceInfo,
+                            String introduce, Integer courseType){
+        if(StringUtils.isEmpty(courseName) || StringUtils.isEmpty(storeIds) || StringUtils.isEmpty(courseSizeInfo)
+                || StringUtils.isEmpty(sizePriceInfo) || StringUtils.isEmpty(introduce) || courseType == null){
+            return JsonUtils.encapsulationJSON(Constant.INTERFACE_PARAM_ERROR, "参数有误", "").toString();
         }
-        // 查询类型是否添加过
-        Course course = courseDao.queryCourseByType(courseType);
-        if(course != null){
-            return JsonUtils.getJsonString4JavaPOJO(ResultDTOBuilder.failure("0000001", "课程类型已经存在")) ;
+        Course course = new Course();
+        course.setCourseName(courseName);
+        course.setCourseType(courseType);
+        course.setIntroduce(introduce);
+        course.setStoreId("," + storeIds + ",");
+        course.setCreateTime(new Date());
+        // 添加课程信息
+        courseDao.addCourse(course);
+        // 添加课程规格
+        List<CourseSizeBo> lstSize = JsonUtils.getList4Json(courseSizeInfo, CourseSizeBo.class);
+        if(CollectionUtils.isEmpty(lstSize)){
+            return JsonUtils.encapsulationJSON(Constant.INTERFACE_PARAM_ERROR, "参数有误", "").toString();
         }
-        Course courseseInfo = new Course();
-        courseseInfo.setCourseType(courseType);
-        courseseInfo.setIntroduce(introduce);
-        courseDao.addCourse(courseseInfo);
-        return JsonUtils.getJsonString4JavaPOJO(ResultDTOBuilder.failure("0000001", "添加课程成功")) ;
+        for (CourseSizeBo size : lstSize){
+            CourseSize courseSize = new CourseSize(size.getSizeTypeName(), null, course.getCourseId());
+            courseSizeDao.addCourseSize(courseSize);
+            // 添加数据
+            List<CourseSizeBo> lstSizeName = JsonUtils.getList4JsonArray(size.getSizeNameInfo(), CourseSizeBo.class);
+            for (CourseSizeBo sizeName : lstSizeName){
+                CourseSize courseSizeName = new CourseSize(sizeName.getSizeName(), courseSize.getSizeId(),
+                        course.getCourseId());
+                courseSizeDao.addCourseSize(courseSizeName);        // 添加数据
+            }
+        }
+        // 添加课程规格价格
+        /**
+         * [{"sizeTypeId":1,"sizeTypeName":"颜色","sizeNameInfo":[{"sizeNameId":1,"sizeName":"黑色"},{"sizeNameId":2,"sizeName":"白色"}]}]
+         */
+        /**
+         * [{"courseSize":[{"sizeTypeId":1,"sizeNameId":1}],"sizePrice":"120","isSale":0},
+         * {"courseSize":[{"sizeTypeId":1,"sizeNameId":1}],"sizePrice":"130","isSale":0}]
+         */
+        /*
+            List<CourseSizeBo> lstSizePrice = JsonUtils.getList4Json(sizePriceInfo, CourseSizeBo.class);
+            for (CourseSizeBo sizePrice : lstSizePrice){
+            List<CourseSizeBo> lstSizePriceDetail = JsonUtils.getList4JsonArray(sizePrice.getCourseSize(),
+                    CourseSizeBo.class);
+            for (CourseSizeBo sizePriceDetail : lstSizePriceDetail){
+
+            }
+        }*/
+        return "";
+       /* return JsonUtils.encapsulationJSON(Constant.INTERFACE_SUCC, "添加成功", "").toString();*/
     }
 
     /**

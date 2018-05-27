@@ -9,4 +9,6 @@ import java.util.List;
  */
 public interface CourseSizeDao {
     public List<CourseSize> queryCourseSize(Integer courseId);
+
+    public void addCourseSize(CourseSize courseSize);
 }

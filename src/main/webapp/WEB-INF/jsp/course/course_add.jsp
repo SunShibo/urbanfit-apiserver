@@ -57,12 +57,14 @@
                                 <input type="hidden" name="sizeNameIndex_1" value="1">
                             </div>
                             <input type="hidden" name="sizeTypeIndex" value="1">
+                            <input type="hidden" name="courseSizeInfo">
                         </td>
                     </tr>
                     <tr>
                         <td>价格：</td>
                         <td>
                             <div id="coursePriceDiv"></div>
+                            <input type="hidden" name="sizePriceInfo">
                         </td>
                     </tr>
                     <tr>
