@@ -54,8 +54,10 @@ public class CourseController extends BaseCotroller {
     }
 
     @RequestMapping("/update")
-    public void updateCourse(HttpServletResponse response, Course course) {
-        String result = courseService.updateCourse(course);
+    public void updateCourse(String courseName, String storeIds, String courseSizeInfo, String sizePriceInfo,
+                             String introduce, Integer courseType, Integer courseId, HttpServletResponse response) {
+        String result = courseService.updateCourse(courseName, storeIds, courseSizeInfo, sizePriceInfo,
+                introduce, courseType, courseId);
         safeJsonPrint(response, result);
     }
 

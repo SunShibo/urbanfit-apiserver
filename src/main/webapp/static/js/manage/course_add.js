@@ -94,6 +94,12 @@ function sizePriceIsWrite(){
         if($(this).val() == ""){
             isWrite = false;
             return ;
+        }else{
+            var coursePricePattern = /^\d+(\.\d{1,2})?$/;
+            if(!coursePricePattern.test($(this).val())){
+                isWrite = false;
+                return ;
+            }
         }
     });
     return isWrite;

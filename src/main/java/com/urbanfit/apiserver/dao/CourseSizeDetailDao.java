@@ -13,4 +13,6 @@ public interface CourseSizeDetailDao {
     public void batchAddCourseSizeDetail(List<CourseSizeDetail> list);
 
     public List<CourseSizeDetail> queryCourseSizeDetail(Integer courseId);
+
+    public void deleteCourseSizeDetail(Integer courseId);
 }

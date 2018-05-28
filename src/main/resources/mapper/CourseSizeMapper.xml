@@ -15,4 +15,8 @@
         insert into t_course_size (sizeName, parentId, courseId, createTime) values (#{sizeName}, #{parentId},
         #{courseId}, now());
     </insert>
+
+    <delete id="deleteCourseSize" parameterType="int">
+        delete from t_course_size where courseId = #{courseId}
+    </delete>
 </mapper>

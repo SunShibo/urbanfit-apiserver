@@ -14,9 +14,8 @@
     </select>
     <!-- 修改课程信息 -->
     <update id="updateCourse" parameterType="com.urbanfit.apiserver.entity.Course">
-        update t_course set courseTitle = #{courseTitle}, coursePrice = #{coursePrice}, courseName = #{courseName},
-        courseDistrict = #{courseDistrict}, courseImageUrl = #{courseImageUrl}, introduce = #{introduce}
-        where courseId = #{courseId}
+        update t_course set courseName = #{courseName}, courseType = #{courseType}, userId = #{userId},
+        storeId = #{storeId}, introduce = #{introduce}, coursePrice = #{coursePrice} where courseId = #{courseId}
     </update>
     <select id="queryCourseByCourseId" parameterType="int" resultType="com.urbanfit.apiserver.entity.Course">
         select * from t_course where courseId = #{courseId}
@@ -35,4 +34,7 @@
     <select id="queryUpCourseByCourseId" parameterType="int" resultType="com.urbanfit.apiserver.entity.Course">
         select * from t_course where courseId = #{courseId} and status = 0
     </select>
+    <update id="updateCoursePrice" parameterType="map">
+        update t_course set coursePrice = #{coursePrice} where courseId = #{courseId}
+    </update>
 </mapper>

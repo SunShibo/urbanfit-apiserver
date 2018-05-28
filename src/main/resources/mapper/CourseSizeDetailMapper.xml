@@ -21,4 +21,8 @@
     <select id="queryCourseSizeDetail" parameterType="int" resultType="com.urbanfit.apiserver.entity.CourseSizeDetail">
         select * from t_course_size_detail where courseId = #{courseId}
     </select>
+
+    <delete id="deleteCourseSizeDetail" parameterType="int">
+        delete from t_course_size_detail where courseId = #{courseId}
+    </delete>
 </mapper>

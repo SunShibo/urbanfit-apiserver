@@ -56,7 +56,7 @@ function initCourseSizeInfo(){
                         if(n.sizeId == m.parentId){
                             sizeNameIndex = sizeNameIndex + 1;
                             sizeTypeArr.push('<div id="sizeNameDiv_' + sizeNameIndex + '">');
-                            sizeTypeArr.push('<input type="text" value="' + m.sizeName + '" class="short" data-nid="' + sizeNameIndex + '" id="sizeName_' + sizeTypeIndex + '_' + sizeNameIndex + '">');
+                            sizeTypeArr.push('<input type="text" data-sid="' + m.sizeId + '" value="' + m.sizeName + '" class="short" data-nid="' + sizeNameIndex + '" id="sizeName_' + sizeTypeIndex + '_' + sizeNameIndex + '">');
                             if(sizeIndex == 0){
                                 sizeTypeArr.push('<input type="button" id="B_add_sizeName_'+ sizeTypeIndex+ '" data-aid="'+ sizeTypeIndex + '" value="添加信息" class="course-btn">');
                             }else{
@@ -74,6 +74,8 @@ function initCourseSizeInfo(){
                     $("#sizeName_" + sizeTypeIndex + "_" + sizeNameIndex +"").blur(showCoursePriceDetail);
                     $("input[name='sizeTypeIndex']").val(sizeTypeIndex);
                     $("input[name='sizeNameIndex']").val(sizeNameIndex);
+
+                    initCoursePriceDetail(data.data.lstSizeDetail);
                 })
                 $("input[id='B_add_sizeType']").click(addSizeType);
                 $("input[id^='B_delete_sizeName_']").each(function (){
@@ -87,6 +89,97 @@ function initCourseSizeInfo(){
             }
         }
     });
+}
+
+function initCoursePriceDetail(lstSizeDetail){
+    var courseSizeInfoArr = [];
+    var totalRow = 1;
+    var skuTypeArr = [];
+    $("input[id^='sizeType_']").each(function(){
+        var skuTypeObj = {};        //sku类型对象
+        //SKU属性类型标题
+        skuTypeObj.skuTypeTitle = $(this).val();
+        skuTypeObj.skuTypeKey = $(this).data("tid");
+        var skuValueArr = [];       //存放SKU值得数组
+        var tid = $(this).data("tid");
+        var tname = $(this).val();
+        var sizeNameLength = 0;
+        var sizeNameArr = [];       // 存放规格信息
+        $("input[id^='sizeName_" + tid + "_']").each(function(){
+            if($(this).val() != ""){
+                sizeNameLength += 1;
+                var skuValObj = {};                             //SKU值对象
+                skuValObj.skuValueTitle = $(this).val();      //SKU值名称
+                skuValObj.skuValueId = $(this).data("nid");   //SKU值主键
+                skuValObj.skuValueSizeId = $(this).data("sid");
+                skuValueArr.push(skuValObj);
+                var sizeNameInfo = {"sizeNameId" : $(this).data("nid"), "sizeName" : $(this).val()};
+                sizeNameArr.push(sizeNameInfo);
+            }
+        });
+        totalRow = totalRow * sizeNameLength;
+        skuTypeObj.skuValues = skuValueArr;               //sku值数组
+        skuTypeObj.skuValueLen = skuValueArr.length;     //sku值长度
+        skuTypeArr.push(skuTypeObj);                       //保存进数组中
+
+        // 处理课程规格数据信息
+        var courseSizeInfo = {"sizeTypeId" : tid, "sizeTypeName" : tname, "sizeNameInfo" : sizeNameArr};
+        courseSizeInfoArr.push(courseSizeInfo);
+    })
+    $("input[name='courseSizeInfo']").val(JSON.stringify(courseSizeInfoArr));
+
+    var skuDetailArr = [];
+    skuDetailArr.push('<table class="skuTable" cellpadding="0" cellspacing="0"><tr>');
+    //创建表头
+    for(var t = 0; t < skuTypeArr.length; t ++){
+        skuDetailArr.push('<th>' + skuTypeArr[t].skuTypeTitle + '</th>');
+    }
+    skuDetailArr.push('<th>价格</th>');
+    skuDetailArr.push('<th>是否可售</th>');
+    skuDetailArr.push('</tr>');
+
+    //循环处理表体
+    for(var i = 0 ; i < totalRow ; i ++){
+        var sizeNameIdArr = []
+        var sizeNameTrueIdArr = [];
+        var currRowDoms = "";
+        var rowCount = 1;                                       //记录行数
+        for(var j = 0; j < skuTypeArr.length; j ++) {          //sku列
+            var skuValues = skuTypeArr[j].skuValues;           //SKU值数组
+            var skuValueLen = skuValues.length;                //sku值长度
+            rowCount = (rowCount * skuValueLen);                //目前的生成的总行数
+            var anInterBankNum = (totalRow / rowCount);         //跨行数
+            var point = ((i / anInterBankNum) % skuValueLen);
+            if (0 == (i % anInterBankNum)) {                    //需要创建td
+                currRowDoms += '<td rowspan=' + anInterBankNum + '>' + skuValues[point].skuValueTitle + '</td>';
+                sizeNameIdArr.push(skuValues[point].skuValueId);
+                sizeNameTrueIdArr.push(skuValues[point].skuValueSizeId);
+            }else{
+                sizeNameIdArr.push(skuValues[parseInt(point)].skuValueId);
+                sizeNameTrueIdArr.push(skuValues[parseInt(point)].skuValueSizeId);
+            }
+        }
+
+        var courseSizePrice;
+        var courseSizeIsSale;
+        $.each(lstSizeDetail, function (i, n){
+            if(n.sizeDetail == sizeNameTrueIdArr.join(",")) {
+                courseSizePrice = n.sizePrice;
+                courseSizeIsSale = n.isSale;
+            }
+        })
+        skuDetailArr.push('<tr>' + currRowDoms + '<td><input type="text" value="' + courseSizePrice + '" data-pid="' + i + '" name="sizePrice_' + i +'"/></td>');
+        if(courseSizeIsSale == 0){
+            skuDetailArr.push(  '<td><input type="checkbox" value="1" id="sizeIsSale_' + i + '">不可售<input type="hidden" name=""></td>');
+        }else{
+            skuDetailArr.push(  '<td><input type="checkbox" checked="checked" value="1" id="sizeIsSale_' + i + '">不可售<input type="hidden" name=""></td>');
+        }
+        skuDetailArr.push(  '<input type="hidden" value=' + sizeNameIdArr.join(",") + ' name="sizePriceInfo_' + i +'">');
+        skuDetailArr.push(  '<input type="hidden" value=' + sizeNameTrueIdArr.join(",") + ' name="sizePriceInfoTrue_' + i +'">');
+        skuDetailArr.push('</tr>');
+    }
+    skuDetailArr.push('</table>');
+    $("#coursePriceDiv").html(skuDetailArr.join(""));
 }
 
 // 添加规格信息
@@ -311,72 +404,81 @@ function updateCourse(){
     var courseName = $("input[name='courseName']").val();
     if(courseName == ""){
         alert("课程名称不能为空");
-        return ;
+        return;
     }
-
-    var coursePricePattern = /^\d+(\.\d{1,2})?$/;
-    if(!coursePricePattern.test(coursePrice)){
-        alert("价格输入格式有误");
-        return ;
+    var storeIds = $("input[name='storeIds']").val();
+    if(storeIds == ""){
+        alert("请关联俱乐部");
+        return;
     }
-    var courseImageUrl = $("input[name='courseImageUrl']").val();
-    if(courseImageUrl == ""){
-        alert("请选择课程图片");
-        return ;
+    var courseSizeInfo = $("input[name='courseSizeInfo']").val();
+    if(courseSizeInfo == ""){
+        alert("请填写规格属性信息");
+        return;
+    }
+    // 判断价格是否填写
+    if(sizePriceIsWrite() == false){
+        alert("请填写规格价格信息");
+        return;
     }
     var introduce = editor.html();
     if(introduce == ""){
         alert("课程内容不能为空");
         return ;
     }
-    var isCity = true;
-    var courseDistrictArr = [];
-    $("div[id^='city_info']").each(function (){
-        var index = $(this).data("index");
-        var proviceInfo = $("#proviceId_" + index + "").val();
-        if(proviceInfo == ""){
-            alert("第" + index + "个所属区域请选择省市区信息");
-            isCity = false;
-            return false;
-        }
-        var cityInfo = $("#cityId_" + index + "").val();
-        if(cityInfo == ""){
-            alert("第" + index + "个所属区域请选择省市区信息");
-            isCity = false;
-            return false;
-        }
-        var districtInfo = $("#districtId_" + index + "").val();
-        if(districtInfo == ""){
-            alert("第" + index + "个所属区域请选择省市区信息");
-            isCity = false;
-            return false;
-        }
-        var courseDistrict = proviceInfo + "," + cityInfo + "," + districtInfo;
-        courseDistrictArr.push(courseDistrict);
-    });
-
-    if(isCity == false){
-        return ;
-    }
-    $("input[name='courseDistrict']").val(courseDistrictArr.join("#"));
-    $("input[name='introduce']").val(editor.html());
-    var courseId = $("input[name='courseId']").val();
+    // 处理课程规格价格信息
+    dealCourseSizePrice();
+    // 修改课程
+    var courseType = $("select[name='courseType']").val();
+    var sizePriceInfo = $("input[name='sizePriceInfo']").val();
     $.ajax({
         type : "post",
-        url : "update",
-        data : $("#courseForm").serialize(),
+        url : "/course/update",
+        data : {"courseName" : courseName, "storeIds" : storeIds, "courseSizeInfo" : courseSizeInfo,
+            "sizePriceInfo" : sizePriceInfo, "introduce" : introduce, "courseType" : courseType,
+            "courseId" : course.courseId},
         dataType : "json",
-        success: function(result, status) {
-            if(result.code != "1"){
-                alert(result.msg);
+        success : function (data){
+            if(data.code == 1){
+                alert("修改课程成功");
+                window.location.href = "/course/list";
+            }else{
+                alert(data.msg);
                 return ;
-            }else {
-                // 修改成功，跳转到列表页面
-                alert("修改课程信息成功");
-                window.location.href = "list";
             }
         }
-    })
+    });
+}
+
+function dealCourseSizePrice(){
+    var sizePriceInfoArr = [];
+    $("input[name^='sizePrice_']").each(function(i, n){
+        var pid = $(this).data("pid");
+        var price = $(this).val();
+        var sizePriceInfo = $("input[name='sizePriceInfo_" + pid + "']").val();
+        var isSale = $("#sizeIsSale_" + pid +"").is(":checked") ? 1 : 0;
+        var sizePriceDetail = {"courseSize" : sizePriceInfo, "sizePrice" : price, "isSale" : isSale};
+        sizePriceInfoArr.push(sizePriceDetail);
+    });
+    $("input[name='sizePriceInfo']").val(JSON.stringify(sizePriceInfoArr));
+}
+
+function sizePriceIsWrite(){
+    var isWrite = true;
+    // 判断价格是否填写
+    $("input[name^='sizePrice_']").each(function(i, n){
+        if($(this).val() == ""){
+            isWrite = false;
+            return ;
+        }else{
+            var coursePricePattern = /^\d+(\.\d{1,2})?$/;
+            if(!coursePricePattern.test($(this).val())){
+                isWrite = false;
+                return ;
+            }
+        }
+    });
+    return isWrite;
 }
 
 function uploadCourseImageUrl(){

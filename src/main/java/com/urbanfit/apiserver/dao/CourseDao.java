@@ -28,4 +28,6 @@ public interface CourseDao {
     public List<Course> queryUpCourseList();
 
     public Course queryUpCourseByCourseId(Integer courseId);
+
+    public void updateCoursePrice(Map<String, Object> map);
 }
