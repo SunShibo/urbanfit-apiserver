@@ -10,6 +10,10 @@ $(function (){
     $("#B_add_store").click(openChooseStoreLayer);
     // 添加课程
     $("#B_submit").click(addCourse);
+    // 删除图片
+    $("#B_delete_image").click(deleteImageUrl);
+    // 上次图片
+    uploadCourseImageUrl();
 
     KindEditor.ready(function(K) {
         editor = K.create('textarea[name="content"]', {
@@ -46,6 +50,11 @@ function addCourse(){
         alert("请填写规格价格信息");
         return;
     }
+    var courseImageUrl = $("input[name='courseImageUrl']").val();
+    if(courseImageUrl == ""){
+        alert("请选择课程图片");
+        return ;
+    }
     var introduce = editor.html();
     if(introduce == ""){
         alert("课程内容不能为空");
@@ -60,7 +69,8 @@ function addCourse(){
         type : "post",
         url : "/course/addCourse",
         data : {"courseName" : courseName, "storeIds" : storeIds, "courseSizeInfo" : courseSizeInfo,
-            "sizePriceInfo" : sizePriceInfo, "introduce" : introduce, "courseType" : courseType},
+            "sizePriceInfo" : sizePriceInfo, "introduce" : introduce, "courseType" : courseType,
+            "courseImageUrl" : courseImageUrl},
         dataType : "json",
         success : function (data){
             if(data.code == 1){
@@ -291,4 +301,41 @@ function deleteChooseStore(){
         }
         $("#courseStoreDiv_" + storeId + "").remove();
     }
+}
+
+function uploadCourseImageUrl(){
+    var button = $("#uploadImage"), interval;
+    new AjaxUpload(button, {
+        action: "uploadImage",
+        type:"post",
+        name: 'myFile',
+        responseType : 'json',
+        onSubmit: function(file, ext) {
+            if (!(ext && /^(jpg|JPG|png|PNG|gif|GIF)$/.test(ext))) {
+                alert("您上传的图片格式不对，请重新选择！");
+                return false;
+            }
+        },
+        onComplete: function(file, response) {
+            if(response.message == "big"){
+                alert("图片太大，请重新选择！");
+                return ;
+            }else if(response.message == "paramError"){
+                alert("参数有误！");
+                return ;
+            }else if(response.message == "fail"){
+                alert("修改失败，请重新修改！");
+                return ;
+            }else if(response.message == "success"){
+                var resultData = response.data;
+                $("#uploadImage").attr("src", resultData.baseUrl + resultData.courseImageUrl);
+                $("input[name='courseImageUrl']").val(resultData.courseImageUrl);
+            }
+        }
+    });
+}
+
+function deleteImageUrl(){
+    $("#uploadImage").attr("src", "");
+    $("input[name='courseImageUrl']").val("");
 }

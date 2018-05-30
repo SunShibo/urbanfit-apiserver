@@ -25,6 +25,8 @@ $(function (){
     initCourseSizeInfo();
     // 添加俱乐部
     $("#B_add_store").click(openChooseStoreLayer);
+    $("#B_delete_image").click(deleteImageUrl);
+    uploadCourseImageUrl();
 })
 
 function initCourseSizeInfo(){
@@ -421,6 +423,11 @@ function updateCourse(){
         alert("请填写规格价格信息");
         return;
     }
+    var courseImageUrl = $("input[name='courseImageUrl']").val();
+    if(courseImageUrl == ""){
+        alert("请选择课程图片");
+        return ;
+    }
     var introduce = editor.html();
     if(introduce == ""){
         alert("课程内容不能为空");
@@ -436,7 +443,7 @@ function updateCourse(){
         url : "/course/update",
         data : {"courseName" : courseName, "storeIds" : storeIds, "courseSizeInfo" : courseSizeInfo,
             "sizePriceInfo" : sizePriceInfo, "introduce" : introduce, "courseType" : courseType,
-            "courseId" : course.courseId},
+            "courseId" : course.courseId, "courseImageUrl" : courseImageUrl},
         dataType : "json",
         success : function (data){
             if(data.code == 1){

@@ -5,8 +5,8 @@
     <!-- 添加课程信息 -->
     <insert id="addCourse" parameterType="com.urbanfit.apiserver.entity.Course"
             useGeneratedKeys="true" keyProperty="courseId">
-        insert into t_course (courseName, courseType, introduce, userId, storeId, createTime) values (#{courseName},
-        #{courseType}, #{introduce}, #{userId}, #{storeId}, now())
+        insert into t_course (courseName, courseType, introduce, userId, storeId, courseImageUrl, createTime)
+        values (#{courseName}, #{courseType}, #{introduce}, #{userId}, #{storeId}, courseImageUrl, now())
     </insert>
     <!-- 根据课程类型查询数据 -->
     <select id="queryCourseByType" parameterType="int" resultType="com.urbanfit.apiserver.entity.Course">
@@ -15,7 +15,8 @@
     <!-- 修改课程信息 -->
     <update id="updateCourse" parameterType="com.urbanfit.apiserver.entity.Course">
         update t_course set courseName = #{courseName}, courseType = #{courseType}, userId = #{userId},
-        storeId = #{storeId}, introduce = #{introduce}, coursePrice = #{coursePrice} where courseId = #{courseId}
+        storeId = #{storeId}, introduce = #{introduce}, coursePrice = #{coursePrice},
+        courseImageUrl = #{courseImageUrl} where courseId = #{courseId}
     </update>
     <select id="queryCourseByCourseId" parameterType="int" resultType="com.urbanfit.apiserver.entity.Course">
         select * from t_course where courseId = #{courseId}

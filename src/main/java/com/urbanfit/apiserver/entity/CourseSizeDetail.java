@@ -1,11 +1,13 @@
 package com.urbanfit.apiserver.entity;
 
+import com.urbanfit.apiserver.common.base.BaseModel;
+
 import java.util.Date;
 
 /**
  * Created by Administrator on 2018/5/27.
  */
-public class CourseSizeDetail {
+public class CourseSizeDetail extends BaseModel{
     private Integer detailId;
     private String sizeDetail;
     private Double sizePrice;

@@ -5,29 +5,26 @@ import com.urbanfit.apiserver.cfg.pop.SystemConfig;
 import com.urbanfit.apiserver.dao.CourseDao;
 import com.urbanfit.apiserver.dao.CourseSizeDao;
 import com.urbanfit.apiserver.dao.CourseSizeDetailDao;
+import com.urbanfit.apiserver.dao.CourseStoreDao;
 import com.urbanfit.apiserver.entity.Course;
 import com.urbanfit.apiserver.entity.CourseSize;
 import com.urbanfit.apiserver.entity.CourseSizeDetail;
+import com.urbanfit.apiserver.entity.CourseStore;
 import com.urbanfit.apiserver.entity.bo.CourseSizeBo;
 import com.urbanfit.apiserver.entity.dto.ResultDTOBuilder;
 import com.urbanfit.apiserver.util.*;
 import com.urbanfit.apiserver.util.StringUtils;
 import net.sf.json.JSONObject;
-import org.apache.commons.lang.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.multipart.MultipartFile;
-
 import javax.annotation.Resource;
 import java.io.File;
 import java.text.MessageFormat;
 import java.util.*;
 
-/**
- * Created by Administrator on 2018/3/2.
- */
 @Service("courseService")
 @Transactional
 public class CourseService {
@@ -37,14 +34,17 @@ public class CourseService {
     private CourseSizeDao courseSizeDao;
     @Autowired
     private CourseSizeDetailDao courseSizeDetailDao;
+    @Autowired
+    private CourseStoreDao courseStoreDao;
 
     /**
      * 添加课程数据
      */
     public String addCourse(String courseName, String storeIds, String courseSizeInfo, String sizePriceInfo,
-                            String introduce, Integer courseType){
+                            String introduce, Integer courseType, String courseImageUrl){
         if(StringUtils.isEmpty(courseName) || StringUtils.isEmpty(storeIds) || StringUtils.isEmpty(courseSizeInfo)
-                || StringUtils.isEmpty(sizePriceInfo) || StringUtils.isEmpty(introduce) || courseType == null){
+                || StringUtils.isEmpty(sizePriceInfo) || StringUtils.isEmpty(introduce) || courseType == null
+                || StringUtils.isEmpty(courseImageUrl)){
             return JsonUtils.encapsulationJSON(Constant.INTERFACE_PARAM_ERROR, "参数有误", "").toString();
         }
         Course course = new Course();
@@ -52,16 +52,16 @@ public class CourseService {
         course.setCourseType(courseType);
         course.setIntroduce(introduce);
         course.setStoreId("," + storeIds + ",");
+        course.setCourseImageUrl(courseImageUrl);
         course.setCreateTime(new Date());
         // 添加课程信息
         courseDao.addCourse(course);
-        Map<Integer, Integer> courseSizeMap = new HashMap<Integer, Integer>();
         // 添加课程规格
         List<CourseSizeBo> lstSize = JsonUtils.getList4Json(courseSizeInfo, CourseSizeBo.class);
         if(CollectionUtils.isEmpty(lstSize)){
             return JsonUtils.encapsulationJSON(Constant.INTERFACE_PARAM_ERROR, "参数有误", "").toString();
         }
-        Double coursePrice = addCourseSize(lstSize, course, sizePriceInfo);
+        Double coursePrice = addCourseSize(lstSize, course, sizePriceInfo, storeIds);
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("coursePrice", coursePrice);
         map.put("courseId", course.getCourseId());
@@ -73,10 +73,10 @@ public class CourseService {
      * 修改课程信息
      */
     public String updateCourse(String courseName, String storeIds, String courseSizeInfo, String sizePriceInfo,
-                               String introduce, Integer courseType, Integer courseId){
+                               String introduce, Integer courseType, Integer courseId, String courseImageUrl){
         if(StringUtils.isEmpty(courseName) || StringUtils.isEmpty(storeIds) || StringUtils.isEmpty(courseSizeInfo)
                 || StringUtils.isEmpty(sizePriceInfo) || StringUtils.isEmpty(introduce) || courseType == null
-                || courseId == null){
+                || courseId == null || StringUtils.isEmpty(courseImageUrl)){
             return JsonUtils.encapsulationJSON(Constant.INTERFACE_PARAM_ERROR, "参数有误", "").toString();
         }
         // 查询课程是否存在
@@ -87,17 +87,19 @@ public class CourseService {
         // 删除相关数据
         courseSizeDao.deleteCourseSize(courseId);
         courseSizeDetailDao.deleteCourseSizeDetail(courseId);
+        courseStoreDao.deleteCourseStore(courseId);
         // 添加课程规格
         List<CourseSizeBo> lstSize = JsonUtils.getList4Json(courseSizeInfo, CourseSizeBo.class);
         if(CollectionUtils.isEmpty(lstSize)){
             return JsonUtils.encapsulationJSON(Constant.INTERFACE_PARAM_ERROR, "参数有误", "").toString();
         }
-        Double coursePrice = addCourseSize(lstSize, course, sizePriceInfo);
+        Double coursePrice = addCourseSize(lstSize, course, sizePriceInfo, storeIds);
         course.setCourseName(courseName);
         course.setCourseType(courseType);
         course.setIntroduce(introduce);
         course.setStoreId("," + storeIds + ",");
         course.setCoursePrice(coursePrice);
+        course.setCourseImageUrl(courseImageUrl);
         courseDao.updateCourse(course);
         return JsonUtils.encapsulationJSON(Constant.INTERFACE_SUCC, "修改成功", "").toString();
     }
@@ -222,7 +224,7 @@ public class CourseService {
         return sb.toString();
     }
 
-    private double addCourseSize(List<CourseSizeBo> lstSize, Course course, String sizePriceInfo){
+    private double addCourseSize(List<CourseSizeBo> lstSize, Course course, String sizePriceInfo, String storeIds){
         Map<Integer, Integer> courseSizeMap = new HashMap<Integer, Integer>();
         for (CourseSizeBo size : lstSize){
             CourseSize courseSize = new CourseSize(size.getSizeTypeName(), null, course.getCourseId());
@@ -256,6 +258,16 @@ public class CourseService {
         // 规格价格排序
         Collections.sort(lstCourseSizePrice);
         courseSizeDetailDao.batchAddCourseSizeDetail(lstSizeDetail);
+        // 添加课程俱乐部信息
+        if(!StringUtils.isEmpty(storeIds)){
+            List<CourseStore> lstCourseStore = new ArrayList<CourseStore>();
+            String[] storeIdArr = storeIds.split(",");
+            for (String storeId : storeIdArr){
+                CourseStore courseStore = new CourseStore(course.getCourseId(), Integer.parseInt(storeId));
+                lstCourseStore.add(courseStore);
+            }
+            courseStoreDao.batchAddCourseStore(lstCourseStore);
+        }
         return lstCourseSizePrice.get(0);
     }
 }

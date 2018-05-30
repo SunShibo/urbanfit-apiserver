@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.urbanfit.apiserver.dao.CourseStoreDao">
+    <insert id="batchAddCourseStore">
+        <selectKey resultType="Integer" keyProperty="cdId" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_course_store (courseId, storeId) values
+        <foreach collection="list" item="cs" index="index" separator=",">
+            (#{cs.courseId}, #{cs.storeId})
+        </foreach>
+    </insert>
+
+    <delete id="deleteCourseStore" parameterType="int">
+        delete from t_course_store where courseId = #{courseId}
+    </delete>
+</mapper>

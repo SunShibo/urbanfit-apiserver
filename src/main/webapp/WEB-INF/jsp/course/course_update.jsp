@@ -68,6 +68,26 @@
                                 </td>
                             </tr>
                             <tr>
+                                <td>课程图片：</td>
+                                <td>
+                                    <div class="suolue">
+                                        <div class="uploadimg">
+                                            <c:if test="${course.courseImageUrl == null}">
+                                                <img width="160px;" height="160px;" id="uploadImage" src="../static/img/u37.png"/>
+                                            </c:if>
+                                            <c:if test="${course.courseImageUrl != null}">
+                                                <img width="160px;" height="160px;" id="uploadImage" src="${baseUrl}${course.courseImageUrl}"/>
+                                            </c:if>
+                                            <input type="hidden" name="courseImageUrl" value="${course.courseImageUrl}"><br/>
+                                        </div>
+                                        <div class="zi">
+                                            <span style="color:#FF0000;">*必填</span>
+                                            <p class="del" id="B_delete_image">删除</p>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
                                 <td>课程内容：</td>
                                 <td>
                                     <div class="edit">

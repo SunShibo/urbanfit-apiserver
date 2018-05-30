@@ -55,9 +55,10 @@ public class CourseController extends BaseCotroller {
 
     @RequestMapping("/update")
     public void updateCourse(String courseName, String storeIds, String courseSizeInfo, String sizePriceInfo,
-                             String introduce, Integer courseType, Integer courseId, HttpServletResponse response) {
+                             String introduce, Integer courseType, Integer courseId, String courseImageUrl,
+                             HttpServletResponse response) {
         String result = courseService.updateCourse(courseName, storeIds, courseSizeInfo, sizePriceInfo,
-                introduce, courseType, courseId);
+                introduce, courseType, courseId, courseImageUrl);
         safeJsonPrint(response, result);
     }
 
@@ -81,9 +82,9 @@ public class CourseController extends BaseCotroller {
 
     @RequestMapping("/addCourse")
     public void addCourse(String courseName, String storeIds, String courseSizeInfo, String sizePriceInfo,
-                          String introduce, Integer courseType, HttpServletResponse response){
+                          String introduce, Integer courseType, String courseImageUrl, HttpServletResponse response){
         String result = courseService.addCourse(courseName, storeIds, courseSizeInfo, sizePriceInfo, introduce,
-                courseType);
+                courseType, courseImageUrl);
         safeTextPrint(response, result);
     }
 }
