@@ -56,6 +56,10 @@ public class OrderMaster extends BaseModel{
     private Date payTime;
     private String remarks;
 
+    private String courseSizeId;
+    private String courseSize;
+    private Integer storeId;
+
     private String clientName;
     private Integer courseType;
     private String couponName;
@@ -260,5 +264,29 @@ public class OrderMaster extends BaseModel{
 
     public void setRemarks(String remarks) {
         this.remarks = remarks;
+    }
+
+    public String getCourseSizeId() {
+        return courseSizeId;
+    }
+
+    public void setCourseSizeId(String courseSizeId) {
+        this.courseSizeId = courseSizeId;
+    }
+
+    public String getCourseSize() {
+        return courseSize;
+    }
+
+    public void setCourseSize(String courseSize) {
+        this.courseSize = courseSize;
+    }
+
+    public Integer getStoreId() {
+        return storeId;
+    }
+
+    public void setStoreId(Integer storeId) {
+        this.storeId = storeId;
     }
 }
