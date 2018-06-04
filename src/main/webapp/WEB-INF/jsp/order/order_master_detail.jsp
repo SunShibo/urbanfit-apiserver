@@ -37,10 +37,6 @@
                                 <td>${orderMaster.clientMobile}</td>
                             </tr>
                             <tr>
-                                <td>区域：</td>
-                                <td>${orderMaster.courseDistrict}</td>
-                            </tr>
-                            <tr>
                                 <td>支付方式：</td>
                                 <td>
                                     <c:if test="${orderMaster.payment == 0}">支付宝</c:if>
@@ -57,6 +53,7 @@
                                     <c:if test="${orderMaster.status == 0}">待支付</c:if>
                                     <c:if test="${orderMaster.status == 1}">已支付</c:if>
                                     <c:if test="${orderMaster.status == 2}">已退款</c:if>
+                                    <c:if test="${orderMaster.status == 3}">系统自动取消</c:if>
                                 </td>
                             </tr>
                             <tr>
@@ -68,6 +65,22 @@
                             <tr>
                                 <td>课程名称：</td>
                                 <td>${orderMaster.courseName}</td>
+                            </tr>
+                            <tr>
+                                <td>课程类型：</td>
+                                <td>${orderMaster.courseTypeName}</td>
+                            </tr>
+                            <tr>
+                                <td>课程规格：</td>
+                                <td>${orderMaster.courseSize}</td>
+                            </tr>
+                            <tr>
+                                <td>俱乐部名称：</td>
+                                <td>${orderMaster.storeName}</td>
+                            </tr>
+                            <tr>
+                                <td>俱乐部地址：</td>
+                                <td>${orderMaster.storeAddress}</td>
                             </tr>
                             <tr>
                                 <td>课程价格：</td>
