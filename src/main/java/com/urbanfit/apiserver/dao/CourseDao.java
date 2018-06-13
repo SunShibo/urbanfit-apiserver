@@ -30,4 +30,8 @@ public interface CourseDao {
     public Course queryUpCourseByCourseId(Integer courseId);
 
     public void updateCoursePrice(Map<String, Object> map);
+
+    public List<Course> queryListCourse(Map<String, Object> map);
+
+    public int queryCountCourse(Map<String, Object> map);
 }

@@ -2,6 +2,7 @@ package com.urbanfit.apiserver.web.controller.manage;
 
 import com.urbanfit.apiserver.cfg.pop.SystemConfig;
 import com.urbanfit.apiserver.entity.Course;
+import com.urbanfit.apiserver.query.PageObject;
 import com.urbanfit.apiserver.service.CourseService;
 import com.urbanfit.apiserver.util.StringUtils;
 import com.urbanfit.apiserver.web.controller.base.BaseCotroller;
@@ -24,11 +25,13 @@ public class CourseController extends BaseCotroller {
     private CourseService courseService;
 
     @RequestMapping("/list")
-    public ModelAndView queryCoachList() {
-        List<Course> lstCourse = courseService.queryCourseList();
+    public ModelAndView queryCoachList(Integer pageNo, Integer pageSize) {
+        PageObject<Course> pager = courseService.queryCourseList(getQueryInfo(pageNo, pageSize));
         ModelAndView view = new ModelAndView();
         view.setViewName("/course/course_list");
-        view.addObject("lstCourse", lstCourse);
+        view.addObject("lstCourse", pager.getDatas());
+        view.addObject("pager", pager);
+        view.addObject("pageNo", pageNo);
         return view;
     }
 

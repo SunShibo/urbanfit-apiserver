@@ -44,6 +44,14 @@
                                 </c:forEach>
                             </table>
                         </div>
+                        <div class="page clear">
+                            <div class="pages">
+                                <jsp:include page="../common/pager.jsp">
+                                    <jsp:param value="${pager.totalRecord}" name="totalRecord"/>
+                                    <jsp:param value="list" name="url"/>
+                                </jsp:include>
+                            </div>
+                        </div>
                     </form>
                 </div>
             </div>

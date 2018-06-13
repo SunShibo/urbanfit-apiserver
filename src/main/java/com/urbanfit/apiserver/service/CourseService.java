@@ -12,6 +12,9 @@ import com.urbanfit.apiserver.entity.CourseSizeDetail;
 import com.urbanfit.apiserver.entity.CourseStore;
 import com.urbanfit.apiserver.entity.bo.CourseSizeBo;
 import com.urbanfit.apiserver.entity.dto.ResultDTOBuilder;
+import com.urbanfit.apiserver.query.PageObject;
+import com.urbanfit.apiserver.query.PageObjectUtil;
+import com.urbanfit.apiserver.query.QueryInfo;
 import com.urbanfit.apiserver.util.*;
 import com.urbanfit.apiserver.util.StringUtils;
 import net.sf.json.JSONObject;
@@ -107,6 +110,15 @@ public class CourseService {
     public List<Course> queryCourseList(){
         return courseDao.queryCourseList();
     }
+
+    public PageObject<Course> queryCourseList(QueryInfo queryInfo){
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("pageOffset", queryInfo.getPageOffset());
+        map.put("pageSize", queryInfo.getPageSize());
+        PageObjectUtil page = new PageObjectUtil<Course>();
+        return page.savePageObject(courseDao.queryCountCourse(map), courseDao.queryListCourse(map), queryInfo);
+    }
+
 
     public Course queryCourseById(Integer courseId){
         return courseDao.queryCourseByCourseId(courseId);

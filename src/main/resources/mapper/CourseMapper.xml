@@ -2,6 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.urbanfit.apiserver.dao.CourseDao">
+    <sql id="limit">
+        limit #{pageOffset}, #{pageSize}
+    </sql>
     <!-- 添加课程信息 -->
     <insert id="addCourse" parameterType="com.urbanfit.apiserver.entity.Course"
             useGeneratedKeys="true" keyProperty="courseId">
@@ -38,4 +41,13 @@
     <update id="updateCoursePrice" parameterType="map">
         update t_course set coursePrice = #{coursePrice} where courseId = #{courseId}
     </update>
+
+    <select id="queryListCourse" parameterType="map" resultType="com.urbanfit.apiserver.entity.Course">
+        select * from t_course order by createTime desc
+        <include refid="limit"/>
+    </select>
+
+    <select id="queryCountCourse" parameterType="map" resultType="int">
+        select count(courseId) from t_course
+    </select>
 </mapper>
