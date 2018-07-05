@@ -18,6 +18,7 @@ $(function (){
 
     $("a[name^='A_query_']").click(queryOrderMasterDetail);
     $("a[name^='A_update_']").click(updateOrderMaster);
+    $("#export_excel").click(exportExcel);
 })
 
 function initOrderMasterStatus(){
@@ -31,6 +32,14 @@ function queryOrderMaster(){
 function queryOrderMasterDetail(){
     var orderNum = $(this).data("ordernum");
     window.location.href = "detail?orderNum=" + orderNum;
+}
+
+function exportExcel(){
+    var  orderInfo=$("input[name='orderInfo']").val();
+    var  provice= $("select[name='provice']").val();
+    var  status = $("select[name='status']").val();
+    window.location.href= "/order/download?&orderInfo="+orderInfo+ "&provice=" + provice +
+        "&status="+status;
 }
 
 function updateOrderMaster(){

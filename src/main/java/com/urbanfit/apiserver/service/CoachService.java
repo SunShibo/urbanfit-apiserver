@@ -41,7 +41,6 @@ public class CoachService {
         PageObjectUtil page = new PageObjectUtil<Coach>();
         return page.savePageObject(coachDao.queryCoachCount(map), coachDao.queryCoachList(map), queryInfo);
     }
-
     public Coach queryCoachById(Integer coachId){
         return coachDao.queryCoachById(coachId);
     }

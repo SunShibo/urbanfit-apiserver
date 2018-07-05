@@ -26,19 +26,24 @@
                         <div class="form">
                             <input type="text" placeholder="订单号/课程名/报名人" name="orderInfo" value="${orderInfo}">
                             <a href="javascript:void(0);" id="B_query">搜索</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <a href="javascript:void(0);" id="export_excel">批量导出excel</a>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <div class="select">
+                                <div>
+                                    <select name="status">
+                                        <option value="">--全部--</option>
+                                        <option value="0">未付款</option>
+                                        <option value="1">已付款</option>
+                                        <option value="2">已退款</option>
+                                    </select>
+                                </div>
+                            </div>&nbsp;&nbsp;&nbsp;&nbsp;
                             <div class="select">
                                 <div id="distpicker">
                                     <select class="prov" id="proviceId" name="provice"></select>
                                     <select class="city" id="cityId" name="city"></select>
                                     <select class="dist" id="districtId" name="district"></select>
                                 </div>
-                            </div>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <select name="status">
-                                <option value="">--全部--</option>
-                                <option value="0">未付款</option>
-                                <option value="1">已付款</option>
-                                <option value="2">已退款</option>
-                            </select>
+                            </div>
                         </div>
                     </div>
                     <div class="tablebox1">

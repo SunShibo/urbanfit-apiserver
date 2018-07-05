@@ -28,10 +28,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Administrator on 2018/3/25.
@@ -253,6 +250,31 @@ public class OrderMasterService {
 
     public void systemCancleOrderMaster(){
         orderMasterDao.systemCancleOrderMaster();
+    }
+
+
+    public List<OrderMaster> queryExportOrderMaster(String orderInfo, String provice, String city, String district,
+                                                    Integer status){
+        Map<String, Object> map = new HashMap<String, Object>();
+        if(!StringUtils.isEmpty(orderInfo)){
+            map.put("orderInfo", orderInfo);
+        }
+
+        if(!StringUtils.isEmpty(provice)){
+            map.put("provice", provice);
+        }
+
+        if(!StringUtils.isEmpty(city)){
+            map.put("city", city);
+        }
+
+        if(!StringUtils.isEmpty(district)){
+            map.put("district", district);
+        }
+        if(status != null){
+            map.put("status", status);
+        }
+        return orderMasterDao.queryExportOrderMaster(map);
     }
 
     private OrderMaster addOrderMasterDetail(OrderMaster order, Coupon coupon, Course course, String orderNum){

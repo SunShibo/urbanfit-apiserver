@@ -1,7 +1,6 @@
 package com.urbanfit.apiserver.dao;
 
 import com.urbanfit.apiserver.entity.OrderMaster;
-
 import java.util.List;
 import java.util.Map;
 
@@ -31,4 +30,6 @@ public interface OrderMasterDao {
     public void updateOrderMaster(Map<String, Object> map);
 
     public void systemCancleOrderMaster();
+
+    public List<OrderMaster> queryExportOrderMaster(Map<String, Object> map);
 }

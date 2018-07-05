@@ -12,20 +12,19 @@
             on m.clientId = n.clientId left join t_course c on m.courseId = c.courseId where 1 = 1
             <if test="orderInfo != null">
                 and (orderNum like CONCAT("%", #{orderInfo}, "%") or n.name like CONCAT("%", #{orderInfo}, "%")
-                or c.courseName like CONCAT("%", #{orderInfo}, "%"))
+                or m.courseName like CONCAT("%", #{orderInfo}, "%"))
             </if>
             <if test="status != null">
                 and m.status = #{status}
             </if>
-            <if test="provice != null and city != null and district != null">
-                and (m.courseDistrict like CONCAT("%", #{provice}, "%") or m.courseDistrict like CONCAT("%", #{city}, "%")
-                or m.courseDistrict like CONCAT("%", #{district}, "%"))
-            </if>
-            <if test="provice != null and city != null">
-                and (m.courseDistrict like CONCAT("%", #{provice}, "%") or m.courseDistrict like CONCAT("%", #{city}, "%"))
-            </if>
             <if test="provice != null">
-                and (m.courseDistrict like CONCAT("%", #{provice}, "%"))
+                and m.storeAddress like CONCAT("%", #{provice}, "%")
+            </if>
+            <if test="city != null">
+                m.storeAddress like CONCAT("%", #{city}, "%"))
+            </if>
+            <if test="district != null">
+                and m.storeAddress like CONCAT("%", #{district}, "%")
             </if>
         ) m
     </select>
@@ -35,20 +34,19 @@
         on m.clientId = n.clientId left join t_course c on m.courseId = c.courseId where 1 = 1
         <if test="orderInfo != null">
             and (orderNum like CONCAT("%", #{orderInfo}, "%") or n.name like CONCAT("%", #{orderInfo}, "%")
-            or c.courseName like CONCAT("%", #{orderInfo}, "%"))
+            or m.courseName like CONCAT("%", #{orderInfo}, "%"))
         </if>
         <if test="status != null">
             and m.status = #{status}
         </if>
-        <if test="provice != null and city != null and district != null">
-            and (m.courseDistrict like CONCAT("%", #{provice}, "%") or m.courseDistrict like CONCAT("%", #{city}, "%")
-            or m.courseDistrict like CONCAT("%", #{district}, "%"))
-        </if>
-        <if test="provice != null and city != null">
-            and (m.courseDistrict like CONCAT("%", #{provice}, "%") or m.courseDistrict like CONCAT("%", #{city}, "%"))
-        </if>
         <if test="provice != null">
-            and (m.courseDistrict like CONCAT("%", #{provice}, "%"))
+            and m.storeAddress like CONCAT("%", #{provice}, "%")
+        </if>
+        <if test="city != null">
+            m.storeAddress like CONCAT("%", #{city}, "%"))
+        </if>
+        <if test="district != null">
+            and m.storeAddress like CONCAT("%", #{district}, "%")
         </if>
         order by m.createTime desc
         <include refid="limit"/>
@@ -118,4 +116,26 @@
     <update id="systemCancleOrderMaster">
         update t_client_order_master set status = 3 where status = 0 and systemCancleTime &lt;= now()
     </update>
+
+    <select id="queryExportOrderMaster" parameterType="map" resultType="com.urbanfit.apiserver.entity.OrderMaster">
+        select m.*, n.`name` clientName, c.courseType from t_client_order_master m left join t_clientinfo n
+        on m.clientId = n.clientId left join t_course c on m.courseId = c.courseId where 1 = 1
+        <if test="orderInfo != null">
+            and (orderNum like CONCAT("%", #{orderInfo}, "%") or n.name like CONCAT("%", #{orderInfo}, "%")
+            or m.courseName like CONCAT("%", #{orderInfo}, "%"))
+        </if>
+        <if test="status != null">
+            and m.status = #{status}
+        </if>
+        <if test="provice != null">
+            and m.storeAddress like CONCAT("%", #{provice}, "%")
+        </if>
+        <if test="city != null">
+            m.storeAddress like CONCAT("%", #{city}, "%"))
+        </if>
+        <if test="district != null">
+            and m.storeAddress like CONCAT("%", #{district}, "%")
+        </if>
+        order by m.createTime desc
+    </select>
 </mapper>
