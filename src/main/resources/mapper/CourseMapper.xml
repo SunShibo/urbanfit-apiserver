@@ -9,7 +9,7 @@
     <insert id="addCourse" parameterType="com.urbanfit.apiserver.entity.Course"
             useGeneratedKeys="true" keyProperty="courseId">
         insert into t_course (courseName, courseType, introduce, userId, storeId, courseImageUrl, createTime)
-        values (#{courseName}, #{courseType}, #{introduce}, #{userId}, #{storeId}, courseImageUrl, now())
+        values (#{courseName}, #{courseType}, #{introduce}, #{userId}, #{storeId}, #{courseImageUrl}, now())
     </insert>
     <!-- 根据课程类型查询数据 -->
     <select id="queryCourseByType" parameterType="int" resultType="com.urbanfit.apiserver.entity.Course">
@@ -49,5 +49,51 @@
 
     <select id="queryCountCourse" parameterType="map" resultType="int">
         select count(courseId) from t_course
+    </select>
+
+    <select id="queryStoreChooseCourseList" parameterType="map" resultType="com.urbanfit.apiserver.entity.Store">
+        select * from t_course where status = 0
+        <if test="courseIds != null">
+            and courseId in
+            <foreach collection="courseIds" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+    </select>
+
+    <select id="queryStoreCourseCount" resultType="int" parameterType="map">
+        select count(m.courseId) from (
+            select * from t_course where status = 0
+            <if test="courseName != null">
+                and courseName like CONCAT("%", #{courseName}, "%")
+            </if>
+            <if test="courseType != null">
+                and courseType = #{courseType}
+            </if>
+            <if test="courseIds != null">
+                and courseId not in
+                <foreach collection="courseIds" index="index" item="item" open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        ) m
+    </select>
+
+    <select id="queryStoreCourseList" resultType="com.urbanfit.apiserver.entity.Course" parameterType="map">
+        select * from t_course where status = 0
+        <if test="courseName != null">
+            and courseName like CONCAT("%", #{courseName}, "%")
+        </if>
+        <if test="courseType != null">
+            and courseType = #{courseType}
+        </if>
+        <if test="courseIds != null">
+            and courseId not in
+            <foreach collection="courseIds" index="index" item="item" open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        order by createTime desc
+        <include refid="limit"/>
     </select>
 </mapper>

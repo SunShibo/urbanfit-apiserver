@@ -282,4 +282,25 @@ public class CourseService {
         }
         return lstCourseSizePrice.get(0);
     }
+
+    public PageObject<Course> queryStoreCourseList(String courseName, Integer courseType, String courseIds,
+                                             QueryInfo queryInfo){
+        Map<String, Object> map = new HashMap<String, Object>();
+        if(!StringUtils.isEmpty(courseName)){
+            map.put("courseName", courseName);
+        }
+        if(courseType != null){
+            map.put("courseType", courseType);
+        }
+        if(!StringUtils.isEmpty(courseIds)){
+            map.put("courseIds", courseIds.split(","));
+        }
+        if(queryInfo != null){
+            map.put("pageOffset", queryInfo.getPageOffset());
+            map.put("pageSize", queryInfo.getPageSize());
+        }
+        PageObjectUtil<Course> page = new PageObjectUtil<Course>();
+        return page.savePageObject(courseDao.queryStoreCourseCount(map), courseDao.queryStoreCourseList(map),
+                queryInfo);
+    }
 }

@@ -14,6 +14,8 @@ public class ClientInfo extends BaseModel{
     private String password;
     private int status;
     private Date createTime;
+    private String openId;
+    private String nickname;
 
 
     public Integer getClientId() {
@@ -62,5 +64,21 @@ public class ClientInfo extends BaseModel{
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public String getOpenId() {
+        return openId;
+    }
+
+    public void setOpenId(String openId) {
+        this.openId = openId;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 }

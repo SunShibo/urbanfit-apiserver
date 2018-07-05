@@ -24,6 +24,8 @@ public class Store extends BaseModel{
     private int status;
     private Integer userId;
     private Date createTime;
+    private String introduce;
+    private String courseIds;
 
     public Integer getStoreId() {
         return storeId;
@@ -95,5 +97,21 @@ public class Store extends BaseModel{
 
     public void setCreateTime(Date createTime) {
         this.createTime = createTime;
+    }
+
+    public String getIntroduce() {
+        return introduce;
+    }
+
+    public void setIntroduce(String introduce) {
+        this.introduce = introduce;
+    }
+
+    public String getCourseIds() {
+        return courseIds;
+    }
+
+    public void setCourseIds(String courseIds) {
+        this.courseIds = courseIds;
     }
 }

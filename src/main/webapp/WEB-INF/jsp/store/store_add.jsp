@@ -52,6 +52,24 @@
                                 </td>
                             </tr>
                             <tr>
+                                <td>关联课程：</td>
+                                <td>
+                                    <div id="storeCourseDiv"></div><em>*必填</em>
+                                    <div><input type="button" id="B_add_course" value="添加课程" class="store-btn"></div>
+                                    <input type="hidden" name="courseIds">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>门店介绍：</td>
+                                <td>
+                                    <div class="edit">
+                                        <textarea name="content"></textarea>
+                                        <input name="introduce" type="hidden"/>
+                                    </div>
+                                    <em>*必填</em>
+                                </td>
+                            </tr>
+                            <tr>
                                 <td></td>
                                 <td>
                                     <a href="javascript:void(0);" id="B_submit">发布</a>
@@ -65,6 +83,9 @@
     </div>
 
     <script type="text/javascript" src="/static/js/mainJs/jquery.min.js"></script>
+    <script charset="utf-8" src="/static/js/kindeditor/kindeditor-all-min.js"></script>
+    <script charset="utf-8" src="/static/js/kindeditor/zh_CN.js"></script>
     <script type="text/javascript" src="/static/js/common/distpicker.js"></script>
     <script type="text/javascript" src="/static/js/manage/store_add.js"></script>
+    <script type="text/javascript" src="/static/js/mainJs/layer/layer.js"></script>
 </body>

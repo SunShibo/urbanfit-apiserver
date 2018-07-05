@@ -34,4 +34,11 @@ public interface CourseDao {
     public List<Course> queryListCourse(Map<String, Object> map);
 
     public int queryCountCourse(Map<String, Object> map);
+
+    public List<Course> queryStoreChooseCourseList(Map<String, Object> map);
+
+    public List<Course> queryStoreCourseList(Map<String, Object> map);
+
+    public int queryStoreCourseCount(Map<String, Object> map);
+
 }

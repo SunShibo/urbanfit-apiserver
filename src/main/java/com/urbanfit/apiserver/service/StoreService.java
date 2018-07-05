@@ -32,7 +32,8 @@ public class StoreService {
     public String addStore(Store store){
         if(store == null || (store != null && (StringUtils.isEmpty(store.getStoreName())
                 || StringUtils.isEmpty(store.getStoreDistrict()) || StringUtils.isEmpty(store.getStoreAddress())
-                /*|| StringUtils.isEmpty(store.getMobile()) || StringUtils.isEmpty(store.getContactName())*/))){
+                /*|| StringUtils.isEmpty(store.getMobile()) || StringUtils.isEmpty(store.getContactName())*/))
+                || StringUtils.isEmpty(store.getIntroduce()) || StringUtils.isEmpty(store.getCourseIds())){
             return JsonUtils.getJsonString4JavaPOJO(ResultDTOBuilder.failure("0", "参数有误")) ;
         }
         // 根据门店名称查询是否添加过该门店
@@ -40,14 +41,17 @@ public class StoreService {
         if(storeName != null){
             return JsonUtils.getJsonString4JavaPOJO(ResultDTOBuilder.failure("0", "您添加的门店已经存在")) ;
         }
+        store.setCourseIds("," + store.getCourseIds() + ",");
         storeDao.addStore(store);
+        // 修改课程门店信息
         return JsonUtils.getJsonString4JavaPOJO(ResultDTOBuilder.failure("1", "添加门店信息成功")) ;
     }
 
     public String updateStore(Store store){
         if(store == null || (store != null && (store.getStoreId() == null || StringUtils.isEmpty(store.getStoreName())
                 || StringUtils.isEmpty(store.getStoreDistrict()) || StringUtils.isEmpty(store.getStoreAddress())
-                /*|| StringUtils.isEmpty(store.getMobile()) || StringUtils.isEmpty(store.getContactName())*/))){
+                /*|| StringUtils.isEmpty(store.getMobile()) || StringUtils.isEmpty(store.getContactName())*/))
+                || StringUtils.isEmpty(store.getIntroduce()) || StringUtils.isEmpty(store.getCourseIds())){
             return JsonUtils.getJsonString4JavaPOJO(ResultDTOBuilder.failure("0", "参数有误")) ;
         }
         Map<String, Object> map = new HashMap<String, Object>();
@@ -57,6 +61,7 @@ public class StoreService {
         if(storeName != null){
             return JsonUtils.getJsonString4JavaPOJO(ResultDTOBuilder.failure("0", "您添加的门店已经存在")) ;
         }
+        store.setCourseIds("," + store.getCourseIds() + ",");
         // 修改门店信息
         storeDao.updateStore(store);
         return JsonUtils.getJsonString4JavaPOJO(ResultDTOBuilder.failure("1", "修改门店信息成功")) ;
@@ -135,5 +140,11 @@ public class StoreService {
         }
         return JsonUtils.encapsulationJSON(Constant.INTERFACE_SUCC, "查询成功", JsonUtils.
                 getJsonString4JavaListDate(lstStore, DateUtils.LONG_DATE_PATTERN)).toString();
+    }
+
+    private void updateStoreCourse(Integer storeId, String courseIds){
+        // 查询课程门店信息
+        // 如果课程已经包含该门店，不做操作
+        // 如果课程没有包含该门店，添加数据
     }
 }

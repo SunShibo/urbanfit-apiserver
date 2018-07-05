@@ -47,6 +47,7 @@ public class OrderMaster extends BaseModel{
      * 支付类型  0：支付宝  1：微信
      */
     private Integer payment;
+    private Integer wechatType;
     /**
      * 支付状态 0：未支付  1：已支付  2：已退款
      */
@@ -315,5 +316,13 @@ public class OrderMaster extends BaseModel{
 
     public void setCourseTypeName(String courseTypeName) {
         this.courseTypeName = courseTypeName;
+    }
+
+    public Integer getWechatType() {
+        return wechatType;
+    }
+
+    public void setWechatType(Integer wechatType) {
+        this.wechatType = wechatType;
     }
 }

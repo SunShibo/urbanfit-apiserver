@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 /**
  * Created by wangyubo on 2018/3/17.
@@ -89,5 +89,20 @@ public class CourseController extends BaseCotroller {
         String result = courseService.addCourse(courseName, storeIds, courseSizeInfo, sizePriceInfo, introduce,
                 courseType, courseImageUrl);
         safeTextPrint(response, result);
+    }
+
+    @RequestMapping("/storeCourseList")
+    public ModelAndView queryStoreCourseList(String courseIds, String courseName, Integer courseType, Integer pageNo,
+                                     Integer pageSize){
+        pager = courseService.queryStoreCourseList(courseName, courseType, courseIds, getQueryInfo(pageNo, pageSize));
+        ModelAndView view = new ModelAndView();
+        view.setViewName("/course/store_choose_course");
+        view.addObject("lstCourse", pager.getDatas());
+        view.addObject("pager", pager);
+        view.addObject("pageNo", pageNo);
+        view.addObject("courseName", courseName);
+        view.addObject("courseType", courseType);
+        view.addObject("courseIds", courseIds);
+        return view;
     }
 }
