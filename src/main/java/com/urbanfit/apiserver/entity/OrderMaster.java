@@ -14,11 +14,13 @@ public class OrderMaster extends BaseModel{
     public static final int NO_USE_COUPON = 0;
     public static final int USE_COUPON = 1;
     /**
-     * 支付状态 0：未支付  1：已支付  2：已退款  3：系统自动取消
+     * 支付状态 0：未支付  1：已支付  2：申请退款  3：系统自动取消  4：已退款 5申请退款失败
      */
     public static final int STATUS_WAITING_PAY = 0;
     public static final int STATUS_PAYED = 1;
-    public static final int STATUS_REFUND = 2;
+    public static final int STATUS_APPLY_REFUND = 2;
+    public static final int STATUS_REFUND = 4;
+    public  static  final  int STATUS_DEFAULT = 5;
     /**
      * 支付类型  0：支付宝  1：微信
      */
@@ -49,7 +51,7 @@ public class OrderMaster extends BaseModel{
     private Integer payment;
     private Integer wechatType;
     /**
-     * 支付状态 0：未支付  1：已支付  2：已退款
+     * 支付状态 0：未支付  1：已支付  2：申请退款 3：系统自动取消 4：已退款
      */
     private int status;
     private Date createTime;

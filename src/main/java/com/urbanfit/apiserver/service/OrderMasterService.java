@@ -2,14 +2,8 @@ package com.urbanfit.apiserver.service;
 
 import com.urbanfit.apiserver.cfg.pop.Constant;
 import com.urbanfit.apiserver.cfg.pop.SystemConfig;
-import com.urbanfit.apiserver.dao.ClientInfoDao;
-import com.urbanfit.apiserver.dao.CouponDao;
-import com.urbanfit.apiserver.dao.CourseDao;
-import com.urbanfit.apiserver.dao.OrderMasterDao;
-import com.urbanfit.apiserver.entity.ClientInfo;
-import com.urbanfit.apiserver.entity.Coupon;
-import com.urbanfit.apiserver.entity.Course;
-import com.urbanfit.apiserver.entity.OrderMaster;
+import com.urbanfit.apiserver.dao.*;
+import com.urbanfit.apiserver.entity.*;
 import com.urbanfit.apiserver.pay.AlipayUtil;
 import com.urbanfit.apiserver.pay.WeChatPayUtil;
 import com.urbanfit.apiserver.query.PageObject;
@@ -36,6 +30,8 @@ import java.util.*;
 @Service("orderMasterService")
 @Transactional
 public class OrderMasterService {
+    @Resource
+    private ClientApplyRefundDao clientApplyRefundDao;
     @Resource
     private OrderMasterDao orderMasterDao;
     @Resource
@@ -74,6 +70,9 @@ public class OrderMasterService {
 
     public OrderMaster queryOderMaterDetail(String orderNum){
         return orderMasterDao.queryOrderMaterDetail(orderNum);
+    }
+    public  ClientApplyRefund queryHandleDetail(String orderNum){
+        return  clientApplyRefundDao.queryHandleDetail(orderNum);
     }
 
     public String updateOrderMasterStatus(String orderNum){
@@ -247,7 +246,21 @@ public class OrderMasterService {
             orderMasterDao.updateOrderMaster(map);
         }
     }
-
+ public  String  againstReason(String orderNum,String reason){
+     if(StringUtils.isEmpty(orderNum) || StringUtils.isEmpty(reason)){
+         return JsonUtils.encapsulationJSON(Constant.INTERFACE_PARAM_ERROR, "参数有误", "").toString();
+     }
+     OrderMaster orderMaster = orderMasterDao.queryOrderMasterByOrderNum(orderNum);
+     if(orderMaster == null){
+         return JsonUtils.encapsulationJSON(Constant.INTERFACE_PARAM_ERROR, "订单不存在", "").toString();
+     }
+     orderMasterDao.updateOrderMasterStatus2(orderNum);
+     ClientApplyRefund clientApplyRefund =new ClientApplyRefund();
+     clientApplyRefund.setOrderNum(orderNum);
+     clientApplyRefund.setAgainstReason(reason);
+     clientApplyRefundDao.updateAgainst(clientApplyRefund);
+     return JsonUtils.encapsulationJSON(Constant.INTERFACE_SUCC, "申请退款成功", "").toString();
+ }
     public void systemCancleOrderMaster(){
         orderMasterDao.systemCancleOrderMaster();
     }

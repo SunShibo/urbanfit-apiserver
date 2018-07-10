@@ -17,7 +17,8 @@ public interface OrderMasterDao {
 
     public OrderMaster queryOrderMasterByOrderNum(String orderNum);
 
-    public void updateOrderMasterStatus(String orderNum);
+    public void  updateOrderMasterStatus(String orderNum);
+    public void updateOrderMasterStatus2(String orderNum);
 
     public int queryClientOrderMasterCount(Map<String, Object> map);
 

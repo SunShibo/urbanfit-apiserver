@@ -63,7 +63,10 @@
     </select>
 
     <select id="updateOrderMasterStatus" parameterType="String">
-        update t_client_order_master set status = 2 where orderNum = #{orderNum}
+        update t_client_order_master set status = 4  where orderNum = #{orderNum}
+    </select>
+    <select id="updateOrderMasterStatus2" parameterType="String">
+        update t_client_order_master set status = 5  where orderNum = #{orderNum}
     </select>
 
     <select id="queryClientOrderMasterCount" parameterType="map" resultType="int">

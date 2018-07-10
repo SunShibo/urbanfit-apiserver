@@ -52,8 +52,10 @@
                                 <td>
                                     <c:if test="${orderMaster.status == 0}">待支付</c:if>
                                     <c:if test="${orderMaster.status == 1}">已支付</c:if>
-                                    <c:if test="${orderMaster.status == 2}">已退款</c:if>
+                                    <c:if test="${orderMaster.status == 2}">申请退款</c:if>
                                     <c:if test="${orderMaster.status == 3}">系统自动取消</c:if>
+                                    <c:if test="${orderMaster.status == 4}">已退款</c:if>
+                                    <c:if test="${orderMaster.status == 5}">申请退款失败</c:if>
                                 </td>
                             </tr>
                             <tr>
@@ -97,6 +99,18 @@
                             <tr>
                                 <td>备注信息：</td>
                                 <td>${orderMaster.remarks}</td>
+                            </tr>
+                            <tr>
+                                <td>申请退款时间：</td>
+                                <td>
+                                <fmt:formatDate value="${applyDetail.applyTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>处理退款时间：</td>
+                                <td>
+                                <fmt:formatDate value="${applyDetail.handleTime}" pattern="yyyy-MM-dd HH:mm:ss"/>
+                                </td>
                             </tr>
                         </table>
                     </div>

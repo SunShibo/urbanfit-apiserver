@@ -1,10 +1,16 @@
 package com.urbanfit.apiserver.web.controller.manage;
 
+import com.urbanfit.apiserver.entity.ClientApplyRefund;
 import com.urbanfit.apiserver.entity.OrderMaster;
+import com.urbanfit.apiserver.entity.dto.ResultDTO;
+import com.urbanfit.apiserver.entity.dto.ResultDTOBuilder;
+import com.urbanfit.apiserver.service.ClientApplyRefundDaoServicce;
 import com.urbanfit.apiserver.service.OrderMasterService;
 import com.urbanfit.apiserver.util.DateUtils;
 import com.urbanfit.apiserver.util.ExcelUtil;
+import com.urbanfit.apiserver.util.JsonUtils;
 import com.urbanfit.apiserver.web.controller.base.BaseCotroller;
+import net.sf.json.JSONObject;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -26,6 +32,9 @@ public class OrderMasterController extends BaseCotroller{
 
     @Resource
     private OrderMasterService orderMasterService;
+
+    @Resource
+    private ClientApplyRefundDaoServicce clientApplyRefundDaoServicce;
 
     @RequestMapping("/list")
     public ModelAndView queryOrderMasterList(String orderInfo, String provice, String city, String district,
@@ -49,19 +58,27 @@ public class OrderMasterController extends BaseCotroller{
     @RequestMapping("/detail")
     public ModelAndView queryOderMaterDetail(String orderNum){
         OrderMaster orderMaster = orderMasterService.queryOderMaterDetail(orderNum);
+        ClientApplyRefund clientApplyRefund =orderMasterService.queryHandleDetail(orderNum);
         ModelAndView view = new ModelAndView();
         view.setViewName("/order/order_master_detail");
         view.addObject("orderMaster", orderMaster);
+        view.addObject("applyDetail",clientApplyRefund);
         return view;
     }
 
     @RequestMapping("/update")
     public void updateOrderMasterStatus(HttpServletResponse response, String orderNum){
+        clientApplyRefundDaoServicce.updateAgree(orderNum);
         String result = orderMasterService.updateOrderMasterStatus(orderNum);
         safeJsonPrint(response, result);
     }
 
+     @RequestMapping("/against")
+    public  void  againstReason(HttpServletResponse response , String orderNum , String reason){
+         String result =orderMasterService.againstReason(orderNum,reason);
+         safeJsonPrint(response,result);
 
+    }
     @RequestMapping("/download")
     public void download(HttpServletResponse response, String orderInfo, String provice, String city,String dist,
                             Integer status) throws Exception{
@@ -141,17 +158,21 @@ public class OrderMasterController extends BaseCotroller{
             String payTime = project.getCreateTime() == null ? "" : DateUtils.formatDate(
                     DateUtils.LONG_DATE_PATTERN, project.getPayTime());
             mapValue.put("payTime",payTime);
-            if (project.getStatus()==0){
+            if (project.getStatus() == 0){
                 mapValue.put("status","未支付");
-            }else if (project.getStatus()==1){
+            }else if (project.getStatus() == 1){
                 mapValue.put("status","已支付");
-            }else if (project.getStatus()==2) {
-                mapValue.put("status", "已退款");
-            }else  if (project.getStatus()==3){
+            }else if (project.getStatus() == 2) {
+                mapValue.put("status", "申请退款");
+            }else  if (project.getStatus() == 3){
                 mapValue.put("status","系统自动取消");
+            }else if(project.getStatus() == 4){
+                mapValue.put("status","已退款");
+            }else if (project.getStatus()==5){
+                mapValue.put("status","申请退款失败");
             }
             mapValue.put("clientName",project.getClientName());
-            if(project.getIsUseCoupon()==0){
+            if(project.getIsUseCoupon() == 0){
                 mapValue.put("isUseCoupon","否");
             }else if (project.getIsUseCoupon()==0){
                 mapValue.put("isUseCoupon","是");
@@ -162,5 +183,15 @@ public class OrderMasterController extends BaseCotroller{
             listmap.add(mapValue);
         }
         return listmap;
+    }
+
+    @RequestMapping("/reason")
+    public void queryReason(HttpServletResponse response,String orderNum){
+        String result = clientApplyRefundDaoServicce.queryReason(orderNum);
+        /*JSONObject result = JsonUtils.getJsonObject4JavaPOJO(ResultDTOBuilder.success(taskNum));
+        ResultDTO resultDTO = ResultDTOBuilder.success(result);*/
+        ResultDTO resultDTO = ResultDTOBuilder.success(result);
+        safeTextPrint(response, JsonUtils
+                .getJsonObject4JavaPOJO(resultDTO).toString());
     }
 }

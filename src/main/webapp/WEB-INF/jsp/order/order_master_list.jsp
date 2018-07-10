@@ -33,7 +33,10 @@
                                         <option value="">--全部--</option>
                                         <option value="0">未付款</option>
                                         <option value="1">已付款</option>
-                                        <option value="2">已退款</option>
+                                        <option value="2">申请退款</option>
+                                        <option value="3">系统自动取消</option>
+                                        <option value="4">已退款</option>
+                                        <option value="5">申请退款失败</option>
                                     </select>
                                 </div>
                             </div>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -74,16 +77,19 @@
                                         <label id="status_${order.orderNum}">
                                             <c:if test="${order.status == 0}">未支付</c:if>
                                             <c:if test="${order.status == 1}">已支付</c:if>
-                                            <c:if test="${order.status == 2}">已退款</c:if>
+                                            <c:if test="${order.status == 2}">申请退款</c:if>
+                                            <c:if test="${order.status == 3}">系统自动取消</c:if>
+                                            <c:if test="${order.status == 4}">已退款</c:if>
+                                            <c:if test="${order.status == 5}">申请退款失败</c:if>
                                         </label>
                                     </td>
                                     <td>
                                         <a href="javascript:void(0);" name="A_query_${order.orderNum}"
                                            data-ordernum="${order.orderNum}">查看</a>&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <c:if test="${order.status == 1}">
+                                        <c:if test="${order.status == 2}">
                                             <label id="update_${order.orderNum}">
-                                                <a href="javascript:void(0);" name="A_update_${order.orderNum}"
-                                                   data-ordernum="${order.orderNum}">标记为退款</a>
+                                                <a href="javascript:void(0);" name="A_reason_${order.orderNum}"
+                                                   data-ordernum="${order.orderNum}">查看退款原因</a>
                                             </label>
                                         </c:if>
                                     </td>
@@ -103,7 +109,27 @@
             </div>
         </div>
     </div>
+    <div id="applyBackMoneyDiv">
+        <div>
+            <tr>
+                <td class="td1">原因：<span id="reason-span"></span></td>
+                <td class="td2">${orderMaster.orderNum}</td>
+                不同意退款原因  <textarea name="againstReason"></textarea><br/>
+            </tr>
+            <input type="hidden" id="applyOrderNum-hide" value="">
+            <input type="button" id="No_apply_back_money" value="不同意退款">
+            <input type="button" id="B_apply_back_money" value="同意退款">
+        </div>
+        </div>
+    <div id="againstReasonDiv">
+        <div>
+
+        <input type="button" id="B_against_back_money" value="不同意退款">
+    </div>
+    </div>
     <script type="text/javascript" src="/static/js/mainJs/jquery.min.js"></script>
     <script type="text/javascript" src="/static/js/common/distpicker.js"></script>
+    <script type="text/javascript" src="/static/js/mainJs/layer/layer.js"></script>
+
     <script type="text/javascript" src="/static/js/manage/order_master_list.js"></script>
 </body>
