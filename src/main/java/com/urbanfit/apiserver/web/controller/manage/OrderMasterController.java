@@ -4,7 +4,7 @@ import com.urbanfit.apiserver.entity.ClientApplyRefund;
 import com.urbanfit.apiserver.entity.OrderMaster;
 import com.urbanfit.apiserver.entity.dto.ResultDTO;
 import com.urbanfit.apiserver.entity.dto.ResultDTOBuilder;
-import com.urbanfit.apiserver.service.ClientApplyRefundDaoServicce;
+import com.urbanfit.apiserver.service.ClientApplyRefundDaoService;
 import com.urbanfit.apiserver.service.OrderMasterService;
 import com.urbanfit.apiserver.util.DateUtils;
 import com.urbanfit.apiserver.util.ExcelUtil;
@@ -34,7 +34,7 @@ public class OrderMasterController extends BaseCotroller{
     private OrderMasterService orderMasterService;
 
     @Resource
-    private ClientApplyRefundDaoServicce clientApplyRefundDaoServicce;
+    private ClientApplyRefundDaoService clientApplyRefundDaoService;
 
     @RequestMapping("/list")
     public ModelAndView queryOrderMasterList(String orderInfo, String provice, String city, String district,
@@ -68,7 +68,7 @@ public class OrderMasterController extends BaseCotroller{
 
     @RequestMapping("/update")
     public void updateOrderMasterStatus(HttpServletResponse response, String orderNum){
-        clientApplyRefundDaoServicce.updateAgree(orderNum);
+        clientApplyRefundDaoService.updateAgree(orderNum);
         String result = orderMasterService.updateOrderMasterStatus(orderNum);
         safeJsonPrint(response, result);
     }
@@ -187,7 +187,7 @@ public class OrderMasterController extends BaseCotroller{
 
     @RequestMapping("/reason")
     public void queryReason(HttpServletResponse response,String orderNum){
-        String result = clientApplyRefundDaoServicce.queryReason(orderNum);
+        String result = clientApplyRefundDaoService.queryReason(orderNum);
         /*JSONObject result = JsonUtils.getJsonObject4JavaPOJO(ResultDTOBuilder.success(taskNum));
         ResultDTO resultDTO = ResultDTOBuilder.success(result);*/
         ResultDTO resultDTO = ResultDTOBuilder.success(result);
