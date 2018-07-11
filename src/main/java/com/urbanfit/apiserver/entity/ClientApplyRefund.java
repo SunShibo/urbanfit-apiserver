@@ -14,6 +14,7 @@ public class ClientApplyRefund {
     private String orderNum;
     private Date handleTime;
     private Date applyTime;
+    private  String againstReason;
 
     public String getAgainstReason() {
         return againstReason;
@@ -23,7 +24,6 @@ public class ClientApplyRefund {
         this.againstReason = againstReason;
     }
 
-    private  String againstReason;
 
     public String getReason() {
         return reason;
