@@ -23,7 +23,7 @@ import java.util.Map;
 @RequestMapping("/corder")
 public class ClientOrderMasterController extends BaseCotroller{
     @Resource
-    private OrderMasterService orderMasterService;
+    private OrderMasterService orderMasterService ;
 
 
     @RequestMapping("/list")
