@@ -5,7 +5,7 @@ import com.urbanfit.apiserver.pay.AlipayUtil;
 import com.urbanfit.apiserver.service.ClientApplyRefundDaoServicce;
 import com.urbanfit.apiserver.service.OrderMasterService;
 import com.urbanfit.apiserver.tenpay.handler.PrepayIdRequestHandler;
-import com.urbanfit.apiserver.web.controller.base.BaseCotroller;
+import com.urbanfit.apiserver.web.controller.base.BaseCotroller ;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +23,7 @@ import java.util.Map;
 @RequestMapping("/corder")
 public class ClientOrderMasterController extends BaseCotroller{
     @Resource
-    private OrderMasterService orderMasterService ;
+    private OrderMasterService orderMasterService;
 
 
     @RequestMapping("/list")
