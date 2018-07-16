@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.urbanfit.apiserver.dao.ClientApplyRefundDao">
+    <select id="queryReasonByOrderNum" parameterType="string" resultType="string">
+    select reason from t_client_apply_refund where orderNum = #{orderNum}
+    </select>
+    <update id="updateAgree" parameterType="string">
+    UPDATE t_client_apply_refund   SET handleTime = now()  WHERE  orderNum = #{orderNum}
+    </update>
+    <update id="updateAgainst" parameterType="com.urbanfit.apiserver.entity.ClientApplyRefund">
+        UPDATE t_client_apply_refund   SET handleTime = now(),againstReason=#{againstReason} WHERE  orderNum = #{orderNum}
+    </update>
+    <select id="queryHandleDetail" parameterType="String" resultType="com.urbanfit.apiserver.entity.ClientApplyRefund">
+        SELECT handleTime,applyTime FROM t_client_apply_refund WHERE orderNum = #{orderNum}
+    </select>
+</mapper>
