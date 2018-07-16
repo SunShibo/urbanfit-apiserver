@@ -15,6 +15,74 @@
             "district" : '${district}'
         };
     </script>
+    <meta charset="utf-8"/>
+    <title>我的订单</title>
+    <link rel="shortcut icon" href="/static/images/favicon.ico" type="image/x-icon"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/common.css">
+    <link type="text/css" href="/static/css/main.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
+    <script type="text/javascript" src="/static/js/mainJs/jquery.min.js"></script>
+    <script type="text/javascript" src="/static/js/common/menu.js"></script>
+    <script type="text/javascript" src="/static/js/mainJs/layer/layer.js"></script>
+    <script type="text/javascript" src="/static/js/web/order_master_list.js"></script>
+    <script type="text/javascript">
+        var status = '${status}';
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+        }
+        #reason-span{
+            display: inline-block;
+            vertical-align: top;
+            font-size: 20px;
+            margin-top: 50px;
+            margin-left: auto;
+
+        }
+        #ApplyReason{
+            display: inline-block;
+            vertical-align: top;
+            font-size: 20px;
+            margin-top: 50px;
+            margin-left: 15%;
+
+        }
+        #applyBackMoneyDiv{
+            margin: 0 auto;
+            text-align: center;
+            height: 440px;
+        }
+        #B_apply_back_money{
+            display: block;width: 120px;height: 45px;
+            background: #f6d332;color: #001111;
+            font-size: 18px;border-radius: 4px;
+            text-align: center;line-height: 45px;
+            margin-top: -45px;margin-left: 10%;
+        }
+        #reason{
+            margin-top: 122px ;
+        }
+        #No_apply_back_money{
+            display: block;width: 120px;height: 45px;
+            background: #f6d332;color: #001111;
+            font-size: 18px;border-radius: 4px;
+            text-align: center;line-height: 45px;
+            margin-top: 80px;margin-left: 65%;
+        }
+        #No-Apply{
+            display: inline-block;
+            vertical-align: top;
+            margin-top: 130px;
+            font-size: 20px;
+            margin-left: -280px;
+        }
+    </style>
 </head>
 <body>
     <div class="index clear">
@@ -112,20 +180,15 @@
     <div id="applyBackMoneyDiv">
         <div>
             <tr>
-                <td class="td1">原因：<span id="reason-span"></span></td>
+                <td class="td1"><span id="ApplyReason">原&nbsp&nbsp&nbsp&nbsp&nbsp因:</span><span id="reason-span"></span></td>
                 <td class="td2">${orderMaster.orderNum}</td>
-                不同意退款原因  <textarea name="againstReason"></textarea><br/>
+                <span id="No-Apply">不同意退款原因:</span><textarea name="againstReason" id="reason" weight="200px"></textarea><br/>
             </tr>
             <input type="hidden" id="applyOrderNum-hide" value="">
             <input type="button" id="No_apply_back_money" value="不同意退款">
             <input type="button" id="B_apply_back_money" value="同意退款">
         </div>
         </div>
-    <div id="againstReasonDiv">
-        <div>
-
-        <input type="button" id="B_against_back_money" value="不同意退款">
-    </div>
     </div>
     <script type="text/javascript" src="/static/js/mainJs/jquery.min.js"></script>
     <script type="text/javascript" src="/static/js/common/distpicker.js"></script>

@@ -322,7 +322,6 @@ public class OrderMasterService {
         return orderMaster;
     }
 
-
     private Date getSystemCancleTime() {
         long curren = System.currentTimeMillis();
         curren += 30 * 60 * 1000;

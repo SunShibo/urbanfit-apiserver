@@ -90,7 +90,7 @@ function openApplyBackMoneyReason(orderNum){
                     title : '申请退款处理',
                     type: 1,
                     content : $("#applyBackMoneyDiv"),//指定弹出DIV内容
-                    area: ['500px', '540px'],
+                    area: ['500px', '500px'],
                     full: false
                 });
             }else {
