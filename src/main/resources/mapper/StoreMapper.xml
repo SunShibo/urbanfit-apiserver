@@ -9,8 +9,8 @@
     <insert id="addStore" parameterType="com.urbanfit.apiserver.entity.Store"
             useGeneratedKeys="true" keyProperty="storeId">
         insert into t_store (storeName, storeDistrict, storeAddress, mobile, contactName, status, userId, createTime,
-         introduce, courseIds) values (#{storeName}, #{storeDistrict}, #{storeAddress}, #{mobile}, #{contactName}, 0,
-         #{userId}, now(), #{introduce}, #{courseIds})
+         introduce, courseIds, storeImageUrl) values (#{storeName}, #{storeDistrict}, #{storeAddress}, #{mobile},
+         #{contactName}, 0, #{userId}, now(), #{introduce}, #{courseIds}, #{storeImageUrl})
     </insert>
     <!-- 根据门店名称查询数据 -->
     <select id="queryStoreByName" parameterType="String" resultType="com.urbanfit.apiserver.entity.Store">
@@ -24,7 +24,7 @@
     <update id="updateStore" parameterType="com.urbanfit.apiserver.entity.Store">
         update t_store set storeName = #{storeName}, storeDistrict = #{storeDistrict}, storeAddress = #{storeAddress},
         mobile = #{mobile}, contactName = #{contactName}, status = 0, userId = #{userId}, introduce = #{introduce},
-        courseIds = #{courseIds} where storeId = #{storeId}
+        courseIds = #{courseIds}, storeImageUrl = #{storeImageUrl} where storeId = #{storeId}
     </update>
     <select id="queryStoreById" parameterType="int" resultType="com.urbanfit.apiserver.entity.Store">
         select * from t_store where status = 0 and storeId = #{storeId}
@@ -105,4 +105,9 @@
             </foreach>
         </if>
     </select>
+
+    <update id="updateStoreCourse">
+        update t_store t1, (select storeId, concat(',', group_concat(courseId), ',') courseId from
+        t_course_store group by storeId) t2 set t1.courseIds = t2.courseId where t1.storeId = t2.storeId
+    </update>
 </mapper>

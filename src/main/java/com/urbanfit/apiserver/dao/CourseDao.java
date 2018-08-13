@@ -41,4 +41,5 @@ public interface CourseDao {
 
     public int queryStoreCourseCount(Map<String, Object> map);
 
+    public void updateCourseStore();
 }

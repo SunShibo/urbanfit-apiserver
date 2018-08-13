@@ -1,12 +1,16 @@
 package com.urbanfit.apiserver.web.controller;
 
+import com.urbanfit.apiserver.cfg.pop.SystemConfig;
 import com.urbanfit.apiserver.entity.Store;
 import com.urbanfit.apiserver.service.StoreService;
+import com.urbanfit.apiserver.util.StringUtils;
 import com.urbanfit.apiserver.web.controller.base.BaseCotroller;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Resource;
@@ -57,9 +61,15 @@ public class StoreController extends BaseCotroller{
 
     @RequestMapping("/toUpdate")
     public ModelAndView redirectUpdatePage(Integer storeId){
+        Store store = storeService.queryStoreById(storeId);
+        if(!StringUtils.isEmpty(store.getCourseIds())){
+            store.setCourseIds(store.getCourseIds().substring(1, store.getCourseIds().length() - 1));
+        }
         ModelAndView view = new ModelAndView();
         view.setViewName("/store/store_update");
-        view.addObject("store", storeService.queryStoreById(storeId));
+        view.addObject("store", store);
+        view.addObject("baseUrl", SystemConfig.getString("image_base_url"));
+        sput("base_image", SystemConfig.getString("image_base_url"));
         return view;
     }
 
@@ -86,5 +96,11 @@ public class StoreController extends BaseCotroller{
     public void queryCourseChoosedStore(String storeIds, HttpServletResponse response){
         String result = storeService.queryCourseChoosedStore(storeIds);
         safeTextPrint(response, result);
+    }
+
+    @RequestMapping("/uploadImage")
+    public void updateStoreImageUrl(HttpServletResponse response, @RequestParam("myFile") MultipartFile file) {
+        String result = storeService.updateStoreImageUrl(file);
+        safeJsonPrint(response, result);
     }
 }

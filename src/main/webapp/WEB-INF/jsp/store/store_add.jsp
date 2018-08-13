@@ -60,6 +60,20 @@
                                 </td>
                             </tr>
                             <tr>
+                                <td>门店图片：</td>
+                                <td>
+                                    <div class="suolue">
+                                        <div class="uploadimg">
+                                            <img width="160px;" height="160px;" id="uploadImage" src="../static/img/u37.png"/>
+                                            <input type="hidden" name="storeImageUrl"><br/>
+                                        </div>
+                                        <div class="zi">
+                                            <p class="del" id="B_delete_image">删除</p>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
                                 <td>门店介绍：</td>
                                 <td>
                                     <div class="edit">
@@ -86,6 +100,7 @@
     <script charset="utf-8" src="/static/js/kindeditor/kindeditor-all-min.js"></script>
     <script charset="utf-8" src="/static/js/kindeditor/zh_CN.js"></script>
     <script type="text/javascript" src="/static/js/common/distpicker.js"></script>
+    <script type="text/javascript" src="/static/js/common/ajaxupload.js"></script>
     <script type="text/javascript" src="/static/js/manage/store_add.js"></script>
     <script type="text/javascript" src="/static/js/mainJs/layer/layer.js"></script>
 </body>

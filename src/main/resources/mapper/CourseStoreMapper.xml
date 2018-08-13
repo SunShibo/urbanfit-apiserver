@@ -15,4 +15,14 @@
     <delete id="deleteCourseStore" parameterType="int">
         delete from t_course_store where courseId = #{courseId}
     </delete>
+
+    <delete id="deleteCourseStoreByStoreId" parameterType="int">
+        delete from t_course_store where storeId = #{storeId}
+    </delete>
+
+    <select id="queryStoreChoosedCourse" resultType="com.urbanfit.apiserver.entity.CourseStore"
+            parameterType="int">
+        select m.*, n.courseName from t_course_store m left join t_course n on m.courseId = n.courseId
+        where m.storeId = #{storeId}
+    </select>
 </mapper>

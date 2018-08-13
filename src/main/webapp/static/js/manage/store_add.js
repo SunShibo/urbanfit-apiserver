@@ -7,6 +7,7 @@ $(function(){
     $("input[name='storeDistrict']").val("");
     $("#B_submit").click(addStore);
     $("#B_add_course").click(openChooseCourseLayer);
+    uploadStoreImageUrl();  // 上次图片
 
     KindEditor.ready(function(K) {
         editor = K.create('textarea[name="content"]', {
@@ -121,6 +122,7 @@ function addStore(){
         alert("门店介绍不能为空");
         return ;
     }
+    $("input[name='introduce']").val(introduce);
     /*var mobile = $("input[name='mobile']").val();
      if(mobile == ""){
      alert("联系电话不能为空");
@@ -137,6 +139,7 @@ function addStore(){
      alert("联系人不能为空");
      return ;
      }*/
+
     $.ajax({
         type : "post",
         url : "add",
@@ -153,4 +156,36 @@ function addStore(){
             }
         }
     })
+}
+
+function uploadStoreImageUrl(){
+    var button = $("#uploadImage"), interval;
+    new AjaxUpload(button, {
+        action: "/store/uploadImage",
+        type:"post",
+        name: 'myFile',
+        responseType : 'json',
+        onSubmit: function(file, ext) {
+            if (!(ext && /^(jpg|JPG|png|PNG|gif|GIF)$/.test(ext))) {
+                alert("您上传的图片格式不对，请重新选择！");
+                return false;
+            }
+        },
+        onComplete: function(file, response) {
+            if(response.message == "big"){
+                alert("图片太大，请重新选择！");
+                return ;
+            }else if(response.message == "paramError"){
+                alert("参数有误！");
+                return ;
+            }else if(response.message == "fail"){
+                alert("修改失败，请重新修改！");
+                return ;
+            }else if(response.message == "success"){
+                var resultData = response.data;
+                $("#uploadImage").attr("src", resultData.baseUrl + resultData.storeImageUrl);
+                $("input[name='storeImageUrl']").val(resultData.storeImageUrl);
+            }
+        }
+    });
 }

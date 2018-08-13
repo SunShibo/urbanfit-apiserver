@@ -26,6 +26,7 @@ public class Store extends BaseModel{
     private Date createTime;
     private String introduce;
     private String courseIds;
+    private String storeImageUrl;
 
     public Integer getStoreId() {
         return storeId;
@@ -113,5 +114,13 @@ public class Store extends BaseModel{
 
     public void setCourseIds(String courseIds) {
         this.courseIds = courseIds;
+    }
+
+    public String getStoreImageUrl() {
+        return storeImageUrl;
+    }
+
+    public void setStoreImageUrl(String storeImageUrl) {
+        this.storeImageUrl = storeImageUrl;
     }
 }

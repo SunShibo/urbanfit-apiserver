@@ -7,6 +7,8 @@ public class CourseStore extends BaseModel{
     private Integer courseId;
     private Integer storeId;
 
+    private String courseName;
+
     public Integer getCsId() {
         return csId;
     }
@@ -36,5 +38,13 @@ public class CourseStore extends BaseModel{
     public CourseStore(Integer courseId, Integer storeId) {
         this.courseId = courseId;
         this.storeId = storeId;
+    }
+
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
     }
 }

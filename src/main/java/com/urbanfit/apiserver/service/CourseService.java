@@ -2,10 +2,7 @@ package com.urbanfit.apiserver.service;
 
 import com.urbanfit.apiserver.cfg.pop.Constant;
 import com.urbanfit.apiserver.cfg.pop.SystemConfig;
-import com.urbanfit.apiserver.dao.CourseDao;
-import com.urbanfit.apiserver.dao.CourseSizeDao;
-import com.urbanfit.apiserver.dao.CourseSizeDetailDao;
-import com.urbanfit.apiserver.dao.CourseStoreDao;
+import com.urbanfit.apiserver.dao.*;
 import com.urbanfit.apiserver.entity.Course;
 import com.urbanfit.apiserver.entity.CourseSize;
 import com.urbanfit.apiserver.entity.CourseSizeDetail;
@@ -39,6 +36,8 @@ public class CourseService {
     private CourseSizeDetailDao courseSizeDetailDao;
     @Autowired
     private CourseStoreDao courseStoreDao;
+    @Resource
+    private StoreDao storeDao;
 
     /**
      * 添加课程数据
@@ -69,6 +68,7 @@ public class CourseService {
         map.put("coursePrice", coursePrice);
         map.put("courseId", course.getCourseId());
         courseDao.updateCoursePrice(map);
+        storeDao.updateStoreCourse();      // 修改门店课程信息
         return JsonUtils.encapsulationJSON(Constant.INTERFACE_SUCC, "添加成功", "").toString();
     }
 
@@ -104,11 +104,8 @@ public class CourseService {
         course.setCoursePrice(coursePrice);
         course.setCourseImageUrl(courseImageUrl);
         courseDao.updateCourse(course);
+        storeDao.updateStoreCourse();      // 修改门店课程信息
         return JsonUtils.encapsulationJSON(Constant.INTERFACE_SUCC, "修改成功", "").toString();
-    }
-
-    public List<Course> queryCourseList(){
-        return courseDao.queryCourseList();
     }
 
     public PageObject<Course> queryCourseList(QueryInfo queryInfo){
@@ -118,7 +115,6 @@ public class CourseService {
         PageObjectUtil page = new PageObjectUtil<Course>();
         return page.savePageObject(courseDao.queryCountCourse(map), courseDao.queryListCourse(map), queryInfo);
     }
-
 
     public Course queryCourseById(Integer courseId){
         return courseDao.queryCourseByCourseId(courseId);

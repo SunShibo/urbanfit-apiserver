@@ -41,4 +41,6 @@ public interface StoreDao {
     public List<Store> queryClientStoreList(Map<String, Object> map);
 
     public List<Store> queryCourseChooseStoreList(Map<String, Object> map);
+
+    public void updateStoreCourse();
 }

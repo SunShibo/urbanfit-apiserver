@@ -38,6 +38,7 @@
     <select id="queryUpCourseByCourseId" parameterType="int" resultType="com.urbanfit.apiserver.entity.Course">
         select * from t_course where courseId = #{courseId} and status = 0
     </select>
+
     <update id="updateCoursePrice" parameterType="map">
         update t_course set coursePrice = #{coursePrice} where courseId = #{courseId}
     </update>
@@ -96,4 +97,9 @@
         order by createTime desc
         <include refid="limit"/>
     </select>
+
+    <update id="updateCourseStore">
+        update t_course t1, (select courseId, concat(',', group_concat(storeId), ',') storeId
+        from t_course_store group by courseId) t2 set t1.storeId = t2.storeId where t1.courseId = t2.courseId
+    </update>
 </mapper>

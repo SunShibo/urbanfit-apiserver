@@ -12,4 +12,8 @@ public interface CourseStoreDao {
     public void batchAddCourseStore(List<CourseStore> list);
 
     public void deleteCourseStore(Integer courseId);
+
+    public void deleteCourseStoreByStoreId(Integer storeId);
+
+    public List<CourseStore> queryStoreChoosedCourse(Integer storeId);
 }
